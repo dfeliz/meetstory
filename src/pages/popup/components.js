@@ -1,56 +1,55 @@
+const ButtonBase = {
+  outline: "none",
+  src: "local('Segoe UI')",
+  fontWeight: "525",
+  fontStyle: "normal",
+  cursor: "pointer",
+  borderRadius: "2rem",
+  fontSize: "16px",
+  border: "none",
+  color: "white",
+}
+
+const CenteredContainerBase = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}
+
 export const Background = {
   width: "475px",
 }
 
 export const ButtonStyle1 = {
-  src: "local('Segoe UI')",
-  fontWeight: "525",
-  fontStyle: "normal",
-  cursor: "pointer",
-  borderRadius: "2rem",
+  ...ButtonBase,
   padding: "13.5px  106px",
-  fontSize: "16px",
-  border: "none",
-  color: "white",
   backgroundColor: "#178E74",
 }
 
 export const ButtonStyle2 = {
-  src: "local('Segoe UI')",
-  fontWeight: "525",
-  fontStyle: "normal",
-  cursor: "pointer",
-  borderRadius: "2rem",
+  ...ButtonBase,
   padding: "13.5px  116.5px",
-  fontSize: "16px",
-  border: "none",
-  color: "white",
   backgroundColor: "#1A435B",
 }
 
 export const Container1 = {
+  ...CenteredContainerBase,
   marginTop: "33px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
 }
 export const Container2 = {
+  ...CenteredContainerBase,
   borderBottom: "1.2px solid #DADADA",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
 }
 
 export const Container3 = {
-  marginTop: "29.5px",
-  marginBottom: "29.5px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-
+  ...CenteredContainerBase,
+  backgroundColor: "white",
+  paddingTop: "29.5px",
+  paddingBottom: "29.5px",
 }
 
 export const Header1 = {
+  paddingLeft: "78px",
   src: "local('Segoe UI')",
   fontWeight: "525",
   fontStyle: "normal",
