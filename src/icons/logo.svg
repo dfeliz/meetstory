@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45">
+  <g id="Grupo_58" data-name="Grupo 58" transform="translate(-222 -65)">
+    <g id="Rectángulo_34" data-name="Rectángulo 34" transform="translate(222 65)" fill="#fff" stroke="#51945a" stroke-width="1">
+      <rect width="45" height="45" rx="22.5" stroke="none"/>
+      <rect x="0.5" y="0.5" width="44" height="44" rx="22" fill="none"/>
+    </g>
+    <text id="M" transform="translate(232 98)" fill="#51945a" font-size="29" font-family="SegoeUI, Segoe UI, Arial"><tspan x="0" y="0">M</tspan></text>
+  </g>
+</svg>
