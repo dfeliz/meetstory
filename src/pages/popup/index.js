@@ -9,8 +9,6 @@ async function initApp() {
 
     const mountNode = document.createElement('div');
     document.body.appendChild(mountNode);
-    document.body.style.backgroundColor = "#F2F2F2",
-    document.body.style.margin = 0,
 
     ReactDOM.render(
         <Provider store={store}>
