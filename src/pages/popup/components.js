@@ -1,21 +1,11 @@
-const ButtonBase = {
-  outline: "none",
-  src: "local('Segoe UI')",
-  fontWeight: "525",
-  fontStyle: "normal",
-  cursor: "pointer",
-  borderRadius: "2rem",
-  fontSize: "16px",
-  border: "none",
-  color: "white",
-};
 
 const CenteredContainerBase = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 };
-export const LogoContainer= {
+
+export const LogoContainer = {
   position: "absolute",
   top: "21px",
   left: "22px"
@@ -23,18 +13,6 @@ export const LogoContainer= {
 
 export const Background = {
   width: "475px"
-};
-
-export const PrimaryButton = {
-  ...ButtonBase,
-  padding: "13.5px  106px",
-  backgroundColor: "#178E74",
-};
-
-export const SecondaryButton = {
-  ...ButtonBase,
-  padding: "13.5px  116.5px",
-  backgroundColor: "#1A435B",
 };
 
 export const TopContainer = {

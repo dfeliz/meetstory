@@ -15,6 +15,7 @@ function generateHtmlPlugins(items) {
 }
 
 module.exports = {
+  mode: 'production',
   entry: {
     background: `${PAGES_PATH}/background`,
     popup: `${PAGES_PATH}/popup`,
@@ -41,6 +42,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
     ],
   },
   plugins: [

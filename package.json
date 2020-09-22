@@ -7,8 +7,8 @@
     "build": "webpack"
   },
   "dependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
+    "css-loader": "^4.3.0",
+    "html-webpack-plugin": "^4.5.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
@@ -17,18 +17,25 @@
     "redux-persist": "^6.0.0",
     "redux-persist-chrome-storage": "^1.0.1",
     "redux-webext": "*",
+    "style-loader": "^1.2.1",
     "styled-components": "^5.2.0",
-    "svg-url-loader": "^6.0.0"
+    "svg-url-loader": "^6.0.0",
+    "tapable": "^2.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.8",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/polyfill": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/runtime": "^7.11.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-loader": "^8.1.0",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-plugin-transform-class-properties": "^6.19.0",
-    "babel-preset-react": "^6.16.0",
     "copy-webpack-plugin": "^4.0.1",
-    "html-webpack-plugin": "^2.24.1",
-    "webpack": "^2.1.0-beta.27",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
     "write-file-webpack-plugin": "^3.4.2"
   }
 }
