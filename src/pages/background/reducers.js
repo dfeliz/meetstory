@@ -1,28 +1,18 @@
 import {combineReducers} from 'redux';
 import {
-    INCREMENT_BACKGROUND_COUNTER,
-    DECREMENT_BACKGROUND_COUNTER,
-    INCREMENT_UI_COUNTER,
-    DECREMENT_UI_COUNTER,
-    INCREMENT_CONTENTSCRIPTS_COUNTER
+    OBTAIN_TEXT,
 } from '../constants';
 
-function createCounterReducer(increment, decrement) {
-    return function (state = 0, action) {
-        const value = action.value || 1;
-        switch (action.type) {
-            case increment:
-                return state + value;
-            case decrement:
-                return state - value;
-            default:
-                return state;
-        }
+function canCaptureReducer(state = false, action) {
+    console.log('canCaptureReducer activated');
+    switch (action.type) {
+        case OBTAIN_TEXT:
+            return true;
+        default:
+            return state;
     }
 }
 
 export default combineReducers({
-    backgroundCounter: createCounterReducer(INCREMENT_BACKGROUND_COUNTER, DECREMENT_BACKGROUND_COUNTER),
-    uiCounter: createCounterReducer(INCREMENT_UI_COUNTER, DECREMENT_UI_COUNTER),
-    contentScriptsCounter: createCounterReducer(INCREMENT_CONTENTSCRIPTS_COUNTER)
+    canCapture: canCaptureReducer,
 });

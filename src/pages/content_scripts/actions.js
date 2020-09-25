@@ -1,9 +1,7 @@
-import {INCREMENT_CONTENTSCRIPTS_COUNTER} from '../constants';
+import { OBTAIN_TEXT } from '../constants';
 
-export function incrementContentScriptsCounter() {
+export function obtainText() {
     return {
-        type: INCREMENT_CONTENTSCRIPTS_COUNTER,
-        value: 1,
+        type: OBTAIN_TEXT
     };
 }
-

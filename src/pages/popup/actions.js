@@ -1,15 +1,7 @@
-import {INCREMENT_UI_COUNTER, DECREMENT_UI_COUNTER} from '../constants';
+import { OBTAIN_TEXT } from '../constants';
 
-export function incrementUICounter() {
+export function obtainText() {
     return {
-        type: INCREMENT_UI_COUNTER,
-        value: 3
-    };
-}
-
-export function decrementUICounter() {
-    return {
-        type: DECREMENT_UI_COUNTER,
-        value: 3
+        type: OBTAIN_TEXT
     };
 }

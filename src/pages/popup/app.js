@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
 import Switch from 'react-switch';
@@ -16,9 +16,12 @@ import {
 } from "./components";
 
 class App extends Component {
+  static propTypes = {
+    obtainText: PropTypes.func.isRequired,
+  };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       checked: false
     }
@@ -28,8 +31,10 @@ class App extends Component {
   handleChange(checked) {
     this.setState({checked})
   }
-
+  
   render() {
+    const { obtainText } = this.props;
+
     return (
       <div style={Background}>
         <div style={LogoContainer}>
@@ -37,7 +42,7 @@ class App extends Component {
         </div>
           <h1 style={Title}>Meetstory for Google Meets</h1> 
         <div style={TopContainer}>
-          <button id="primaryButton" className="button">Empezar a guardar</button>
+          <button id="primaryButton" className="button" onClick={obtainText}>Empezar a guardar</button>
         </div>
         <div style={MiddleContainer}>
           <Switch className="react-switch" onChange={this.handleChange} checked={this.state.checked}></Switch>

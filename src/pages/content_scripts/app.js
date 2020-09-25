@@ -4,21 +4,19 @@ import * as actions from './actions';
 
 class App extends Component {
     static propTypes = {
-        incrementContentScriptsCounter: PropTypes.func.isRequired,
+        canCapture: PropTypes.bool.isRequired,
     };
-    
+
     constructor(props) {
         super(props);
         console.log('Content scripts loaded.')
     }
-
-    handleClick = () => {
-        const {
-            incrementContentScriptsCounter,
-            contentScriptsCounter
-        } = this.props;
-        incrementContentScriptsCounter(1);
-        console.log('new count: ', contentScriptsCounter);
+    
+    componentDidUpdate() {
+        const { canCapture } = this.props;
+        if (canCapture === true) {
+            console.log(document.querySelector("#tsf > div:nth-child(2) > div.A8SBwf > div.FPdoLc.tfB0Bf > center > input.gNO89b"));
+        }
     }
 
     render() {

@@ -1,36 +1,7 @@
-import {
-    INCREMENT_BACKGROUND_COUNTER,
-    DECREMENT_BACKGROUND_COUNTER,
-    INCREMENT_UI_COUNTER,
-    DECREMENT_UI_COUNTER,
-    INCREMENT_CONTENTSCRIPTS_COUNTER
-} from '../constants';
+import { OBTAIN_TEXT } from '../constants';
 
-export function incrementBackgroundCounter() {
-    return {type: INCREMENT_BACKGROUND_COUNTER};
-}
-
-export function decrementBackgroundCounter() {
-    return {type: DECREMENT_BACKGROUND_COUNTER};
-}
-
-export function incrementUICounter({value}) {
+export function obtainText() {
     return {
-        type: INCREMENT_UI_COUNTER,
-        value
-    };
-}
-
-export function decrementUICounter({value}) {
-    return {
-        type: DECREMENT_UI_COUNTER,
-        value
-    };
-}
-
-export function incrementContentScriptsCounter({value}) {
-    return {
-        type: INCREMENT_CONTENTSCRIPTS_COUNTER,
-        value       
+        type: OBTAIN_TEXT
     };
 }
