@@ -1,15 +1,25 @@
 {
+    "manifest_version": 2,
     "name": "Meetstory",
     "description": "Tool for saving google meets chat history",
     "version": "0.1.0",
     "browser_action": {
-        "default_popup": "popup.html",
-        "default_title": "Meetstory"
+        "default_title": "Meetstory",
+        "default_popup": "pages/popup.html"
     },
-    "manifest_version": 2   ,
+    "content_scripts": [
+        {
+          "matches": ["*://*/*"],
+          "js": ["pages/content_scripts.js"]
+        }
+    ],
+    "background": {
+        "page": "pages/background.html"
+    },
     "permissions": [
+        "tabs",
         "storage"
-        ],
+    ],
     "icons": {
         "16": "icons/icon16.png",
         "24": "icons/icon24.png",

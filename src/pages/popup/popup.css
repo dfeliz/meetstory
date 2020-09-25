@@ -1,0 +1,43 @@
+body {
+    background-color: #F2F2F2;
+    margin: 0;
+}
+
+.button {
+    outline: none;
+    font-family: local('Segoe UI');
+    font-weight: 525;
+    font-style: normal;
+    cursor: pointer;
+    border-radius: 2rem;
+    font-size: 16px;
+    border: none;
+    color: white;
+    transition: all 0.15s linear;
+}
+
+#primaryButton {
+    padding: 13.5px  106px;
+    background-color: #178E74;
+}
+
+#primaryButton:hover {
+    background-color: #127B64;
+}
+
+#primaryButton:active {
+    background-color: #116855;
+}
+
+#secondaryButton {
+    padding: 13.5px  116.5px;
+    background-color: #1A435B;
+}
+
+#secondaryButton:hover {
+    background-color: #163C50;
+}
+
+#secondaryButton:active {
+    background-color: #123141;
+}
