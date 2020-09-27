@@ -1,7 +1,7 @@
-import { OBTAIN_TEXT } from '../constants';
+import { TOGGLE_SAVE } from '../constants';
 
-export function obtainText() {
+export function toggleSave() {
     return {
-        type: OBTAIN_TEXT
+        type: TOGGLE_SAVE
     };
 }

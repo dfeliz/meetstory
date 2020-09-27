@@ -17,7 +17,8 @@ import {
 
 class App extends Component {
   static propTypes = {
-    obtainText: PropTypes.func.isRequired,
+    toggleSave: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -33,7 +34,10 @@ class App extends Component {
   }
   
   render() {
-    const { obtainText } = this.props;
+    const { toggleSave, isSaving } = this.props;
+
+    const startSavingText = 'Empezar a guardar';
+    const stopSavingText = 'Parar de guardar';
 
     return (
       <div style={Background}>
@@ -42,7 +46,11 @@ class App extends Component {
         </div>
           <h1 style={Title}>Meetstory for Google Meets</h1> 
         <div style={TopContainer}>
-          <button id="primaryButton" className="button" onClick={obtainText}>Empezar a guardar</button>
+          <button id="primaryButton" className={`${ isSaving && 'danger'} button`} onClick={toggleSave}>
+            {
+              isSaving ? stopSavingText : startSavingText
+            }
+          </button>
         </div>
         <div style={MiddleContainer}>
           <Switch className="react-switch" onChange={this.handleChange} checked={this.state.checked}></Switch>

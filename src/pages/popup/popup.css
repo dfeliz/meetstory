@@ -16,6 +16,18 @@ body {
     transition: all 0.15s linear;
 }
 
+.danger {
+    background-color: #8a1515 !important;
+}
+
+.danger:hover {
+    background-color: #7b1212 !important;
+}
+
+.danger:active {
+    background-color: #681111 !important;
+}
+
 #primaryButton {
     padding: 13.5px  106px;
     background-color: #178E74;

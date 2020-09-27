@@ -1,17 +1,17 @@
 import {combineReducers} from 'redux';
 import {
-    OBTAIN_TEXT,
+    TOGGLE_SAVE,
 } from '../constants';
 
-function canCaptureReducer(state = false, action) {
+function isSavingReducer(state = false, action) {
     switch (action.type) {
-        case OBTAIN_TEXT:
-            return true;
+        case TOGGLE_SAVE:
+            return !state;
         default:
             return state;
     }
 }
 
 export default combineReducers({
-    canCapture: canCaptureReducer,
+    isSaving: isSavingReducer,
 });

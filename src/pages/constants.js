@@ -1,1 +1,1 @@
-export const OBTAIN_TEXT = 'OBTAIN_TEXT';
+export const TOGGLE_SAVE = 'TOGGLE_SAVE';

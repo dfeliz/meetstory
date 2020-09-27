@@ -1,10 +1,10 @@
 import {createStore} from 'redux';
 import {createBackgroundStore} from 'redux-webext';
-import { OBTAIN_TEXT } from '../constants';
+import { TOGGLE_SAVE } from '../constants';
 import { persistStore, persistReducer } from 'redux-persist'
 import createChromeStorage from 'redux-persist-chrome-storage'
 import reducer from './reducers';
-import {obtainText} from './actions';
+import {toggleSave} from './actions';
 
 const storage = createChromeStorage(window.chrome, 'sync');
 
@@ -21,6 +21,6 @@ const store = createStore(persistedReducer);
 export default createBackgroundStore({
     store,
     actions: {
-        OBTAIN_TEXT: obtainText,
+        TOGGLE_SAVE: toggleSave,
     }
 });

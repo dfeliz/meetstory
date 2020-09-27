@@ -8,10 +8,12 @@ import {
 } from '../../selectors';
 
 let dialogs = [];
+let intervalRunning = false;
+let intervalID;
 
 class App extends Component {
     static propTypes = {
-        canCapture: PropTypes.bool.isRequired,
+        isSaving: PropTypes.bool.isRequired,
     };
 
     constructor(props) {
@@ -20,13 +22,20 @@ class App extends Component {
     }
     
     componentDidUpdate() {
-        const { canCapture } = this.props;
+        const { isSaving } = this.props;
 
-        if (canCapture) {
+        if (isSaving) {
             console.log("button has been clicked");
             if (document.querySelector(chatLayoutSelector)) {
                 console.log("chatLayout detected");
-                setInterval(this.getChats, 1500);
+                intervalID = setInterval(this.getChats, 1500);
+                intervalRunning = true;
+            }
+        } else {
+            if (intervalRunning) {
+                console.log("stopped");
+                intervalRunning = false;
+                clearInterval(intervalID);
             }
         }
     }
