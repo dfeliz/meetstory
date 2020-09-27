@@ -4,7 +4,6 @@ import {
 } from '../constants';
 
 function canCaptureReducer(state = false, action) {
-    console.log('canCaptureReducer activated');
     switch (action.type) {
         case OBTAIN_TEXT:
             return true;

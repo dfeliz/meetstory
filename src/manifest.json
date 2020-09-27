@@ -9,7 +9,7 @@
     },
     "content_scripts": [
         {
-          "matches": ["*://*/*"],
+          "matches": ["https://meet.google.com/*"],
           "js": ["pages/content_scripts.js"]
         }
     ],

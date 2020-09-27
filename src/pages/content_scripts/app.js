@@ -1,6 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import * as actions from './actions';
+import { chatChildrenMapper } from './mappers';
+import {
+    chatLayoutSelector,
+    chatContainerSelector
+} from '../../selectors';
+
+let dialogs = [];
 
 class App extends Component {
     static propTypes = {
@@ -14,9 +21,24 @@ class App extends Component {
     
     componentDidUpdate() {
         const { canCapture } = this.props;
-        if (canCapture === true) {
-            console.log(document.querySelector("#tsf > div:nth-child(2) > div.A8SBwf > div.FPdoLc.tfB0Bf > center > input.gNO89b"));
+
+        if (canCapture) {
+            console.log("button has been clicked");
+            if (document.querySelector(chatLayoutSelector)) {
+                console.log("chatLayout detected");
+                setInterval(this.getChats, 1500);
+            }
         }
+    }
+
+    getChats() {
+        console.log("actual: ", dialogs);
+
+        const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
+        const newDialogs = chatChildrenArray.map(chatChildrenMapper);
+
+        console.log("new: ", newDialogs);
+        dialogs = newDialogs;
     }
 
     render() {
