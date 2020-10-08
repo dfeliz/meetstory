@@ -34,7 +34,7 @@ class App extends Component {
   }
   
   render() {
-    const { toggleSave, isSaving } = this.props;
+    const { toggleSave, isSaving, isSaveButtonEnabled } = this.props;
 
     const startSavingText = 'Empezar a guardar';
     const stopSavingText = 'Parar de guardar';
@@ -46,7 +46,12 @@ class App extends Component {
         </div>
           <h1 style={Title}>Meetstory for Google Meets</h1> 
         <div style={TopContainer}>
-          <button id="primaryButton" className={`${ isSaving && 'danger'} button`} onClick={toggleSave}>
+          <button
+            id="primaryButton"
+            onClick={toggleSave}
+            disabled={!isSaveButtonEnabled}
+            className={`${!isSaveButtonEnabled && 'disabled'} ${ isSaving && 'danger'} button`}
+          >
             {
               isSaving ? stopSavingText : startSavingText
             }

@@ -18,7 +18,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        console.log('Content scripts loaded.')
+        console.log('Content scripts loaded.');
     }
     
     componentDidUpdate() {

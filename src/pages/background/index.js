@@ -1,6 +1,8 @@
 import store from './store';
+import {
+    TOGGLE_BUTTON_DISABLE, TOGGLE_BUTTON_ENABLE
+} from '../constants';
 
-setInterval(() => {
-    console.log(JSON.stringify(store));
-    console.log('xd');
-}, 1000);
+store.dispatch(new Object({ type: TOGGLE_BUTTON_ENABLE }));
+
+

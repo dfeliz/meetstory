@@ -16,6 +16,19 @@ body {
     transition: all 0.15s linear;
 }
 
+.disabled {
+    cursor: default;
+    background-color: gray !important;
+}
+
+.disabled:hover {
+    background-color: gray !important;
+}
+
+.disabled:active {
+    background-color: gray !important;
+}
+
 .danger {
     background-color: #8a1515 !important;
 }
