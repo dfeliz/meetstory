@@ -25,6 +25,15 @@ class App extends Component {
         const { isSaving } = this.props;
 
         if (isSaving) {
+            // @TODO: Use real chat
+            const chat = {
+                title: 'El chat XD',
+                code: 'uce-fpsx-rbi',
+            }
+            chrome.runtime.sendMessage({messageType: "create", message: chat}, (response) => {
+                console.log('[APP]: ', response.message);
+            });
+
             console.log("button has been clicked");
             if (document.querySelector(chatLayoutSelector)) {
                 console.log("chatLayout detected");
