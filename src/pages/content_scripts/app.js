@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import * as actions from './actions';
 import { chatChildrenMapper } from './mappers';
 import {
+    meetTitle,
     chatLayoutSelector,
     chatContainerSelector
 } from '../../selectors';
 
-let dialogs = [];
 let intervalRunning = false;
 let intervalID;
 
@@ -25,10 +25,9 @@ class App extends Component {
         const { isSaving } = this.props;
 
         if (isSaving) {
-            // @TODO: Use real chat
             const chat = {
-                title: 'El chat XD',
-                code: 'uce-fpsx-rbi',
+                title: document.querySelector(meetTitle).innerHTML,
+                code: document.title.slice(7),
             }
             chrome.runtime.sendMessage({ messageType: "create", message: chat }, (response) => {
                 console.log('[APP]: ', response.message);
@@ -51,8 +50,7 @@ class App extends Component {
 
     getChats() {
         const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
-        const newDialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a,b) => [...a,...b]);
-        dialogs = newDialogs;
+        const dialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a,b) => [...a,...b], []);
         chrome.runtime.sendMessage({ messageType: "update", message: dialogs }, (response) => {
             console.log('[APP]: ', response.message);
         });
