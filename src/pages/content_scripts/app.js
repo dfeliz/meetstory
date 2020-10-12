@@ -51,7 +51,7 @@ class App extends Component {
 
     getChats() {
         const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
-        const newDialogs = chatChildrenArray.map(chatChildrenMapper);
+        const newDialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a,b) => [...a,...b]);
         dialogs = newDialogs;
         chrome.runtime.sendMessage({ messageType: "update", message: dialogs }, (response) => {
             console.log('[APP]: ', response.message);
