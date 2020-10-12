@@ -4,43 +4,43 @@ import { generateChat } from './helpers';
 
 // @TODO: Remove console logs
 async function createChat(data) {
-    console.log('[ChatService]: ', data);
     const newChat = generateChat(data);
     const newChatId = uuidv4();
-    console.log('[ChatService]: ', newChatId);
+    
+    return ChromeStorageService.get('savedChats').then(({savedChats}) => {
+        const updatedSavedChats = [
+            ...savedChats,
+            newChatId
+        ]
+        const newChatObj = { [newChatId]: newChat };
 
-    const savedChatsId = await ChromeStorageService.get('savedChats');
-    console.log('[ChatService]: ', savedChatsId);
-
-    const updatedSavedChats = {
-        ...savedChatsId,
-        newChatId
-    }
-    console.log('[ChatService]: ', updatedSavedChats);
-
-    await ChromeStorageService.set({ [newChatId]: newChat });
-    await ChromeStorageService.set({ savedChats: updatedSavedChats });
-    await ChromeStorageService.set({ currentChat: newChatId });
+        ChromeStorageService.set({ savedChats: updatedSavedChats });
+        ChromeStorageService.set(newChatObj);
+        ChromeStorageService.set({ currentChat: newChatId });
+    });
 }
 
 async function updateMessages(messages) {
-    const currentChatId = await ChromeStorageService.get('currentChat');
-    const chat = await ChromeStorageService.get(currentChatId);
-    chat.messages = messages;
-    await ChromeStorageService.set({ [currentChatId]: chat });
-    console.log('[ChatService]: ', messages, currentChatId, chat);
+    return ChromeStorageService.get('currentChat').then(async ({currentChat}) => {
+        return ChromeStorageService.get(currentChat).then((chatObj) => {
+            const chat = chatObj[currentChat];
+            chat.messages = messages;
+            ChromeStorageService.set({ [currentChat]: chat });
+            console.log('[ChatService]: ', messages, currentChat, chat);
+        });
+    });
 }
 
 async function toggleDelete(id) {
     const chat = await ChromeStorageService.get(id);
     chat.deleted = !chat.deleted;
-    await ChromeStorageService.set({ [id]: chat });
+    ChromeStorageService.set({ [id]: chat });
 }
 
 async function toggleFavorite(id) {
     const chat = await ChromeStorageService.get(id);
     chat.favorite = !chat.favorite;
-    await ChromeStorageService.set({ [id]: chat });
+    ChromeStorageService.set({ [id]: chat });
 }
 
 export default {

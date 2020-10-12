@@ -30,7 +30,7 @@ class App extends Component {
                 title: 'El chat XD',
                 code: 'uce-fpsx-rbi',
             }
-            chrome.runtime.sendMessage({messageType: "create", message: chat}, (response) => {
+            chrome.runtime.sendMessage({ messageType: "create", message: chat }, (response) => {
                 console.log('[APP]: ', response.message);
             });
 
@@ -50,13 +50,12 @@ class App extends Component {
     }
 
     getChats() {
-        console.log("actual: ", dialogs);
-
         const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
         const newDialogs = chatChildrenArray.map(chatChildrenMapper);
-
-        console.log("new: ", newDialogs);
         dialogs = newDialogs;
+        chrome.runtime.sendMessage({ messageType: "update", message: dialogs }, (response) => {
+            console.log('[APP]: ', response.message);
+        });
     }
 
     render() {
