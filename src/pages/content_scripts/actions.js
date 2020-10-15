@@ -1,9 +1,7 @@
-import {INCREMENT_CONTENTSCRIPTS_COUNTER} from '../constants';
+import { TOGGLE_SAVE } from '../constants';
 
-export function incrementContentScriptsCounter() {
+export function toggleSave() {
     return {
-        type: INCREMENT_CONTENTSCRIPTS_COUNTER,
-        value: 1,
+        type: TOGGLE_SAVE
     };
 }
-

@@ -1,0 +1,54 @@
+{
+    "config": {
+        "google_api_key": "SDL3MN2FOLSDMFLSKMSDL3MN2FOLSDMFLSKM",
+        "autosave": false,
+        "language": "eng"
+    },
+    "savedChats": [
+        "63a38d65-19bc-4aaf-8a03-22690fd28a31",
+        "63a38d45-19bc-4aaf-8a03-22690fd28a31",
+        "13a38d65-19bc-4aaf-8a03-22690fd28a31"
+    ],
+    "63a38d65-19bc-4aaf-8a03-22690fd28a31": {
+        "title": "XD Meeting",
+        "code": "kqm-nftu-unt",
+        "date": "Wed Sep 30 2020 21:05:11 GMT-0400 (hora de Bolivia)",
+        "messages": [
+            "[21:14] Bernie Nicasio: Jajaj",
+            "[21:14] You: Lol",
+            "[21:14] Bernie Nicasio: XD",
+            "[21:14] You: e_e",
+            "[21:14] Dahiana Astacio: Andaaaa"
+        ],
+        "favorite": false,
+        "deleted": false
+    },
+    "63a38d45-19bc-4aaf-8a03-22690fd28a31": {
+        "title": "XD Meeting",
+        "code": "kqm-nftu-unt",
+        "date": "Wed Sep 30 2020 21:05:11 GMT-0400 (hora de Bolivia)",
+        "messages": [
+            "[21:14] Bernie Nicasio: Jajaj",
+            "[21:14] You: Lol",
+            "[21:14] Bernie Nicasio: XD",
+            "[21:14] You: e_e",
+            "[21:14] Dahiana Astacio: Andaaaa"
+        ],
+        "favorite": false,
+        "deleted": false
+    },
+    "13a38d65-19bc-4aaf-8a03-22690fd28a31": {
+        "title": "XD Meeting",
+        "code": "kqm-nftu-unt",
+        "date": "Wed Sep 30 2020 21:05:11 GMT-0400 (hora de Bolivia)",
+        "messages": [
+            "[21:14] Bernie Nicasio: Jajaj",
+            "[21:14] You: Lol",
+            "[21:14] Bernie Nicasio: XD",
+            "[21:14] You: e_e",
+            "[21:14] Dahiana Astacio: Andaaaa"
+        ],
+        "favorite": false,
+        "deleted": false
+    }
+}

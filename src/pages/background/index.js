@@ -1,13 +1,13 @@
 import store from './store';
-import {incrementBackgroundCounter, decrementBackgroundCounter} from './actions';
+import ChatService from './services/ChatService';
 
-// increment or decrement background counter every second
-setInterval(() => {
-    store.dispatch(Math.random() >= 0.5 ?
-        incrementBackgroundCounter() :
-        decrementBackgroundCounter()
-    );
-    chrome.tabs.getCurrent(function (tab) {
-        console.log(tab)
+chrome.runtime.onMessage.addListener(
+    function (request, sender, sendResponse) {
+        if (request.messageType === 'create') {
+            ChatService.createChat(request.message).then(sendResponse({ message: 'Chat successfully created' }));
+        }
+        else if (request.messageType === 'update') {
+            ChatService.updateMessages(request.message).then(sendResponse({ message: 'Chat successfully updated' }))
+        }
+        return true;
     });
-}, 1000);
