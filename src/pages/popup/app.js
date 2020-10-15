@@ -32,6 +32,10 @@ class App extends Component {
   handleChange(checked) {
     this.setState({checked})
   }
+
+  handleOptions() {
+    // chrome-extension://ficikllkdpcnebnmjjdnfhnmidpgocgg/pages/options.html
+  }
   
   render() {
     const { toggleSave, isSaving } = this.props;
@@ -57,7 +61,7 @@ class App extends Component {
           <h1 style={Text}>Guardar chats automaticamente</h1>
         </div>
         <div style={BottomContainer}>
-          <button id="secondaryButton" className="button">Mis meetstories</button>
+          <button id="secondaryButton" className="button" onClick={this.handleOptions}>Mis meetstories</button>
         </div>
       </div>
     );

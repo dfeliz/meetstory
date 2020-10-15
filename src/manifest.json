@@ -20,6 +20,7 @@
         "tabs",
         "storage"
     ],
+    "options_page": "pages/options.html",
     "icons": {
         "16": "icons/icon16.png",
         "24": "icons/icon24.png",
