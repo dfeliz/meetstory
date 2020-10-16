@@ -9,8 +9,8 @@
   "dependencies": {
     "css-loader": "^4.3.0",
     "html-webpack-plugin": "^4.5.0",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
+    "react": "^15.7.0",
+    "react-dom": "^15.7.0",
     "react-redux": "^4.4.6",
     "react-switch": "^5.0.1",
     "redux": "^3.6.0",
@@ -18,7 +18,7 @@
     "redux-persist-chrome-storage": "^1.0.1",
     "redux-webext": "*",
     "style-loader": "^1.2.1",
-    "styled-components": "^5.2.0",
+    "styled-components": "^2.0.0-15",
     "svg-url-loader": "^6.0.0",
     "tapable": "^2.0.0",
     "uuid": "^8.3.1"

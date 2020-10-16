@@ -34,7 +34,7 @@ class App extends Component {
   }
 
   handleOptions() {
-    // chrome-extension://ficikllkdpcnebnmjjdnfhnmidpgocgg/pages/options.html
+    chrome.tabs.create({'url': "/pages/options.html" } )
   }
   
   render() {

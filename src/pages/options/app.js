@@ -1,12 +1,18 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from 'react';
+import {
+  SideBarMenu,
+  PageContainer
+} from './components';
 
 class App extends Component {
 
   render() {
     return (
-      <div>
+      <PageContainer>
+        <SideBarMenu>
           Hola xD
-      </div>
+        </SideBarMenu>
+      </PageContainer>
     );
   }
 }
