@@ -7,3 +7,10 @@ body {
     min-height: 100vh;
     margin: 0;
 }
+
+h1,
+h2,
+p {
+    margin: 0;
+    padding: 0;
+}

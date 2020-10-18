@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 export const PageContainer = styled.div`
+    display: flex;
     height: 100%;
 `
 
-export const SideBarMenu = styled.div`
-    width: 25.5%;
-    min-width: 300px;
-    background-color: #18435A;
+export const Page = styled.div`
+    width: 100%;
     height: 100%;
+    color: white;
+    overflow-y: visible;
+    background-color: #F2F2F2;
 `;

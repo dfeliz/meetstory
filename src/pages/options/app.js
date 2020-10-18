@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import Cards from './cards';
 import {
-  SideBarMenu,
+  Page,
   PageContainer
 } from './components';
+import Sidebar  from './menu/index'
 
 class App extends Component {
 
   render() {
     return (
       <PageContainer>
-        <SideBarMenu>
-          Hola xD
-        </SideBarMenu>
+        <Sidebar />
+        <Page>
+          <Cards />
+        </Page>
       </PageContainer>
     );
   }
