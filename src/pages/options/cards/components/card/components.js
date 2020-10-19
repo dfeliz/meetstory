@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
-
-
 export const CardContainer = styled.div`
-    width: 345px;
-    height: 403px;
-    padding: 28px;
+    width: 342px;
     margin-bottom: 72px;
     border-radius: 13px;
     box-sizing: border-box;
@@ -13,6 +9,11 @@ export const CardContainer = styled.div`
     box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.16);
     -moz-box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.16);
     -webkit-box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.16);
+`;
+
+export const Upper = styled.div`
+    padding: 28px;
+    border-bottom: 1px solid #E6E6E6;
 `;
 
 export const MeetLogo = styled.img`
@@ -29,13 +30,7 @@ export const MeetTitle = styled.h2`
     color: black;
     font-size: 25px;
     font-weight: normal;
-    margin-bottom: 16px;
-`;
-
-export const MeetChat = styled.div`
-    padding-top: 26px;
-    padding-bottom: 28.2px;
-    border-bottom: 1px solid grey;
+    margin-bottom: 26px;
 `;
 
 export const MeetMessages = styled.p`
@@ -45,7 +40,8 @@ export const MeetMessages = styled.p`
 `;
 
 export const MeetIcons = styled.div`
-    padding-top: 12.8px;
-    padding-bottom: 12.8px;
     color: black;
+    display: flex;
+    padding: 16.8px 28px 23.2px 28px;
+    justify-content: space-between;
 `;

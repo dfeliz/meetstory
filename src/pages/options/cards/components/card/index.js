@@ -1,13 +1,15 @@
 import React from 'react';
 import {
+    Upper,
     MeetLogo,
     CardContainer,
     MeetCode,
     MeetTitle,
-    MeetChat,
     MeetIcons,
     MeetMessages
 } from './components';
+import Tag from '../../assets/tag.svg';
+import Trash from '../../assets/trash.svg';
 import MeetIcon from '../../assets/meet.svg';
 
 const Card = ({ chat }) => {
@@ -21,21 +23,21 @@ const Card = ({ chat }) => {
     } = chat;
 
     function GenerateMessages(chat) {
-        return chat.slice(0, 5).map((messages) => {
+        return chat.slice(0, 6).map((messages) => {
              return <MeetMessages>{messages}</MeetMessages>
         })
     }
     return (
         <CardContainer>
-            <MeetLogo src={MeetIcon} alt="Meet" />
-            <MeetCode>{code}</MeetCode>
-            <MeetTitle>{title}</MeetTitle>
-            <MeetChat>
+            <Upper>
+                <MeetLogo src={MeetIcon} alt="Meet" />
+                <MeetCode>{code}</MeetCode>
+                <MeetTitle>{title}</MeetTitle>
                 {GenerateMessages(messages)}
-            </MeetChat>
+            </Upper>
             <MeetIcons>
-                Basura
-                asdasd
+                <img src={Trash} alt="delete" />
+                <img src={Tag} alt="favorite" />
             </MeetIcons>
         </CardContainer>
     )
