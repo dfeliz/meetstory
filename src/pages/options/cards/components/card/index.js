@@ -6,11 +6,13 @@ import {
     MeetCode,
     MeetTitle,
     MeetIcons,
-    MeetMessages
+    MeetMessages,
+    MeetOptions
 } from './components';
 import Tag from '../../assets/tag.svg';
 import Trash from '../../assets/trash.svg';
 import MeetIcon from '../../assets/meet.svg';
+import Dots from '../../assets/dots.svg';
 
 const Card = ({ chat }) => {
     const {
@@ -31,13 +33,16 @@ const Card = ({ chat }) => {
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
+                <MeetOptions src={Dots} alt="options" />
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
-                {GenerateMessages(messages)}
+                <div style={{cursor: "pointer"}}>
+                    {GenerateMessages(messages)}
+                </div>                
             </Upper>
             <MeetIcons>
-                <img src={Trash} alt="delete" />
-                <img src={Tag} alt="favorite" />
+                <img style={{cursor: "pointer"}} src={Trash} alt="delete" />
+                <img style={{cursor: "pointer"}} src={Tag} alt="favorite" />
             </MeetIcons>
         </CardContainer>
     )

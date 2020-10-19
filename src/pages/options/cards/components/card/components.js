@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const CardContainer = styled.div`
+    position: relative;
     width: 342px;
     margin-bottom: 72px;
     border-radius: 13px;
@@ -18,6 +19,14 @@ export const Upper = styled.div`
 
 export const MeetLogo = styled.img`
     margin-bottom: 11px;
+`;
+
+export const MeetOptions = styled.img`
+    position: absolute;
+    right: 20px;
+    top: 32px;
+    border-radius:35px;
+    cursor: pointer;
 `;
 
 export const MeetCode = styled.p`
