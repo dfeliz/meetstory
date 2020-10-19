@@ -31,7 +31,7 @@ class Sidebar extends Component {
 
   renderOptions() {
     return options.map((option, index) =>
-      <Option onClick={this.handleMenuMove(index)}>
+      <Option onClick={() => this.handleMenuMove(index)}>
         {option.title}
       </Option>
     )

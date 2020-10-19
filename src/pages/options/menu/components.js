@@ -10,7 +10,7 @@ export const SuperContainer = styled.div`
 
 export const Container = styled.div`
   padding-right: 61px;
-  transition: all 1s linear;
+  transition: all 0.3s ease-in-out;
 `;
 
 export const Title = styled.h1`
