@@ -131,7 +131,6 @@ const chats = {
         "favorite": false,
         "deleted": false
     },
-    
 }
 
 class Cards extends React.Component {
@@ -141,9 +140,7 @@ class Cards extends React.Component {
         for (let chat in chats) {
             array.push({ [chat]: chats[chat] });
         }
-        return array.map((chat) => {
-            return <Card chat={chat} />
-        })
+        return array.map((chat) => <Card chat={Object.values(chat)[0]} />)
     }
 
     render() {
