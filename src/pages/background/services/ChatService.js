@@ -7,7 +7,8 @@ async function createChat(data) {
     const newChat = generateChat(data);
     const newChatId = uuidv4();
     
-    return ChromeStorageService.get('savedChats').then(({savedChats}) => {
+    return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
+        console.log("TamoAqui:", savedChats)
         const updatedSavedChats = [
             ...savedChats,
             newChatId
@@ -17,6 +18,23 @@ async function createChat(data) {
         ChromeStorageService.set({ savedChats: updatedSavedChats });
         ChromeStorageService.set(newChatObj);
         ChromeStorageService.set({ currentChat: newChatId });
+    });
+}
+
+async function getAllChats() {
+    return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
+        const allChats = savedChats.map(id => {
+            return ChromeStorageService.get(id).then(({ chat }) => chat);
+        })
+        console.log("to lo chat:", allChats)
+        return allChats;
+    });
+}
+
+async function getChat(chatId) {
+    return ChromeStorageService.get(chatId).then(({ chat }) => {
+        console.log("Aqui ta el chat:", chat)
+        return chat;
     });
 }
 
