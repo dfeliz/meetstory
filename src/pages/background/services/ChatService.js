@@ -6,9 +6,14 @@ import { generateChat } from './helpers';
 async function createChat(data) {
     const newChat = generateChat(data);
     const newChatId = uuidv4();
-    
+
     return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
         console.log("TamoAqui:", savedChats)
+
+        if (!Array.isArray(savedChats)) {
+            savedChats = [];
+        }
+        
         const updatedSavedChats = [
             ...savedChats,
             newChatId
@@ -22,13 +27,20 @@ async function createChat(data) {
 }
 
 async function getAllChats() {
-    return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
-        const allChats = savedChats.map(id => {
-            return ChromeStorageService.get(id).then(({ chat }) => chat);
-        })
-        console.log("to lo chat:", allChats)
-        return allChats;
-    });
+    const { savedChats } = await ChromeStorageService.get('savedChats');
+
+    const savedDataChats = [];
+
+    if (savedChats.length < 1) {
+        return savedDataChats;
+    }
+
+    for (let chatCounter = 0; chatCounter < savedChats.length; chatCounter++) {
+        const getChatDetail = await ChromeStorageService.get(savedChats[chatCounter]);
+        savedDataChats.push(getChatDetail);
+    }
+
+    return savedDataChats;
 }
 
 async function getChat(chatId) {
@@ -39,7 +51,7 @@ async function getChat(chatId) {
 }
 
 async function updateMessages(messages) {
-    return ChromeStorageService.get('currentChat').then(async ({currentChat}) => {
+    return ChromeStorageService.get('currentChat').then(async ({ currentChat }) => {
         return ChromeStorageService.get(currentChat).then((chatObj) => {
             const chat = chatObj[currentChat];
             chat.messages = messages;
@@ -65,5 +77,7 @@ export default {
     createChat,
     updateMessages,
     toggleDelete,
-    toggleFavorite
+    toggleFavorite,
+    getAllChats,
+    getChat,
 }

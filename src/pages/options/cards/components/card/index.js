@@ -15,6 +15,7 @@ import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
 
 const Card = ({ chat }) => {
+    const chatValue = Object.values(chat)[0];
     const {
         title,
         code,
@@ -22,13 +23,14 @@ const Card = ({ chat }) => {
         messages,
         favorite,
         deleted,
-    } = chat;
+    } = chatValue;
 
     function GenerateMessages(chat) {
-        return chat.slice(0, 6).map((messages) => {
-             return <MeetMessages>{messages}</MeetMessages>
+        return chat.slice(0, 6).map((message) => {
+             return <MeetMessages>{message}</MeetMessages>
         })
     }
+
     return (
         <CardContainer>
             <Upper>

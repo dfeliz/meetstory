@@ -8,19 +8,25 @@ import Sidebar  from './menu'
 import { getAllChats } from './services';
 
 class App extends Component {
-
-  async getChats() {
-    const data = await getAllChats();
-    console.log(data);
-    return data;
+  state = {
+    chatList: []
   }
 
+  componentDidMount() {
+    getAllChats().then(response => {
+      this.setState({
+        chatList: response
+      })
+    })
+  }
+  
   render() {
+    const { chatList } = this.state;
     return (
       <PageContainer>
         <Sidebar />
         <Page>
-          <Cards data={this.getChats()} />
+          <Cards data={chatList} />
         </Page>
       </PageContainer>
     );

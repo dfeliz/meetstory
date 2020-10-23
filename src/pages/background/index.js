@@ -10,7 +10,9 @@ chrome.runtime.onMessage.addListener(
             ChatService.updateMessages(request.message).then(sendResponse({ message: 'Chat successfully updated' }))
         }
         else if (request.messageType === 'getAllChats') {
-            ChatService.getAllChats().then(response => sendResponse({ message: response }))
+            ChatService.getAllChats().then(response => {
+                sendResponse({ message: response });
+            });
         }
         else if (request.messageType === 'getChat') {
             ChatService.getChat(request.message).then(response => sendResponse({ message: response }))
