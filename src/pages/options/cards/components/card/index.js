@@ -14,7 +14,13 @@ import Trash from '../../assets/trash.svg';
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
 
-const Card = ({ chat }) => {
+const GenerateMessages = (chat) => {
+    return chat.slice(0, 6).map((message) => {
+         return <MeetMessages>{message}</MeetMessages>
+    })
+}
+
+function Card({ chat }) {
     const chatValue = Object.values(chat)[0];
     const {
         title,
@@ -25,11 +31,6 @@ const Card = ({ chat }) => {
         deleted,
     } = chatValue;
 
-    function GenerateMessages(chat) {
-        return chat.slice(0, 6).map((message) => {
-             return <MeetMessages>{message}</MeetMessages>
-        })
-    }
 
     return (
         <CardContainer>

@@ -10,5 +10,6 @@ export const Page = styled.div`
     height: 100%;
     color: white;
     overflow-y: auto;
+    position: relative;
     background-color: #F2F2F2;
 `;

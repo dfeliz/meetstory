@@ -13,7 +13,9 @@ export const CardContainer = styled.div`
 `;
 
 export const Upper = styled.div`
+    height: 351px;
     padding: 28px;
+    box-sizing: border-box;
     border-bottom: 1px solid #E6E6E6;
 `;
 
@@ -51,6 +53,6 @@ export const MeetMessages = styled.p`
 export const MeetIcons = styled.div`
     color: black;
     display: flex;
-    padding: 16.8px 28px 23.2px 28px;
     justify-content: space-between;
+    padding: 16.8px 28px 23.2px 28px;
 `;

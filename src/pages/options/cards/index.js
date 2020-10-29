@@ -1,24 +1,17 @@
 import React from 'react';
-import { Card, CardsContainer } from './components';
+import { Card, CardsContainer, NothingHereMessage } from './components';
 
-class Cards extends React.Component {
+const renderCardList = (data) => data.map((chat) => <Card chat={chat} />)
 
-    constructor(props) {
-        super(props);
-    }
-
-    renderCards() {
-        const { data } = this.props;
-        return !!data.length && data.map((chat) => <Card chat={chat} />)
-    }
-
-    render() {
+function CardsComponent({ data }) {
+    if (data && data.length > 0) {
         return (
             <CardsContainer>
-                { this.renderCards()}
+                {renderCardList(data)}
             </CardsContainer>
         )
     }
+    return <NothingHereMessage>Nada por aquí...</NothingHereMessage>
 }
 
-export default Cards;
+export default CardsComponent;
