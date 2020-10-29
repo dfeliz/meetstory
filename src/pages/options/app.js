@@ -5,26 +5,61 @@ import {
   PageContainer
 } from './components';
 import Sidebar  from './menu'
-import { getAllChats } from './services';
+import { getFilteredChats } from './services';
+import { nonDeleted, deleted, favorites } from './utils/filters';
 
 class App extends Component {
   state = {
-    chatList: []
+    page: 0,
+    chatList: [],
   }
 
   componentDidMount() {
-    getAllChats().then(response => {
-      this.setState({
-        chatList: response
-      })
-    })
+    this.renderChats();
   }
-  
+
+  renderChats() {
+    getFilteredChats(nonDeleted).then((response) => {
+      this.setState({
+        chatList: response,
+        page: 0,
+      })
+    });
+  }
+
+  renderFavoriteChats() {
+    getFilteredChats(favorites).then((response) => {      
+      this.setState({
+        chatList: response,
+        page: 1,
+      })
+    });
+  }
+
+  renderDeletedChats() {
+    getFilteredChats(deleted).then((response) => {
+      this.setState({
+        chatList: response,
+        page: 2,
+      })
+    });
+  }
+
   render() {
-    const { chatList } = this.state;
+    const { chatList, page } = this.state;
+
+    const sidebarHandlers = [
+      this.renderChats,
+      this.renderFavoriteChats,
+      this.renderDeletedChats,
+    ]
+
     return (
       <PageContainer>
-        <Sidebar />
+        <Sidebar
+          page={page}
+          handlers={sidebarHandlers}
+        />
         <Page>
           <Cards data={chatList} />
         </Page>

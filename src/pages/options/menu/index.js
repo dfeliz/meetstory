@@ -30,8 +30,13 @@ class Sidebar extends Component {
   }
 
   renderOptions() {
+    const clickHandlers = this.props.handlers;
+
     return options.map((option, index) =>
-      <Option onClick={() => this.handleMenuMove(index)}>
+      <Option onClick={() => {
+        clickHandlers[index]();
+        this.handleMenuMove(index);
+      }}>
         {option.title}
       </Option>
     )

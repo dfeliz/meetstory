@@ -9,3 +9,21 @@ export function getAllChats() {
         });
     })
 }
+
+/**
+ * Gets all chats then filters using the callback parameter.
+ * 
+ * @param {function} callback 
+ * @returns {Array} array of chats (filtered)
+ */
+export function getFilteredChats(callback) {
+    return getAllChats().then((response) => {
+
+        const filteredChats = response.filter((chat) => {
+            const chatProperties = Object.values(chat)[0];
+            return callback(chatProperties);
+        })
+
+        return filteredChats
+    });
+}
