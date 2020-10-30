@@ -16,11 +16,15 @@ import Dots from '../../assets/dots.svg';
 
 const GenerateMessages = (chat) => {
     return chat.slice(0, 6).map((message) => {
-         return <MeetMessages>{message}</MeetMessages>
+        return <MeetMessages>{message}</MeetMessages>
     })
 }
 
-function Card({ chat }) {
+function Card({
+    chat,
+    toggleDelete,
+    toggleFavorite
+}) {
     const chatValue = Object.values(chat)[0];
     const {
         title,
@@ -30,6 +34,7 @@ function Card({ chat }) {
         favorite,
         deleted,
     } = chatValue;
+    const chatId = Object.keys(chat)[0];
 
 
     return (
@@ -39,13 +44,23 @@ function Card({ chat }) {
                 <MeetOptions src={Dots} alt="options" />
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
-                <div style={{cursor: "pointer"}}>
+                <div style={{ cursor: "pointer" }}>
                     {GenerateMessages(messages)}
-                </div>                
+                </div>
             </Upper>
             <MeetIcons>
-                <img style={{cursor: "pointer"}} src={Trash} alt="delete" />
-                <img style={{cursor: "pointer"}} src={Tag} alt="favorite" />
+                <img
+                    src={Trash}
+                    alt="delete"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => toggleDelete(chatId)}
+                />
+                <img
+                    src={Tag}
+                    alt="favorite"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => toggleFavorite(chatId)}
+                />
             </MeetIcons>
         </CardContainer>
     )

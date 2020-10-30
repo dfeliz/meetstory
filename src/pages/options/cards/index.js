@@ -1,17 +1,39 @@
 import React from 'react';
 import { Card, CardsContainer, NothingHereMessage } from './components';
 
-const renderCardList = (data) => data.map((chat) => <Card chat={chat} />)
 
-function CardsComponent({ data }) {
-    if (data && data.length > 0) {
-        return (
-            <CardsContainer>
-                {renderCardList(data)}
-            </CardsContainer>
-        )
+class CardsComponent extends React.Component {
+    constructor(props) {
+        super(props);
     }
-    return <NothingHereMessage>Nada por aquí...</NothingHereMessage>
+
+    toggleDelete = (id) => {
+        console.log('Toggling delete for ', id)
+    }
+
+    toggleFavorite = (id) => {
+        console.log('Toggling fav for ', id)
+    }
+
+    renderCardList = (data) => data.map((chat) => (
+        <Card
+            chat={chat}
+            toggleDelete={this.toggleDelete}
+            toggleFavorite={this.toggleFavorite}
+        />
+    ));
+
+    render() {
+        const { data } = this.props;
+        if (data && data.length > 0) {
+            return (
+                <CardsContainer>
+                    {this.renderCardList(data)}
+                </CardsContainer>
+            )
+        }
+        return <NothingHereMessage>Nada por aquí...</NothingHereMessage>
+    }
 }
 
 export default CardsComponent;

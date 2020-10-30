@@ -2,7 +2,6 @@ import ChromeStorageService from './ChromeStorageService';
 import { v4 as uuidv4 } from 'uuid';
 import { generateChat } from './helpers';
 
-// @TODO: Remove console logs
 async function createChat(data) {
     const newChat = generateChat(data);
     const newChatId = uuidv4();
@@ -64,15 +63,17 @@ async function updateMessages(messages) {
 }
 
 async function toggleDelete(id) {
-    const chat = await ChromeStorageService.get(id);
-    chat.deleted = !chat.deleted;
-    ChromeStorageService.set({ [id]: chat });
+    return ChromeStorageService.get(id).then(({ chat }) => {
+        chat.deleted = !chat.deleted;
+        ChromeStorageService.set({ [id]: chat });
+    });
 }
 
 async function toggleFavorite(id) {
-    const chat = await ChromeStorageService.get(id);
-    chat.favorite = !chat.favorite;
-    ChromeStorageService.set({ [id]: chat });
+    return ChromeStorageService.get(id).then(({ chat }) => {
+        chat.favorite = !chat.favorite;
+        ChromeStorageService.set({ [id]: chat });
+    });
 }
 
 export default {
