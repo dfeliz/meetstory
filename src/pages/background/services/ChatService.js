@@ -23,6 +23,7 @@ async function createChat(data) {
         ChromeStorageService.set({ savedChats: updatedSavedChats });
         ChromeStorageService.set(newChatObj);
         ChromeStorageService.set({ currentChat: newChatId });
+        console.log("llegamo")
     });
 }
 
@@ -51,6 +52,7 @@ async function getChat(chatId) {
 }
 
 async function updateMessages(messages) {
+    console.log("Entrada update")
     return ChromeStorageService.get('currentChat').then(async ({ currentChat }) => {
         return ChromeStorageService.get(currentChat).then((chatObj) => {
             const chat = chatObj[currentChat];

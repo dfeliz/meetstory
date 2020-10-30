@@ -38,6 +38,8 @@ class App extends Component {
                 console.log("chatLayout detected");
                 intervalID = setInterval(this.getChats, 1500);
                 intervalRunning = true;
+            } else {
+                console.log("No se encontro el chat")
             }
         } else {
             if (intervalRunning) {
@@ -49,6 +51,7 @@ class App extends Component {
     }
 
     getChats() {
+        console.log("started get chat")
         const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
         const dialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a,b) => [...a,...b], []);
         chrome.runtime.sendMessage({ messageType: "update", message: dialogs }, (response) => {
