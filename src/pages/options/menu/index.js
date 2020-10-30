@@ -24,19 +24,18 @@ class Sidebar extends Component {
   }
 
   handleMenuMove(index) {
-    const { position } = this.state;
-    const shadowHeight = 60;
-    this.setState({ position: position - (index * shadowHeight) })
+    // const { position } = this.state;
+    // const shadowHeight = 60;
+    // this.setState({ position: position - (index * shadowHeight) })
   }
 
   renderOptions() {
     const clickHandlers = this.props.handlers;
+    console.log(clickHandlers);
 
+    // this.handleMenuMove(index); // <- this goes inside option onClick
     return options.map((option, index) =>
-      <Option onClick={() => {
-        clickHandlers[index]();
-        this.handleMenuMove(index);
-      }}>
+      <Option onClick={clickHandlers[index]}>
         {option.title}
       </Option>
     )
@@ -50,7 +49,7 @@ class Sidebar extends Component {
           <Title>Mis Meetstories</Title>
           {this.renderOptions()}
         </Container>
-        <Shadow />
+        {/* <Shadow /> */}
       </SuperContainer>
     );
   }

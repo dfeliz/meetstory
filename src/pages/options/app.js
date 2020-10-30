@@ -18,7 +18,7 @@ class App extends Component {
     this.renderChats();
   }
 
-  renderChats() {
+  renderChats = () => {
     getFilteredChats(nonDeleted).then((response) => {
       this.setState({
         chatList: response,
@@ -27,7 +27,7 @@ class App extends Component {
     });
   }
 
-  renderFavoriteChats() {
+  renderFavoriteChats = () => {
     getFilteredChats(favorites).then((response) => {      
       this.setState({
         chatList: response,
@@ -36,7 +36,7 @@ class App extends Component {
     });
   }
 
-  renderDeletedChats() {
+  renderDeletedChats = () => {
     getFilteredChats(deleted).then((response) => {
       this.setState({
         chatList: response,
