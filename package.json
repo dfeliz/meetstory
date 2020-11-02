@@ -11,6 +11,7 @@
     "html-webpack-plugin": "^4.5.0",
     "react": "^15.7.0",
     "react-dom": "^15.7.0",
+    "react-loading-screen": "0.0.17",
     "react-redux": "^4.4.6",
     "react-switch": "^5.0.1",
     "redux": "^3.6.0",

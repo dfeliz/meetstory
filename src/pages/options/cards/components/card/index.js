@@ -7,7 +7,7 @@ import {
     MeetTitle,
     MeetIcons,
     MeetMessages,
-    MeetOptions
+    MeetOptions,
 } from './components';
 import Tag from '../../assets/tag.svg';
 import Trash from '../../assets/trash.svg';

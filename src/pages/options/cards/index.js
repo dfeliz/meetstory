@@ -1,27 +1,22 @@
 import React from 'react';
 import { Card, CardsContainer, NothingHereMessage } from './components';
 
-
 class CardsComponent extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    toggleDelete = (id) => {
-        console.log('Toggling delete for ', id)
-    }
+    renderCardList = (data) => {
+        const { toggleDelete, toggleFavorite } = this.props;
 
-    toggleFavorite = (id) => {
-        console.log('Toggling fav for ', id)
+        return data.map((chat) => (
+            <Card
+                chat={chat}
+                toggleDelete={toggleDelete}
+                toggleFavorite={toggleFavorite}
+            />
+        ));
     }
-
-    renderCardList = (data) => data.map((chat) => (
-        <Card
-            chat={chat}
-            toggleDelete={this.toggleDelete}
-            toggleFavorite={this.toggleFavorite}
-        />
-    ));
 
     render() {
         const { data } = this.props;
@@ -32,7 +27,7 @@ class CardsComponent extends React.Component {
                 </CardsContainer>
             )
         }
-        return <NothingHereMessage>Nada por aquí...</NothingHereMessage>
+        return <NothingHereMessage>No hay chats.</NothingHereMessage>
     }
 }
 

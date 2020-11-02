@@ -27,3 +27,25 @@ export function getFilteredChats(callback) {
         return filteredChats
     });
 }
+
+export function toggleChatDelete(id) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'toggleDelete', message: id }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject(`Couldn't delete chat id ${id}`);
+            }
+            resolve(response.message);
+        });
+    })
+}
+
+export function toggleChatFavorite(id) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'toggleFavorite', message: id }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject(`Couldn't toggle favorite chat id ${id}`);
+            }
+            resolve(response.message);
+        });
+    })
+}

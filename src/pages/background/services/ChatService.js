@@ -51,7 +51,6 @@ async function getChat(chatId) {
 }
 
 async function updateMessages(messages) {
-    console.log("Entrada update")
     return ChromeStorageService.get('currentChat').then(async ({ currentChat }) => {
         return ChromeStorageService.get(currentChat).then((chatObj) => {
             const chat = chatObj[currentChat];
@@ -63,14 +62,16 @@ async function updateMessages(messages) {
 }
 
 async function toggleDelete(id) {
-    return ChromeStorageService.get(id).then(({ chat }) => {
+    return ChromeStorageService.get(id).then((chatObj) => {
+        const chat = Object.values(chatObj)[0];
         chat.deleted = !chat.deleted;
         ChromeStorageService.set({ [id]: chat });
     });
 }
 
 async function toggleFavorite(id) {
-    return ChromeStorageService.get(id).then(({ chat }) => {
+    return ChromeStorageService.get(id).then((chatObj) => {
+        const chat = Object.values(chatObj)[0];
         chat.favorite = !chat.favorite;
         ChromeStorageService.set({ [id]: chat });
     });
