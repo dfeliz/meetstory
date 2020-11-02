@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faTag } from '@fortawesome/free-solid-svg-icons';
 import {
     Upper,
     MeetLogo,
@@ -9,10 +11,10 @@ import {
     MeetMessages,
     MeetOptions,
 } from './components';
-import Tag from '../../assets/tag.svg';
-import Trash from '../../assets/trash.svg';
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
+import { COLORS } from '../../../../../styles/colors'
+
 
 const GenerateMessages = (chat) => {
     return chat.slice(0, 6).map((message) => {
@@ -49,18 +51,23 @@ function Card({
                 </div>
             </Upper>
             <MeetIcons>
-                <img
-                    src={Trash}
-                    alt="delete"
-                    style={{ cursor: "pointer" }}
+                <FontAwesomeIcon 
+                    icon={faTrashAlt}
+                    size="2x"
+                    style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
                     onClick={() => toggleDelete(chatId)}
+                
                 />
-                <img
-                    src={Tag}
-                    alt="favorite"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => toggleFavorite(chatId)}
-                />
+                {
+                    !deleted && (
+                        <FontAwesomeIcon 
+                            icon={faTag}
+                            size="2x"
+                            style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
+                            onClick={() => toggleFavorite(chatId)}
+                        />
+                    ) 
+                }
             </MeetIcons>
         </CardContainer>
     )
