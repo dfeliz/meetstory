@@ -10,7 +10,7 @@ import {
   toggleChatDelete
 } from './services';
 import Cards from './cards';
-import Sidebar from './menu'
+import Sidebar from './sidebarMenu'
 import Logo from '../../icons/logo.svg';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SuperContainer = styled.div`
   height: 100%;
   width: 25.5%;
-  min-width: 300px;
+  min-width: 350px;
   position: relative;
   background-color: #18435A;
 `;

@@ -6,6 +6,7 @@ import {
   Container,
   SuperContainer,
 } from './components'
+import UserCard from './usercard';
 
 const options = [
   { title: 'Todos los meetstories' },
@@ -50,6 +51,7 @@ class Sidebar extends Component {
           {this.renderOptions()}
         </Container>
         {/* <Shadow /> */}
+        <UserCard />
       </SuperContainer>
     );
   }
