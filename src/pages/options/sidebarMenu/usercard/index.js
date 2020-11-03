@@ -14,7 +14,12 @@ import { COLORS } from '../../../../styles/colors'
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const UserCard = ({ }) => {
+const UserCard = ({
+    fullName,
+    openSettings
+}) => {
+
+    const isAnonymous = fullName.length === 0;
 
     return (
         <SuperContainer>
@@ -24,10 +29,10 @@ const UserCard = ({ }) => {
                 </UserImgContainer>
                 <TextsContainer>
                     <UpperText>
-                        Sesion iniciada como
+                        { isAnonymous ? "No conectado" : "Sesion iniciada como"}
                     </UpperText>
                     <LowerText>
-                        Harold Adames
+                        { isAnonymous ? "Anónimo" : fullName }
                     </LowerText>
                 </TextsContainer>
                 <ButtonContainer>
@@ -35,9 +40,7 @@ const UserCard = ({ }) => {
                         icon={faCog}
                         size="2x"
                         style={{ cursor: "pointer", color: COLORS.WHITE }}
-                        onClick={() => {
-                            console.log('Clicked settings!')
-                        }}
+                        onClick={openSettings}
                     />
                 </ButtonContainer>
             </Card>

@@ -28,6 +28,8 @@ export const UserImg = styled.img`
 `;
 
 export const TextsContainer = styled.div`
+    min-width: 0;
+    padding-right: 48px;
     display: flex;
     flex-direction: column;
 `;
@@ -38,7 +40,11 @@ export const UpperText = styled.p`
 `;
 
 export const LowerText = styled.h2`
+    min-width: 0;
+    overflow: hidden;
     font-size: 1.6875em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 export const ButtonContainer = styled.div`
