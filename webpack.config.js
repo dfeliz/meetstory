@@ -20,6 +20,7 @@ module.exports = {
     background: `${PAGES_PATH}/background`,
     popup: `${PAGES_PATH}/popup`,
     content_scripts: `${PAGES_PATH}/content_scripts`,
+    options: `${PAGES_PATH}/options`,
   },
   output: {
     path: path.resolve("dist/pages"),
@@ -56,6 +57,6 @@ module.exports = {
         ignore: ["pages/**/*"],
       },
     ]),
-    ...generateHtmlPlugins(["background", "popup", "content_scripts"]),
+    ...generateHtmlPlugins(["background", "popup", "content_scripts", "options"]),
   ],
 };

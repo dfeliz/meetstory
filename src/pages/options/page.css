@@ -1,0 +1,21 @@
+html {
+    height: 100vh;
+}
+
+body {
+    overflow: hidden;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h1,
+h2,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: local('Segoe UI'), local("Open Sans");
+    src: local("Open Sans"), local("OpenSans"), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/K88pR3goAWT7BTt32Z01mz8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}

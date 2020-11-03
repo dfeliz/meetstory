@@ -9,5 +9,19 @@ chrome.runtime.onMessage.addListener(
         else if (request.messageType === 'update') {
             ChatService.updateMessages(request.message).then(sendResponse({ message: 'Chat successfully updated' }))
         }
+        else if (request.messageType === 'getAllChats') {
+            ChatService.getAllChats().then(response => {
+                sendResponse({ message: response });
+            });
+        }
+        else if (request.messageType === 'getChat') {
+            ChatService.getChat(request.message).then(response => sendResponse({ message: response }))
+        }
+        else if (request.messageType === 'toggleFavorite') {
+            ChatService.toggleFavorite(request.message).then(sendResponse({ message: 'Toggle favorite' }))
+        }
+        else if (request.messageType === 'toggleDelete') {
+            ChatService.toggleDelete(request.message).then(sendResponse({ message: 'Toggle delete' }))
+        }
         return true;
     });
