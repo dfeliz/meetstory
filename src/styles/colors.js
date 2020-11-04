@@ -4,6 +4,11 @@ const COLORS = {
     INACTIVE: "#b3b3b3"
 };
 
+const TEXT_COLORS = {
+    GRAY: "#707070",
+}
+
 export {
     COLORS,
+    TEXT_COLORS,
 };
