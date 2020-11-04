@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LoadingScreen from 'react-loading-screen'
+
 import {
   Page,
   PageContainer
@@ -11,21 +12,27 @@ import {
 } from './services';
 import Cards from './cards';
 import Sidebar from './sidebarMenu'
-import Logo from '../../icons/logo.svg';
+import { OptionsModal } from './modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 
+import Logo from '../../icons/logo.svg';
 
 class App extends Component {
   state = {
     page: 0,
     chatList: [],
     loading: true,
+    isModalOpen: false,
     reloadFn: this.renderChats,
   }
 
   componentDidMount() {
     this.renderChats();
   }
+  
+  openModal = () => this.setState({ isModalOpen: true })
+
+  closeModal = () => this.setState({ isModalOpen: false })
 
   toggleFavorite = (id) => {
     const { reloadFn } = this.state;
@@ -95,7 +102,7 @@ class App extends Component {
   }
 
   render() {
-    const { chatList, page, loading } = this.state;
+    const { chatList, page, loading, isModalOpen } = this.state;
 
     const sidebarHandlers = [
       this.renderChats,
@@ -108,6 +115,7 @@ class App extends Component {
         <Sidebar
           page={page}
           handlers={sidebarHandlers}
+          openSettings={this.openModal}
         />
         <Page>
           {loading
@@ -128,6 +136,7 @@ class App extends Component {
           }
 
         </Page>
+        <OptionsModal isOpen={isModalOpen} onRequestClose={this.closeModal} />
       </PageContainer>
     );
   }

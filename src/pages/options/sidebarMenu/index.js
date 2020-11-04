@@ -30,10 +30,6 @@ class Sidebar extends Component {
     // this.setState({ position: position - (index * shadowHeight) })
   }
 
-  handleOpenSettings = () => {
-    console.log('Opening settings...')
-  }
-
   renderOptions() {
     const clickHandlers = this.props.handlers;
     console.log(clickHandlers);
@@ -48,6 +44,8 @@ class Sidebar extends Component {
 
   render() {
     const { position } = this.state;
+    const { openSettings } = this.props;
+
     return (
       <SuperContainer>
         <Container style={{ paddingTop: `${position}px` }}>
@@ -57,7 +55,7 @@ class Sidebar extends Component {
         {/* <Shadow /> */}
         <UserCard
           fullName="Harold Adames Montaño"
-          openSettings={this.handleOpenSettings}
+          openSettings={openSettings}
         />
       </SuperContainer>
     );
