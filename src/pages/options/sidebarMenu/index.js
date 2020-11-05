@@ -6,6 +6,7 @@ import {
   Container,
   SuperContainer,
 } from './components'
+import UserCard from './usercard';
 
 const options = [
   { title: 'Todos los meetstories' },
@@ -29,6 +30,10 @@ class Sidebar extends Component {
     // this.setState({ position: position - (index * shadowHeight) })
   }
 
+  handleOpenSettings = () => {
+    console.log('Opening settings...')
+  }
+
   renderOptions() {
     const clickHandlers = this.props.handlers;
     console.log(clickHandlers);
@@ -50,6 +55,10 @@ class Sidebar extends Component {
           {this.renderOptions()}
         </Container>
         {/* <Shadow /> */}
+        <UserCard
+          fullName="Harold Adames Montaño"
+          openSettings={this.handleOpenSettings}
+        />
       </SuperContainer>
     );
   }
