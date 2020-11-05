@@ -7,6 +7,7 @@ import {
     CardContainer,
     MeetCode,
     MeetTitle,
+    MeetDate,
     MeetIcons,
     MeetMessages,
     MeetOptions,
@@ -14,6 +15,7 @@ import {
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
 import { COLORS } from '../../../../../styles/colors'
+import { formatDate } from '../../../utils/date';
 
 
 const GenerateMessages = (chat) => {
@@ -36,8 +38,9 @@ function Card({
         favorite,
         deleted,
     } = chatValue;
-    const chatId = Object.keys(chat)[0];
 
+    const chatId = Object.keys(chat)[0];
+    const formattedDate = formatDate(date);
 
     return (
         <CardContainer>
@@ -46,6 +49,7 @@ function Card({
                 <MeetOptions src={Dots} alt="options" />
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
+                <MeetDate>{formattedDate}</MeetDate>
                 <div style={{ cursor: "pointer" }}>
                     {GenerateMessages(messages)}
                 </div>

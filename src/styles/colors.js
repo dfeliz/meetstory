@@ -5,6 +5,11 @@ const COLORS = {
     WHITE: "#ffffff",
 };
 
+const TEXT_COLORS = {
+    GRAY: "#707070",
+}
+
 export {
     COLORS,
+    TEXT_COLORS,
 };
