@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { TEXT_COLORS } from '../../../../../styles/colors';
 
 export const CardContainer = styled.div`
     position: relative;
@@ -41,7 +42,12 @@ export const MeetTitle = styled.h2`
     color: black;
     font-size: 25px;
     font-weight: normal;
-    margin-bottom: 26px;
+`;
+
+export const MeetDate = styled.p`
+    color: ${TEXT_COLORS.GRAY};
+    font-size: 12px;
+    margin-bottom: 10px;
 `;
 
 export const MeetMessages = styled.p`
