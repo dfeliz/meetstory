@@ -9,7 +9,7 @@ import {
     ButtonContainer,
     UserImgContainer,
 } from './components';
-import DefaultImg from '../../cards/assets/anonymous-user.svg';
+import DefaultImg from '../../../../icons/anonymous-user.svg';
 import { COLORS } from '../../../../styles/colors'
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

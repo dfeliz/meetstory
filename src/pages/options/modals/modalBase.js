@@ -6,7 +6,7 @@ import { COLORS } from '../../../styles/colors';
 
 import {
     CloseButtonContainer
-} from './components/modalBase';
+} from './components';
 
 const ModalBase = (props) => {
     return (
