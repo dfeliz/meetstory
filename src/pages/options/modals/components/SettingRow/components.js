@@ -25,5 +25,10 @@ export const Left = styled.div`
 export const Right = styled.div`
     right: 0;
     height: 100%;
+    line-height: 66px;
     position: absolute;
+`;
+
+export const ComponentContainer = styled.div`
+    vertical-align: middle;
 `;

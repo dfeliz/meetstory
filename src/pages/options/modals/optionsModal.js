@@ -11,6 +11,7 @@ import GoogleButton from './components/GoogleButton';
 
 class OptionsModal extends React.Component {
     state = {
+        autoSave: false,
         isConnected: false,
     }
 
@@ -18,8 +19,13 @@ class OptionsModal extends React.Component {
         super(props);
     }
 
+    handleSwitchToggle = () => {
+        const { autoSave } = this.state;
+        this.setState({ autoSave: !autoSave })
+    }
+
     renderSwitch = () => (
-        <Switch />
+        <Switch checked={this.state.autoSave} onChange={this.handleSwitchToggle} />
     )
 
     renderGoogleButton = () => (
@@ -27,6 +33,12 @@ class OptionsModal extends React.Component {
             isConnected={this.state.isConnected}
             onClick={() => console.log('Clicked')}
         />
+    )
+
+    renderLanguageSelect = () => (
+        <select>
+            <option id="english" value="english">English</option>
+        </select>
     )
 
     render() {
@@ -57,7 +69,7 @@ class OptionsModal extends React.Component {
                     <SettingRow
                         Title="Idioma predeterminado"
                         Description="Idioma por defecto para la traducción de meetstories."
-                        renderComponent={this.renderGoogleButton}
+                        renderComponent={this.renderLanguageSelect}
                     />
                 </Section>
             </ModalBase>

@@ -5,6 +5,7 @@ import {
     RowDesc,
     RowTitle,
     Container,
+    ComponentContainer,
 } from './components'
 
 const SettingRow = ({
@@ -23,7 +24,9 @@ const SettingRow = ({
                 </RowDesc>
             </Left>
             <Right>
-                {renderComponent()}
+                <ComponentContainer>
+                    {renderComponent()}
+                </ComponentContainer>
             </Right>
         </Container>
     )
