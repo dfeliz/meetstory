@@ -17,5 +17,6 @@ export const ButtonContainer = styled.div`
     width: 320px;
     display: flex;
     cursor: pointer;
-    border: 0.5px solid #707070;
+    border: 0.5px solid #707070A0;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.06);
 `;
