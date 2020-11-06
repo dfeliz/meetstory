@@ -11,6 +11,7 @@ import {
 const ModalBase = (props) => {
     return (
         <ReactModal
+            closeTimeoutMS={200}
             isOpen={props.isOpen}
             shouldCloseOnEsc={true}
             shouldCloseOnOverlayClick={true}
