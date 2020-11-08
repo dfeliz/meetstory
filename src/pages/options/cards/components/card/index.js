@@ -24,6 +24,27 @@ const GenerateMessages = (chat) => {
     })
 }
 
+const downloadTxtFile = (chatMessages, meetCode, tittle, date) => {
+    const messages = createArray(chatMessages, meetCode, tittle, date)
+    const element = document.createElement("a");
+    const file = new Blob([messages],{type: 'text/plain;charset=utf-8'});
+    element.href = URL.createObjectURL(file);
+    element.download = tittle + "-" + meetCode+".txt";
+    document.body.appendChild(element);
+    element.click();
+  }
+
+const createArray = (chatMessages, meetCode, tittle, date) => {
+    const messagesArray = chatMessages
+    const tittleArray = [tittle, meetCode, date]
+    const concatArray = tittleArray.concat(messagesArray)
+    console.log("complete array: ", concatArray);
+    const completeArray = concatArray.reduce((r, a) => r.concat(a, "\r\n"), [0]);
+
+    console.log("complete array: ", completeArray);
+    return completeArray
+}
+
 function Card({
     chat,
     toggleDelete,
@@ -46,7 +67,7 @@ function Card({
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions src={Dots} alt="options" />
+                <MeetOptions src={Dots} alt="options" onClick={() => downloadTxtFile(messages, code, title, date)} />
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <MeetDate>{formattedDate}</MeetDate>
