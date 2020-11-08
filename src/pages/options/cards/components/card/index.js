@@ -38,10 +38,7 @@ const createArray = (chatMessages, meetCode, tittle, date) => {
     const messagesArray = chatMessages
     const tittleArray = [tittle, meetCode, date]
     const concatArray = tittleArray.concat(messagesArray)
-    console.log("complete array: ", concatArray);
-    const completeArray = concatArray.reduce((r, a) => r.concat(a, "\r\n"), [0]);
-
-    console.log("complete array: ", completeArray);
+    const completeArray = concatArray.reduce((r, a) => r.concat(a, "\r\n"), []);
     return completeArray
 }
 
