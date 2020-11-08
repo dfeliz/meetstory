@@ -7,7 +7,6 @@ import {
     CardContainer,
     MeetCode,
     MeetTitle,
-    MeetDate,
     MeetIcons,
     MeetMessages,
     MeetOptions,
@@ -15,13 +14,33 @@ import {
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
 import { COLORS } from '../../../../../styles/colors'
-import { formatDate } from '../../../utils/date';
 
 
 const GenerateMessages = (chat) => {
     return chat.slice(0, 6).map((message) => {
         return <MeetMessages>{message}</MeetMessages>
     })
+}
+
+const downloadTxtFile = (chatMessages, meetCode, tittle, date) => {
+    const messages = createArray(chatMessages, meetCode, tittle, date)
+    const element = document.createElement("a");
+    const file = new Blob([messages],{type: 'text/plain;charset=utf-8'});
+    element.href = URL.createObjectURL(file);
+    element.download = tittle + "-" + meetCode+".txt";
+    document.body.appendChild(element);
+    element.click();
+  }
+
+const createArray = (chatMessages, meetCode, tittle, date) => {
+    const messagesArray = chatMessages
+    const tittleArray = [tittle, meetCode, date]
+    const concatArray = tittleArray.concat(messagesArray)
+    console.log("complete array: ", concatArray);
+    const completeArray = concatArray.reduce((r, a) => r.concat(a, "\r\n"), [0]);
+
+    console.log("complete array: ", completeArray);
+    return completeArray
 }
 
 function Card({
@@ -38,18 +57,16 @@ function Card({
         favorite,
         deleted,
     } = chatValue;
-
     const chatId = Object.keys(chat)[0];
-    const formattedDate = formatDate(date);
+
 
     return (
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions src={Dots} alt="options" />
+                <MeetOptions src={Dots} alt="options" onClick={() => downloadTxtFile(messages, code, title, date)} />
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
-                <MeetDate>{formattedDate}</MeetDate>
                 <div style={{ cursor: "pointer" }}>
                     {GenerateMessages(messages)}
                 </div>
