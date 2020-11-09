@@ -1,32 +1,24 @@
+import { createPdf } from './pdf';
 
 /**
  * 
  * @param {*} chat
- * @param {'txt' | 'pdf' | 'docx'} format 
+ * @param {'txt' | 'pdf'} format 
  */
 const downloadChat = (chat, format) => {
     const formattedChat = formatChatForDownload(chat)
-
-    let blobType;
+    const title = chat.title + "-" + chat.code + format;
+    
     switch (format) {
-        case 'txt':
-            blobType = 'text/plain;charset=utf-8';
-            break;
         case 'pdf':
-            blobType = 'application/pdf';
-            break;
-        case 'docx':
-            blobType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            const file = createPdf([formattedChat]);
+            file.download(title);
             break;
         default:
-            blobType = 'text/plain;charset=utf-8';
+            const file = new Blob([formattedChat], { type: 'text/plain;charset=utf-8' });
+            downloadFile(file, title)
             break;
     }
-
-    const file = new Blob([formattedChat], { type: blobType });
-    const title = chat.title + "-" + chat.code + format;
-
-    downloadFile(file, title)
 }
 
 const formatChatForDownload = (chat) => {
@@ -42,7 +34,7 @@ const formatChatForDownload = (chat) => {
 /**
  * 
  * @param {Blob} file
- * @param {'txt' | 'pdf' | 'docx'} format 
+ * @param {string} fileTitle 
  */
 const downloadFile = (file, fileTitle) => {
     const element = document.createElement("a");

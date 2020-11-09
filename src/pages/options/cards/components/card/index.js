@@ -25,10 +25,6 @@ const GenerateMessages = (chat) => {
     })
 }
 
-const downloadTxtFile = (data) => {
-    downloadChat(data, 'txt');
-}
-
 function Card({
     chat,
     toggleDelete,
@@ -51,7 +47,7 @@ function Card({
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions src={Dots} alt="options" onClick={() => downloadTxtFile(chatValue)} />
+                <MeetOptions src={Dots} alt="options" onClick={() => downloadChat(data, 'txt') /* TODO: Add this to menu */} /> 
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <MeetDate>{formattedDate}</MeetDate>
