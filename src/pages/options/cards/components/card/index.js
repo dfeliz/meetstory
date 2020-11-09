@@ -52,7 +52,7 @@ function Menu(props) {
 
     function Item(props) {
         return (
-            <MenuItem href="#" onClick={() => downloadTxtFile(props.Messages, props.Code, props.Title, props.Date)}>
+            <MenuItem onClick={() => downloadTxtFile(props.Messages, props.Code, props.Title, props.Date)}>
                 <FontAwesomeIcon 
                     icon={props.leftIcon}
                     size="1x"
@@ -71,7 +71,8 @@ function Menu(props) {
                 Code={props.Code} 
                 Title={props.Title} 
                 Date={props.Date} 
-                leftIcon={faGoogleDrive}>
+                leftIcon={faGoogleDrive}
+                >
                 Google Drive
             </Item>
             <Item 
@@ -79,7 +80,8 @@ function Menu(props) {
                 Code={props.Code} 
                 Title={props.Title} 
                 Date={props.Date} 
-                leftIcon={faFileAlt}>
+                leftIcon={faFileAlt}
+                >
                 Archivo TXT
             </Item>
             <Item 
@@ -87,7 +89,8 @@ function Menu(props) {
                 Code={props.Code} 
                 Title={props.Title} 
                 Date={props.Date} 
-                leftIcon={faFilePdf}>
+                leftIcon={faFilePdf}
+                >
                 Archivo PDF
             </Item>
             <ItemHeader>Exportar en idioma</ItemHeader>
@@ -96,7 +99,8 @@ function Menu(props) {
                 Code={props.Code} 
                 Title={props.Title} 
                 Date={props.Date} 
-                leftIcon={faLanguage}>
+                leftIcon={faLanguage}
+                >
                 Ingles (pred.)
             </Item>
         </DropdownMenu>
