@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faTag, faFilePdf, faFileAlt, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import {
     Upper,
     MeetLogo,
@@ -10,11 +10,15 @@ import {
     MeetIcons,
     MeetMessages,
     MeetOptions,
+    MenuItem,
+    DropdownMenu,
+    ItemText,
+    ItemHeader
 } from './components';
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
 import { COLORS } from '../../../../../styles/colors'
-
+import { faGoogleDrive } from '@fortawesome/free-brands-svg-icons';
 
 const GenerateMessages = (chat) => {
     return chat.slice(0, 6).map((message) => {
@@ -22,25 +26,81 @@ const GenerateMessages = (chat) => {
     })
 }
 
-const downloadTxtFile = (chatMessages, meetCode, tittle, date) => {
-    const messages = createArray(chatMessages, meetCode, tittle, date)
+const downloadTxtFile = (chatMessages, meetCode, title, date) => {
+    const messages = createArray(chatMessages, meetCode, title, date)
     const element = document.createElement("a");
     const file = new Blob([messages],{type: 'text/plain;charset=utf-8'});
     element.href = URL.createObjectURL(file);
-    element.download = tittle + "-" + meetCode+".txt";
+    element.download = title + "-" + meetCode+".pdf";
     document.body.appendChild(element);
     element.click();
   }
 
-const createArray = (chatMessages, meetCode, tittle, date) => {
+const createArray = (chatMessages, meetCode, title, date) => {
     const messagesArray = chatMessages
-    const tittleArray = [tittle, meetCode, date]
-    const concatArray = tittleArray.concat(messagesArray)
-    console.log("complete array: ", concatArray);
+    const titleArray = [title, meetCode, date]
+    const concatArray = titleArray.concat(messagesArray)
     const completeArray = concatArray.reduce((r, a) => r.concat(a, "\r\n"), [0]);
-
-    console.log("complete array: ", completeArray);
     return completeArray
+}
+
+const toggleDropdown = () => {
+    // toggle the state
+}
+
+function Menu(props) {
+
+    function Item(props) {
+        return (
+            <MenuItem href="#" onClick={() => downloadTxtFile(props.Messages, props.Code, props.Title, props.Date)}>
+                <FontAwesomeIcon 
+                    icon={props.leftIcon}
+                    size="1x"
+                    style={{ color: COLORS.INACTIVE}}                
+                />
+                <ItemText>{props.children}</ItemText>                
+            </MenuItem>
+        )
+    }
+
+    return (
+        <DropdownMenu>
+            <ItemHeader>Exportar a</ItemHeader>
+            <Item 
+                Messages={props.Messages} 
+                Code={props.Code} 
+                Title={props.Title} 
+                Date={props.Date} 
+                leftIcon={faGoogleDrive}>
+                Google Drive
+            </Item>
+            <Item 
+                Messages={props.Messages} 
+                Code={props.Code} 
+                Title={props.Title} 
+                Date={props.Date} 
+                leftIcon={faFileAlt}>
+                Archivo TXT
+            </Item>
+            <Item 
+                Messages={props.Messages}
+                Code={props.Code} 
+                Title={props.Title} 
+                Date={props.Date} 
+                leftIcon={faFilePdf}>
+                Archivo PDF
+            </Item>
+            <ItemHeader>Exportar en idioma</ItemHeader>
+            <Item 
+                Messages={props.Messages} 
+                Code={props.Code} 
+                Title={props.Title} 
+                Date={props.Date} 
+                leftIcon={faLanguage}>
+                Ingles (pred.)
+            </Item>
+        </DropdownMenu>
+    );
 }
 
 function Card({
@@ -59,12 +119,12 @@ function Card({
     } = chatValue;
     const chatId = Object.keys(chat)[0];
 
-
     return (
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions src={Dots} alt="options" onClick={() => downloadTxtFile(messages, code, title, date)} />
+                <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={() => toggleDropdown()} />
+                <Menu Messages={messages} Code={code} Title={title} Date={date}/>
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <div style={{ cursor: "pointer" }}>
