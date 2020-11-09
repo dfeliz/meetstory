@@ -47,7 +47,7 @@ function Card({
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions src={Dots} alt="options" onClick={() => downloadChat(data, 'txt') /* TODO: Add this to menu */} /> 
+                <MeetOptions src={Dots} alt="options" onClick={() => downloadChat(chatValue, 'txt') /* TODO: Add this to menu */} /> 
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <MeetDate>{formattedDate}</MeetDate>
