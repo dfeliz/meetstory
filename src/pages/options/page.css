@@ -10,6 +10,8 @@ body {
 
 h1,
 h2,
+h3,
+h4,
 p {
     margin: 0;
     padding: 0;
@@ -18,4 +20,17 @@ p {
 @font-face {
     font-family: local('Segoe UI'), local("Open Sans");
     src: local("Open Sans"), local("OpenSans"), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/K88pR3goAWT7BTt32Z01mz8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+    opacity: 0;
 }
