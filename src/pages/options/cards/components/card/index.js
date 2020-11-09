@@ -16,6 +16,7 @@ import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
 import { COLORS } from '../../../../../styles/colors'
 import { formatDate } from '../../../utils/date';
+import { downloadChat } from '../../../utils/download';
 
 
 const GenerateMessages = (chat) => {
@@ -46,7 +47,7 @@ function Card({
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions src={Dots} alt="options" />
+                <MeetOptions src={Dots} alt="options" onClick={() => downloadChat(chatValue, 'txt') /* TODO: Add this to menu */} /> 
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <MeetDate>{formattedDate}</MeetDate>
@@ -55,22 +56,22 @@ function Card({
                 </div>
             </Upper>
             <MeetIcons>
-                <FontAwesomeIcon 
+                <FontAwesomeIcon
                     icon={faTrashAlt}
                     size="2x"
                     style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
                     onClick={() => toggleDelete(chatId)}
-                
+
                 />
                 {
                     !deleted && (
-                        <FontAwesomeIcon 
+                        <FontAwesomeIcon
                             icon={faTag}
                             size="2x"
                             style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
                             onClick={() => toggleFavorite(chatId)}
                         />
-                    ) 
+                    )
                 }
             </MeetIcons>
         </CardContainer>
