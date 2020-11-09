@@ -13,7 +13,8 @@ import {
     MenuItem,
     DropdownMenu,
     ItemText,
-    ItemHeader
+    ItemHeader,
+    MeetDate
 } from './components';
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
@@ -29,80 +30,47 @@ const GenerateMessages = (chat) => {
     })
 }
 
-const downloadTxtFile = (chatMessages, meetCode, title, date) => {
-    const messages = createArray(chatMessages, meetCode, title, date)
-    const element = document.createElement("a");
-    const file = new Blob([messages],{type: 'text/plain;charset=utf-8'});
-    element.href = URL.createObjectURL(file);
-    element.download = title + "-" + meetCode+".pdf";
-    document.body.appendChild(element);
-    element.click();
-  }
-
-const createArray = (chatMessages, meetCode, title, date) => {
-    const messagesArray = chatMessages
-    const titleArray = [title, meetCode, date]
-    const concatArray = titleArray.concat(messagesArray)
-    const completeArray = concatArray.reduce((r, a) => r.concat(a, "\r\n"), [0]);
-    return completeArray
+function Item(props) {
+    return (
+        <MenuItem onClick={props.onClick}>
+            <FontAwesomeIcon
+                icon={props.leftIcon}
+                size="1x"
+                style={{ color: COLORS.INACTIVE}}
+            />
+            <ItemText>{props.children}</ItemText>
+        </MenuItem>
+    )
 }
 
-const toggleDropdown = () => {
-    // toggle the state
-}
 
 function Menu(props) {
-
-    function Item(props) {
-        return (
-            <MenuItem onClick={() => downloadTxtFile(props.Messages, props.Code, props.Title, props.Date)}>
-                <FontAwesomeIcon 
-                    icon={props.leftIcon}
-                    size="1x"
-                    style={{ color: COLORS.INACTIVE}}
-                />
-                <ItemText>{props.children}</ItemText>                
-            </MenuItem>
-        )
-    }
-
+    
     return (
         <DropdownMenu>
             <ItemHeader>Exportar a</ItemHeader>
             <Item 
-                Messages={props.Messages} 
-                Code={props.Code} 
-                Title={props.Title} 
-                Date={props.Date} 
                 leftIcon={faGoogleDrive}
+                onClick={() => {}}
                 >
                 Google Drive
             </Item>
             <Item 
-                Messages={props.Messages} 
-                Code={props.Code} 
-                Title={props.Title} 
-                Date={props.Date} 
                 leftIcon={faFileAlt}
+                onClick={() => downloadChat(props.chatData, 'txt')}
                 >
                 Archivo TXT
             </Item>
             <Item 
-                Messages={props.Messages}
-                Code={props.Code} 
-                Title={props.Title} 
-                Date={props.Date} 
                 leftIcon={faFilePdf}
+                onClick={() => downloadChat(props.chatData, 'pdf')}
                 >
                 Archivo PDF
             </Item>
             <ItemHeader>Exportar en idioma</ItemHeader>
             <Item 
-                Messages={props.Messages} 
-                Code={props.Code} 
-                Title={props.Title} 
-                Date={props.Date} 
                 leftIcon={faLanguage}
+                onClick={() => {}}
                 >
                 Ingles (pred.)
             </Item>
@@ -127,6 +95,8 @@ function Card({
         deleted,
     } = chatValue;
     const chatId = Object.keys(chat)[0];
+    const formattedDate = formatDate(date);
+
 
     return (
         <CardContainer>
@@ -135,12 +105,12 @@ function Card({
                 <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={() => dropdownChange()} />
                 {
                     dropdownState && (
-                        <Menu Messages={messages} Code={code} Title={title} Date={date}/>
+                        <Menu chatData={chatValue}/>
                     )
                 }
-                <MeetOptions src={Dots} alt="options" onClick={() => downloadChat(chatValue, 'txt') /* TODO: Add this to menu */} /> 
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
+                <MeetDate>{formattedDate}</MeetDate>
                 <div style={{ cursor: "pointer" }}>
                     {GenerateMessages(messages)}
                 </div>
