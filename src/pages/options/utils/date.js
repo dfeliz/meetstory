@@ -29,7 +29,7 @@ export const formatDate = (dateStr) => {
         const date = new Date(dateStr);
 
         const dayNum = date.getDate();
-        const dayStr = weekDays[date.getDate()];
+        const dayStr = weekDays[date.getDay()];
         const monthStr = months[date.getMonth()];
         const fullYear = date.getFullYear();
 
