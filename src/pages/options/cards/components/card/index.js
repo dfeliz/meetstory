@@ -56,7 +56,7 @@ function Menu(props) {
                 <FontAwesomeIcon 
                     icon={props.leftIcon}
                     size="1x"
-                    style={{ color: COLORS.INACTIVE}}                
+                    style={{ color: COLORS.INACTIVE}}
                 />
                 <ItemText>{props.children}</ItemText>                
             </MenuItem>
@@ -110,7 +110,9 @@ function Menu(props) {
 function Card({
     chat,
     toggleDelete,
-    toggleFavorite
+    toggleFavorite,
+    dropdownState,
+    dropdownChange
 }) {
     const chatValue = Object.values(chat)[0];
     const {
@@ -127,8 +129,12 @@ function Card({
         <CardContainer>
             <Upper>
                 <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={() => toggleDropdown()} />
-                <Menu Messages={messages} Code={code} Title={title} Date={date}/>
+                <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={() => dropdownChange()} />
+                {
+                    dropdownState && (
+                        <Menu Messages={messages} Code={code} Title={title} Date={date}/>
+                    )
+                }                
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <div style={{ cursor: "pointer" }}>
