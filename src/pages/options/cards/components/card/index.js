@@ -33,7 +33,6 @@ class Card extends React.Component {
     }
 
     dropdownToggle = () => {
-        console.log('clickeeeed');
         this.setState(prevState => ({ 
             dropdownVisible: !prevState.dropdownVisible 
         }));
