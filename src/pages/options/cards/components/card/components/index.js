@@ -12,45 +12,6 @@ export const CardContainer = styled.div`
     box-sizing: border-box;
     background-color: white;
     box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.16);
-    -moz-box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.16);
-    -webkit-box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.16);
-`;
-
-export const DropdownMenu = styled.div`
-    position: absolute;
-    top: 45px;
-    right: 0px;
-    width: 115px;
-    transform: translateX(-45%);
-    background-color: white;
-    border-radius: 15px; 
-    padding: 1rem;
-    overflow: hidden;
-    box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.50);
-    -moz-box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.50);
-    -webkit-box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.50);
-`;
-
-export const ItemText = styled.p`
-    color: black;
-    font-size: 14px;
-    text-align: center;
-    padding-left: 2px;
-`;
-
-export const ItemHeader = styled.p`
-    color: grey;
-    font-size: 12px;
-`;
-
-export const MenuItem = styled.div`
-    height: 20px;
-    display: flex;
-    align-items: left;
-    color: black;
-    font-size: 13px;
-    padding: 5px 0;
-    cursor: pointer;
 `;
 
 export const Upper = styled.div`
@@ -101,4 +62,54 @@ export const MeetIcons = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 16.8px 28px 23.2px 28px;
+`;
+
+
+
+// Dropdown popup
+
+export const DropdownMenu = styled.div`
+    position: absolute;
+    top: 45px;
+    right: 0px;
+    width: 172px;
+    transform: translateX(-40%);
+    background-color: white;
+    border-radius: 22px; 
+    padding: 1.2rem 0;
+    overflow: hidden;
+    box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.35);
+`;
+
+export const ItemText = styled.p`
+    color: black;
+    font-size: 14px;
+    text-align: center;
+`;
+
+export const ItemHeader = styled.p`
+    color: grey;
+    padding: 0 1.4rem;
+    margin: 5px 0;
+    font-size: 12px;
+    cursor: default;
+`;
+
+export const MenuItem = styled.div`
+    height: 20px;
+    display: flex;
+    align-items: center;
+    color: black;
+    font-size: 13px;
+    padding: 5px 1.4rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #F9F9F9;
+    }
+`;
+
+export const IconContainer = styled.div`
+    width: 12px;
+    margin-right: 10px;
 `;
