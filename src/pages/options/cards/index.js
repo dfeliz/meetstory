@@ -2,12 +2,10 @@ import React from 'react';
 import { Card, CardsContainer, NothingHereMessage } from './components';
 
 class CardsComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     renderCardList = (data) => {
         const { toggleDelete, toggleFavorite } = this.props;
+    
 
         return data.map((chat) => (
             <Card

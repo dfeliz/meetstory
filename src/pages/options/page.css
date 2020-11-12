@@ -1,5 +1,7 @@
 html {
     height: 100vh;
+    min-width: 974px;
+    min-height: 720px;
 }
 
 body {

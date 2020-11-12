@@ -8,14 +8,15 @@ import { createPdf } from './pdf';
 const downloadChat = (chat, format) => {
     const formattedChat = formatChatForDownload(chat)
     const title = chat.title + "-" + chat.code + format;
+    let file;
     
     switch (format) {
         case 'pdf':
-            const file = createPdf([formattedChat]);
+            file = createPdf([formattedChat]);
             file.download(title);
             break;
         default:
-            const file = new Blob([formattedChat], { type: 'text/plain;charset=utf-8' });
+            file = new Blob([formattedChat], { type: 'text/plain;charset=utf-8' });
             downloadFile(file, title)
             break;
     }
