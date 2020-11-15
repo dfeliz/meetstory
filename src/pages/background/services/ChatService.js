@@ -31,7 +31,7 @@ async function getAllChats() {
 
     const savedDataChats = [];
 
-    if (savedChats.length < 1) {
+    if (savedChats === undefined || savedChats.length === 0) {
         return savedDataChats;
     }
 
