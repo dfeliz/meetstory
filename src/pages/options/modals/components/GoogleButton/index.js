@@ -6,13 +6,11 @@ import {
     ButtonContainer,
 } from './components';
 
-const GoogleButton = ({
-    onClick,
-    isConnected,
-}) => {
+const GoogleButton = (props) => {
+    const { isConnected } = props;
     return (
-        <ButtonContainer onClick={onClick}>
-                <Icon src={GButton} alt="google connect" />
+        <ButtonContainer {...props}>
+            <Icon src={GButton} alt="google connect" />
             <Text>{
                 isConnected
                     ? "Desconectar"

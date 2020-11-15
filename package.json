@@ -17,6 +17,7 @@
     "pdfmake": "^0.1.68",
     "react": "^15.7.0",
     "react-dom": "^15.7.0",
+    "react-google-login": "^4.0.1",
     "react-loading-screen": "0.0.17",
     "react-modal": "^3.11.2",
     "react-redux": "^4.4.6",

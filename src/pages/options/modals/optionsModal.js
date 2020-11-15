@@ -1,5 +1,6 @@
 import React from 'react';
 import Switch from 'react-switch';
+import { GoogleLogin } from 'react-google-login';
 
 import {
     Separator
@@ -19,6 +20,10 @@ class OptionsModal extends React.Component {
         super(props);
     }
 
+    responseGoogle = (response) => {
+        console.log(response);
+    }
+
     handleSwitchToggle = () => {
         const { autoSave } = this.state;
         this.setState({ autoSave: !autoSave })
@@ -29,10 +34,20 @@ class OptionsModal extends React.Component {
     )
 
     renderGoogleButton = () => (
-        <GoogleButton
-            isConnected={this.state.isConnected}
-            onClick={() => console.log('Clicked')}
+        <GoogleLogin
+            clientId="190864320471-u7013qpmh2r7fn39id3eof6fip0fhd7d.apps.googleusercontent.com"
+            render={renderProps => (
+                <GoogleButton
+                    isConnected={this.state.isConnected}
+                    {...renderProps}
+                />
+            )}
+            buttonText="Login"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+            cookiePolicy={'single_host_origin'}
         />
+
     )
 
     renderLanguageSelect = () => (
