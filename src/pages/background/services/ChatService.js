@@ -22,7 +22,6 @@ async function createChat(data) {
         ChromeStorageService.set({ savedChats: updatedSavedChats });
         ChromeStorageService.set(newChatObj);
         ChromeStorageService.set({ currentChat: newChatId });
-        console.log("llegamo")
     });
 }
 
