@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "content_security_policy": "script-src 'self' 'unsafe-eval' *; object-src 'self'",
+    "content_security_policy": "default-src 'none'; script-src 'self' https://apis.google.com; connect-src 'self'; img-src * 'self' data:; style-src 'self' 'unsafe-inline';base-uri 'self';form-action 'self'",
     "name": "Meetstory",
     "description": "Tool for saving google meets chat history",
     "version": "0.1.0",
