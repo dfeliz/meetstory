@@ -30,11 +30,17 @@ export const ButtonContainer = styled.div`
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.06);
 
     ${props => props.disabled && `
-        cursor: wait;
+        cursor: progress;
         color: #F2F2F2;
         box-shadow: 0px 0px 0px 0px;
+
         & > img {
+            margin-left: 44%;
             animation: rotation 2s infinite linear;
+        }
+
+        & > p {
+            visibility: hidden;
         }
     `}
 `;

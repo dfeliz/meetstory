@@ -8,8 +8,18 @@ import {
 
 const GoogleButton = (props) => {
     const { isConnected } = props;
+
+    const onClick = () => {
+        if (!props.disabled) {
+            props.onClick();
+        }
+    }
+    
     return (
-        <ButtonContainer {...props}>
+        <ButtonContainer
+            {...props}
+            onClick={onClick}
+        >
             <Icon src={GButton} alt="google connect" />
             <Text>{
                 isConnected

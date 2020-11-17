@@ -20,8 +20,12 @@ async function getToken() {
     })
 }
 
-async function removeToken() {
-    return ChromeStorageService.set({ gToken: {} });
+function removeToken() {
+    return new Promise((resolve, reject) => {
+        return ChromeStorageService.set({ gToken: {} })
+            .then(resolve)
+            .catch(reject); 
+    })
 }
 
 export default {
