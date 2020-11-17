@@ -7,7 +7,7 @@ import { createPdf } from './pdf';
  */
 const downloadChat = (chat, format) => {
     const formattedChat = formatChatForDownload(chat)
-    const title = chat.title + "-" + chat.code + format;
+    const title = chat.title + "-" + chat.code;
     let file;
     
     switch (format) {

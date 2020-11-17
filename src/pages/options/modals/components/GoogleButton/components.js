@@ -14,9 +14,27 @@ export const Text = styled.p`
 `;
 
 export const ButtonContainer = styled.div`
+    @keyframes rotation {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(359deg);
+        }
+    }
+
     width: 320px;
     display: flex;
     cursor: pointer;
     border: 0.5px solid #707070A0;
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.06);
+
+    ${props => props.disabled && `
+        cursor: wait;
+        color: #F2F2F2;
+        box-shadow: 0px 0px 0px 0px;
+        & > img {
+            animation: rotation 2s infinite linear;
+        }
+    `}
 `;

@@ -1,6 +1,5 @@
 import React from 'react';
 import Switch from 'react-switch';
-import { GoogleLogin } from 'react-google-login';
 
 import {
     Separator
@@ -9,19 +8,55 @@ import ModalBase from './modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';
+import { auth, saveToken, getToken, disconnect } from '../services';
 
 class OptionsModal extends React.Component {
     state = {
         autoSave: false,
         isConnected: false,
+        isGoogleButtonDisabled: false,
     }
 
     constructor(props) {
         super(props);
     }
 
-    responseGoogle = (response) => {
-        console.log(response);
+    componentDidMount() {
+        this.checkIsAuthenticated();
+    }
+
+    checkIsAuthenticated = () => {
+        getToken().then((token) => {
+            console.log(token)
+            if (token) {
+                this.setState({ isConnected: true })
+            }
+        })
+    }
+
+    handleGoogleConnection = () => {
+        const { isConnected } = this.state;
+        this.setState({ isGoogleButtonDisabled: true })
+        
+        if (!isConnected) {
+            auth().then((res) => {
+                let objState = { isGoogleButtonDisabled: false }
+                if (res.success) {
+                    saveToken(res.token)
+                    objState = { ...objState, isConnected: true }
+                }
+                this.setState(objState)
+            })
+        }
+        else {
+            disconnect().then((res) => {
+                let objState = { isGoogleButtonDisabled: false }
+                if (res.success) {
+                    objState = { ...objState, isConnected: false }
+                }
+                this.setState(objState)
+            });
+        }
     }
 
     handleSwitchToggle = () => {
@@ -34,20 +69,11 @@ class OptionsModal extends React.Component {
     )
 
     renderGoogleButton = () => (
-        <GoogleLogin
-            clientId="190864320471-u7013qpmh2r7fn39id3eof6fip0fhd7d.apps.googleusercontent.com"
-            render={renderProps => (
-                <GoogleButton
-                    isConnected={this.state.isConnected}
-                    {...renderProps}
-                />
-            )}
-            buttonText="Login"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-            cookiePolicy={'single_host_origin'}
+        <GoogleButton
+            disabled={this.state.isGoogleButtonDisabled}
+            isConnected={this.state.isConnected}
+            onClick={this.handleGoogleConnection}
         />
-
     )
 
     renderLanguageSelect = () => (
