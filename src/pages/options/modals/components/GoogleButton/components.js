@@ -23,6 +23,7 @@ export const ButtonContainer = styled.div`
         }
     }
 
+    height: 52px;
     width: 320px;
     display: flex;
     cursor: pointer;
@@ -32,6 +33,7 @@ export const ButtonContainer = styled.div`
     ${props => props.disabled && `
         cursor: progress;
         color: #F2F2F2;
+        background-color: #FAFAFA;
         box-shadow: 0px 0px 0px 0px;
 
         & > img {

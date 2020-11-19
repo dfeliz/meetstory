@@ -63,7 +63,7 @@ export function auth() {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ messageType: 'auth' }, (response) => {
             if (response.message === undefined || response.message === null) {
-                reject(`Couldn't authenticate because reasons. Response: ${response}`);
+                reject(`Couldn't authenticate because reasons. Response: `, response);
             }
             resolve({ success: true, token: response.message })
         })
@@ -82,11 +82,8 @@ export function saveToken(token) {
 }
 
 export function getToken() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         chrome.runtime.sendMessage({ messageType: 'getToken' }, (response) => {
-            if (response.message === undefined || response.message === null) {
-                reject(`Couldn't get token because reasons. Response: ${response}`);
-            }
             resolve(response.message)
         })
     })
@@ -96,7 +93,7 @@ export function disconnect() {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ messageType: 'removeToken' }, (response) => {
             if (response.message === undefined || response.message === null) {
-                reject(`Couldn't remove token because reasons. Response: ${response}`);
+                reject(`Couldn't remove token because reasons. Response: `, response);
             }
             resolve({ success: true, response: response.message })
         })
