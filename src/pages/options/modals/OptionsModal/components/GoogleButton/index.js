@@ -1,5 +1,5 @@
 import React from 'react';
-import GButton from '../../../../../icons/gbutton.svg';
+import GButton from '../../../../../../icons/gbutton.svg';
 import {
     Icon,
     Text,
@@ -12,7 +12,7 @@ const GoogleButton = ({
 }) => {
     return (
         <ButtonContainer onClick={onClick}>
-                <Icon src={GButton} alt="google connect" />
+            <Icon src={GButton} alt="google connect" />
             <Text>{
                 isConnected
                     ? "Desconectar"

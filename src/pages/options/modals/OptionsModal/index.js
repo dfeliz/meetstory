@@ -4,7 +4,7 @@ import Switch from 'react-switch';
 import {
     Separator
 } from './components';
-import ModalBase from './modalBase';
+import ModalBase from '../modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';

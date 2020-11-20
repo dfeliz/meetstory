@@ -33,8 +33,8 @@ class Card extends React.Component {
     }
 
     dropdownToggle = () => {
-        this.setState(prevState => ({ 
-            dropdownVisible: !prevState.dropdownVisible 
+        this.setState(prevState => ({
+            dropdownVisible: !prevState.dropdownVisible
         }));
     }
 
@@ -42,6 +42,7 @@ class Card extends React.Component {
         const {
             chat,
             toggleDelete,
+            openChatModal,
             toggleFavorite,
         } = this.props;
         const { dropdownVisible } = this.state;
@@ -71,7 +72,10 @@ class Card extends React.Component {
                     <MeetCode>{code}</MeetCode>
                     <MeetTitle>{title}</MeetTitle>
                     <MeetDate>{formattedDate}</MeetDate>
-                    <div style={{ cursor: "pointer" }}>
+                    <div
+                        style={{ cursor: "pointer" }}
+                        onClick={() => openChatModal({ ...chatValue, formattedDate })}
+                    >
                         {GenerateMessages(messages)}
                     </div>
                 </Upper>
