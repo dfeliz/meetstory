@@ -10,6 +10,8 @@ import {
 } from './components';
 import ModalBase from '../modalBase';
 
+const printMessages = (messages) => messages.map((message) => <div>{message}</div>)
+
 class ChatModal extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +20,6 @@ class ChatModal extends React.Component {
     render() {
         const { isOpen, onRequestClose, selectedChat } = this.props;
         const { title, code, formattedDate, messages } = selectedChat;
-        console.log(messages);
         return (
             <ModalBase
                 isOpen={isOpen}
@@ -43,7 +44,7 @@ class ChatModal extends React.Component {
 
                 </Options>
                 <ChatContainer>
-                    {messages.join("\n")}
+                    {printMessages(messages)}
                 </ChatContainer>
             </ModalBase>
         )
