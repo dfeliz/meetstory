@@ -2,14 +2,14 @@ import { formatChat } from './download'
 import { getToken } from '../services';
 
 const uploadFile = (chatData, fileType, token) => {
-    const { messages, code, title } = chatData;
+    const { code, title } = chatData;
 
     const options = {
         "name": title + "-" + code,
         "parents": ["1K_HIcRZnZl7L8S5gaa_78DvZA5Jb6AuD"],
         "mimeType": fileType
     }
-    const chat = formatChat(messages)
+    const chat = formatChat(chatData)
 
     console.log("here is the token: ", "Bearer " + token)
     console.log("here is the options: ", options)
@@ -20,8 +20,8 @@ const uploadFile = (chatData, fileType, token) => {
     myHeaders.append("Authorization", "Bearer " + token)
 
     var formdata = new FormData();
-    formdata.append("", options, "upload-options");
-    formdata.append("", chat, "chat.txt");
+    formdata.append("", options);
+    formdata.append("", chat);
 
     var requestOptions = {
       method: 'POST',
