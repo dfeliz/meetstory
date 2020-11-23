@@ -28,6 +28,7 @@ class OptionsModal extends React.Component {
     checkIsAuthenticated = () => {
         getToken().then((token) => {
             if (typeof token === 'string' && token.length !== 0) {
+                console.log(token);
                 this.setState({ isConnected: true })
             }
         })

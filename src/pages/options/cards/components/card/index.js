@@ -65,7 +65,7 @@ class Card extends React.Component {
                     <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={this.dropdownToggle} />
                     {
                         dropdownVisible && (
-                            <Menu chatData={chatValue} />
+                            <Menu chatData={chatValue}/>
                         )
                     }
                     <MeetCode>{code}</MeetCode>
