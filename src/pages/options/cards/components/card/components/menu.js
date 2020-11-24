@@ -14,9 +14,9 @@ import {
     IconContainer,
 } from './';
 
-const handdleDrive = async (chatData, fileType) => {
+const handdleDrive = async (chatData) => {
     const token = await fetchToken();
-    uploadFile(chatData, fileType, token)
+    uploadFile(chatData, token)
 }
 
 const Item = (props) => {
@@ -39,7 +39,7 @@ const Menu = (props) => (
         <ItemHeader>Exportar a</ItemHeader>
         <Item
             leftIcon={faGoogleDrive}
-            onClick={() => handdleDrive(props.chatData, "text/plain")}
+            onClick={() => handdleDrive(props.chatData)}
         >
             Google Drive
             </Item>
