@@ -21,7 +21,7 @@ const handdleDrive = async (chatData) => {
 
 const Item = (props) => {
     return (
-        <MenuItem onClick={props.onClick}>
+        <MenuItem onClick={props.onClick} className="dropdown-item">
             <IconContainer>
                 <FontAwesomeIcon
                     icon={props.leftIcon}
@@ -34,36 +34,45 @@ const Item = (props) => {
     )
 }
 
-const Menu = (props) => (
-    <DropdownMenu>
-        <ItemHeader>Exportar a</ItemHeader>
-        <Item
-            leftIcon={faGoogleDrive}
-            onClick={() => handdleDrive(props.chatData)}
-        >
-            Google Drive
+const Menu = (props) => {
+    const { dropdownToggle } = props;
+
+    const onClick = (fn) => {
+        fn();
+        dropdownToggle();
+    }
+
+    return (
+        <DropdownMenu id="dropdown-menu">
+            <ItemHeader>Exportar a</ItemHeader>
+            <Item
+                leftIcon={faGoogleDrive}
+                onClick={() => onClick(() => handdleDrive(props.chatData))}
+            >
+                Google Drive
             </Item>
-        <Item
-            leftIcon={faFileAlt}
-            onClick={() => downloadChat(props.chatData, 'txt')}
-        >
-            Archivo TXT
+            <Item
+                leftIcon={faFileAlt}
+                onClick={() => onClick(() => downloadChat(props.chatData, 'txt'))}
+            >
+                Archivo TXT
             </Item>
-        <Item
-            leftIcon={faFilePdf}
-            onClick={() => downloadChat(props.chatData, 'pdf')}
-        >
-            Archivo PDF
+            <Item
+                leftIcon={faFilePdf}
+                onClick={() => onClick(() => downloadChat(props.chatData, 'pdf'))}
+            >
+                Archivo PDF
             </Item>
-        <ItemHeader>Exportar en idioma</ItemHeader>
-        <Item
-            leftIcon={faLanguage}
-            onClick={() => {}}
-        >
-            Ingles (pred.)
+            <ItemHeader>Exportar en idioma</ItemHeader>
+            <Item
+                leftIcon={faLanguage}
+                onClick={() => onClick(() => {})}
+            >
+                Ingles (pred.)
             </Item>
-    </DropdownMenu>
-);
+        </DropdownMenu>
+    );
+}
 
 export {
     Menu,
