@@ -1,8 +1,19 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { TEXT_COLORS } from '../../../../../../styles/colors';
 
-
 export * from './menu';
+
+const appear = keyframes`
+  from {
+    top: 30px;
+    opacity: 0;
+  }
+
+  to {
+    top: 45px;
+    opacity: 1;
+  }
+`;
 
 export const CardContainer = styled.div`
     position: relative;
@@ -79,6 +90,7 @@ export const DropdownMenu = styled.div`
     padding: 1.2rem 0;
     overflow: hidden;
     box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.35);
+    animation: ${appear} 0.12s ease;
 `;
 
 export const ItemText = styled.p`

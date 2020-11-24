@@ -32,10 +32,30 @@ class Card extends React.Component {
         };
     }
 
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleOutsideClick);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleOutsideClick);
+    }
+
     dropdownToggle = () => {
         this.setState(prevState => ({ 
             dropdownVisible: !prevState.dropdownVisible 
         }));
+    }
+
+    handleOutsideClick = (e) => {
+        const { dropdownVisible } = this.state;
+        const dropdown = document.getElementById("dropdown-menu");
+        const clickedElement = e.target;
+
+        if (dropdownVisible) {
+            if (!dropdown.contains(clickedElement)) {
+                this.setState({ dropdownVisible: false });
+            }
+        }
     }
 
     render() {
@@ -65,7 +85,7 @@ class Card extends React.Component {
                     <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={this.dropdownToggle} />
                     {
                         dropdownVisible && (
-                            <Menu chatData={chatValue} />
+                            <Menu chatData={chatValue} dropdownToggle={this.dropdownToggle} />
                         )
                     }
                     <MeetCode>{code}</MeetCode>
