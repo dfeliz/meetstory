@@ -35,8 +35,7 @@ class App extends Component {
 
   checkIsAuthenticated = () => {
     console.log('checkIsAuthenticated')
-    checkAuth().then((token) => {
-      console.log('Done, setting state')
+    checkAuth().then(() => {
       this.setState({ isAuthenticated: true })
     })
   }
