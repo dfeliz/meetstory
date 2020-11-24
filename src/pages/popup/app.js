@@ -48,7 +48,7 @@ class App extends Component {
         <div style={LogoContainer}>
           <img src={logo}></img>
         </div>
-          <h1 style={Title}>Meetstory for Google Meets</h1> 
+          <h1 style={Title}>Meetstory for Google Meets</h1>
         <div style={TopContainer}>
           <button id="primaryButton" className={`${ isSaving && 'danger'} button`} onClick={toggleSave}>
             {

@@ -14,6 +14,7 @@ import Cards from './cards';
 import Sidebar from './sidebarMenu'
 import { OptionsModal } from './modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
+import { auth, saveToken, disconnect, checkAuth } from './services';
 
 import Logo from '../../icons/logo.svg';
 
@@ -23,13 +24,54 @@ class App extends Component {
     chatList: [],
     loading: true,
     isModalOpen: false,
+    isAuthenticated: false,
     reloadFn: this.renderChats,
   }
 
   componentDidMount() {
     this.renderChats();
+    this.checkIsAuthenticated();
   }
-  
+
+  checkIsAuthenticated = () => {
+    console.log('checkIsAuthenticated')
+    checkAuth().then((token) => {
+      console.log('Done, setting state')
+      this.setState({ isAuthenticated: true })
+    })
+  }
+
+  handleAuthentication = () => {
+    const { isAuthenticated } = this.state;
+    console.log('Handling authentication...');
+    return new Promise((resolve) => {
+      if (!isAuthenticated) {
+        auth().then((res) => {
+          if (res.success) {
+            console.log('Saving token...')
+            saveToken(res.token)
+            this.setState({ isAuthenticated: true })
+          }
+        }).finally((() => resolve()))
+      }
+      else {
+        disconnect().then((res) => {
+          if (res.success) {
+            console.log('Disconnected');
+            this.setState({ isAuthenticated: false })
+          }
+        }).finally((() => resolve()));
+      }
+    })
+  }
+
+  getFullName = () => {
+    if (this.state.isAuthenticated) {
+      return 'Harold Adames Montaño'
+    }
+    return '';
+  }
+
   openModal = () => this.setState({ isModalOpen: true })
 
   closeModal = () => this.setState({ isModalOpen: false })
@@ -102,7 +144,13 @@ class App extends Component {
   }
 
   render() {
-    const { chatList, page, loading, isModalOpen } = this.state;
+    const {
+      chatList,
+      page,
+      loading,
+      isModalOpen,
+      isAuthenticated,
+    } = this.state;
 
     const sidebarHandlers = [
       this.renderChats,
@@ -116,6 +164,7 @@ class App extends Component {
           page={page}
           handlers={sidebarHandlers}
           openSettings={this.openModal}
+          userFullName={this.getFullName()}
         />
         <Page>
           {loading
@@ -134,9 +183,13 @@ class App extends Component {
               />
             )
           }
-
         </Page>
-        <OptionsModal isOpen={isModalOpen} onRequestClose={this.closeModal} />
+        <OptionsModal
+          isOpen={isModalOpen}
+          onRequestClose={this.closeModal}
+          isAuthenticated={isAuthenticated}
+          handleAuthentication={this.handleAuthentication}
+        />
       </PageContainer>
     );
   }

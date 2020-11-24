@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "content_security_policy": "default-src https://accounts.google.com/ https://www.googleapis.com/ https://apis.google.com/; script-src 'self' https://apis.google.com/ 'unsafe-eval'; connect-src https://www.googleapis.com/ 'self'; img-src * 'self' data:; style-src 'self' 'unsafe-inline';base-uri 'self';form-action 'self'",
     "name": "Meetstory",
     "description": "Tool for saving google meets chat history",
     "version": "0.1.0",
@@ -19,13 +19,23 @@
     },
     "permissions": [
         "tabs",
-        "storage"
+        "storage",
+        "identity"
     ],
     "options_page": "pages/options.html",
+    "oauth2": {
+        "client_id": "1013488503763-arfvv9q9h5lq4kgicaso2coingu5palj.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/drive.appdata",
+            "https://www.googleapis.com/auth/drive.file",
+            "https://www.googleapis.com/auth/drive.install"
+        ]
+    },
     "icons": {
         "16": "icons/icon16.png",
         "24": "icons/icon24.png",
         "32": "icons/icon32.png",
         "128": "icons/icon128.png"
-    }
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqpUkzwuxseWMqxUiuXScPcOSpjM7rQl/HmNI+0PICn0ogYsE3bpzST+xNmE4gU4OkX6eAestBAWT0vYMNG/hnLV9dbboddnxgFeYJTYoE7afFhioOXh+DX62HMd8rHSWQzcULkzGTEebsRoCm2I5VKRT98mVwtjQrfIIQDjdAD12UT632TRs3h9ilzTz45Y8vNNUdWTz/6HRGOlTlr1z0wsLOfCvDZFaI/GxJyMCpQhHojwqFApEV1qsdDTXuqsOKFU0DVj/3YGstDoZN58Lfec262wZb6Pjt3noG4xIBc0e1HlpvBd8Rabmv5hV1Z2gajFwYbiD2M3spLYMRkgLswIDAQAB"
 }

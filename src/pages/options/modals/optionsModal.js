@@ -12,11 +12,19 @@ import GoogleButton from './components/GoogleButton';
 class OptionsModal extends React.Component {
     state = {
         autoSave: false,
-        isConnected: false,
+        isGoogleButtonDisabled: false,
     }
 
     constructor(props) {
         super(props);
+    }
+
+    handleGoogleConnection = () => {
+        const { handleAuthentication } = this.props;
+        this.setState({ isGoogleButtonDisabled: true })
+        handleAuthentication().then(() => {
+            this.setState({ isGoogleButtonDisabled: false })
+        })
     }
 
     handleSwitchToggle = () => {
@@ -30,8 +38,9 @@ class OptionsModal extends React.Component {
 
     renderGoogleButton = () => (
         <GoogleButton
-            isConnected={this.state.isConnected}
-            onClick={() => console.log('Clicked')}
+            onClick={this.handleGoogleConnection}
+            isConnected={this.props.isAuthenticated}
+            disabled={this.state.isGoogleButtonDisabled}
         />
     )
 

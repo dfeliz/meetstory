@@ -6,8 +6,8 @@ import { createPdf } from './pdf';
  * @param {'txt' | 'pdf'} format 
  */
 const downloadChat = (chat, format) => {
-    const formattedChat = formatChatForDownload(chat)
-    const title = chat.title + "-" + chat.code + format;
+    const formattedChat = formatChat(chat)
+    const title = chat.title + "-" + chat.code;
     let file;
     
     switch (format) {
@@ -22,7 +22,7 @@ const downloadChat = (chat, format) => {
     }
 }
 
-const formatChatForDownload = (chat) => {
+const formatChat = (chat) => {
     const { messages, code, title, date } = chat;
 
     const messagesArray = messages
@@ -47,4 +47,5 @@ const downloadFile = (file, fileTitle) => {
 
 export {
     downloadChat,
+    formatChat,
 }

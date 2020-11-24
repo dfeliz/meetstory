@@ -22,7 +22,6 @@ async function createChat(data) {
         ChromeStorageService.set({ savedChats: updatedSavedChats });
         ChromeStorageService.set(newChatObj);
         ChromeStorageService.set({ currentChat: newChatId });
-        console.log("llegamo")
     });
 }
 
@@ -31,7 +30,7 @@ async function getAllChats() {
 
     const savedDataChats = [];
 
-    if (savedChats.length < 1) {
+    if (savedChats === undefined || savedChats.length === 0) {
         return savedDataChats;
     }
 

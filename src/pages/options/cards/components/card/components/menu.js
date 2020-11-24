@@ -5,6 +5,7 @@ import { faGoogleDrive } from '@fortawesome/free-brands-svg-icons';
 
 import { COLORS } from '../../../../../../styles/colors'
 import { downloadChat } from '../../../../utils/download';
+import { fetchToken, uploadFile } from '../../../../utils/drive'
 import {
     MenuItem,
     ItemText,
@@ -12,6 +13,11 @@ import {
     DropdownMenu,
     IconContainer,
 } from './';
+
+const handdleDrive = async (chatData) => {
+    const token = await fetchToken();
+    uploadFile(chatData, token)
+}
 
 const Item = (props) => {
     return (
@@ -41,7 +47,7 @@ const Menu = (props) => {
             <ItemHeader>Exportar a</ItemHeader>
             <Item
                 leftIcon={faGoogleDrive}
-                onClick={() => onClick(() => {})}
+                onClick={() => onClick(() => handdleDrive(props.chatData))}
             >
                 Google Drive
             </Item>
