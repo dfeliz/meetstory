@@ -8,12 +8,10 @@ import ModalBase from './modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';
-import { auth, saveToken, getToken, disconnect } from '../services';
 
 class OptionsModal extends React.Component {
     state = {
         autoSave: false,
-        isConnected: false,
         isGoogleButtonDisabled: false,
     }
 
@@ -21,42 +19,12 @@ class OptionsModal extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        this.checkIsAuthenticated();
-    }
-
-    checkIsAuthenticated = () => {
-        getToken().then((token) => {
-            if (typeof token === 'string' && token.length !== 0) {
-                console.log(token);
-                this.setState({ isConnected: true })
-            }
-        })
-    }
-
     handleGoogleConnection = () => {
-        const { isConnected } = this.state;
+        const { handleAuthentication } = this.props;
         this.setState({ isGoogleButtonDisabled: true })
-        
-        if (!isConnected) {
-            auth().then((res) => {
-                let objState = { isGoogleButtonDisabled: false }
-                if (res.success) {
-                    saveToken(res.token)
-                    objState = { ...objState, isConnected: true }
-                }
-                this.setState(objState)
-            })
-        }
-        else {
-            disconnect().then((res) => {
-                let objState = { isGoogleButtonDisabled: false }
-                if (res.success) {
-                    objState = { ...objState, isConnected: false }
-                }
-                this.setState(objState)
-            });
-        }
+        handleAuthentication().then(() => {
+            this.setState({ isGoogleButtonDisabled: false })
+        })
     }
 
     handleSwitchToggle = () => {
@@ -70,9 +38,9 @@ class OptionsModal extends React.Component {
 
     renderGoogleButton = () => (
         <GoogleButton
-            disabled={this.state.isGoogleButtonDisabled}
-            isConnected={this.state.isConnected}
             onClick={this.handleGoogleConnection}
+            isConnected={this.props.isAuthenticated}
+            disabled={this.state.isGoogleButtonDisabled}
         />
     )
 

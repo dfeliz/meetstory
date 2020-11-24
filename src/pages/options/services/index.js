@@ -89,6 +89,19 @@ export function getToken() {
     })
 }
 
+export function checkAuth() {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'checkAuth' }, (response) => {
+            console.log('responseeeeeeeeeeeee')
+            const token = response.message;
+            if (typeof token === 'string' && token.length !== 0) {
+                resolve(response.message);
+            }
+            reject('[checkAuth] Error. Please see services/checkAuth flow');
+        })
+    })
+}
+
 export function disconnect() {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ messageType: 'removeToken' }, (response) => {

@@ -18,7 +18,7 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      position: 378
+      position: 378,
     }
     this.renderOptions = this.renderOptions.bind(this);
     this.handleMenuMove = this.handleMenuMove.bind(this);
@@ -43,7 +43,7 @@ class Sidebar extends Component {
 
   render() {
     const { position } = this.state;
-    const { openSettings } = this.props;
+    const { openSettings, userFullName } = this.props;
 
     return (
       <SuperContainer>
@@ -53,7 +53,7 @@ class Sidebar extends Component {
         </Container>
         {/* <Shadow /> */}
         <UserCard
-          fullName="Harold Adames Montaño"
+          fullName={userFullName}
           openSettings={openSettings}
         />
       </SuperContainer>

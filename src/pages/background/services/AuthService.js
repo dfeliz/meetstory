@@ -1,8 +1,8 @@
 import ChromeStorageService from './ChromeStorageService';
 
-function auth() {
+function auth({interactive = true}) {
     return new Promise((resolve, reject) => {
-        return chrome.identity.getAuthToken({ 'interactive': true }, function (token) {
+        return chrome.identity.getAuthToken({ 'interactive': interactive }, function (token) {
             chrome.runtime.lastError
                 ? reject(Error(chrome.runtime.lastError.message))
                 : resolve(token)

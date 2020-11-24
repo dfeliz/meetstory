@@ -25,7 +25,10 @@ chrome.runtime.onMessage.addListener(
             ChatService.toggleDelete(request.message).then(sendResponse({ message: 'Toggle delete' }))
         }
         else if (request.messageType === 'auth') {
-            AuthService.auth().then((token) => sendResponse({ message: token }))
+            AuthService.auth({ interactive: true }).then((token) => sendResponse({ message: token }))
+        }
+        else if (request.messageType === 'checkAuth') {
+            AuthService.auth({ interactive: false }).then((token) => sendResponse({ message: token }))
         }
         else if (request.messageType === 'saveToken') {
             AuthService.saveToken(request.message).then(() => sendResponse({ message: 'Token saved'}))
