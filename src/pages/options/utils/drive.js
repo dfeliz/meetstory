@@ -1,50 +1,40 @@
 import { formatChat } from './download'
-import { getToken } from '../services';
+import { checkAuth } from '../services';
 
 const uploadFile = (chatData, token) => {
     const { code, title } = chatData;
-    
+
+    const form = new FormData();
+
     const messages = formatChat(chatData)
 
-    console.log("here is the token: ", "Bearer " + token)
-    console.log("this is the chat: ", messages)
+    const metadata = {
+        'name': `Meetstory de ${title} - ${code}`,
+        'mimeType': 'text/plain',
+    };
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "");
-    myHeaders.append("Authorization", "Bearer " + token);
+    form.append('', new Blob([JSON.stringify(metadata)], { type: 'application/json; charset=UTF-8' }));
+    form.append('', new Blob([messages], { type: 'text/plain' }));
 
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: messages,
-      redirect: 'follow'
+    const requestOptions = {
+        method: 'POST',
+        headers: new Headers({
+            "Authorization": "Bearer " + token,
+        }),
+        body: form, // insert form 
     };
 
 
-    fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=media", requestOptions)
+    fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id", requestOptions)
         .then(response => response.json())
         .then(result => {
             console.log("This is a result: ", result)
-            const fileInfo = result.id
-            console.log(fileInfo)
-
-            requestOptions = {
-                method: 'PUT',
-                headers: myHeaders,
-                body: {"title": `${code}-${title}`, "mimeType": "text/plain"},
-                redirect: 'follow'
-            };
-        
-            fetch(`https://www.googleapis.com/drive/v2/files/${fileInfo}`, requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
         })
         .catch(error => console.log('error', error));
 }
- 
+
 const fetchToken = () => {
-    return getToken().then((token) => {
+    return checkAuth().then((token) => {
         if (typeof token === 'string' && token.length !== 0) {
             console.log("I got the token: ", token)
             return token
