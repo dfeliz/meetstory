@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
 import Switch from 'react-switch';
@@ -16,11 +16,6 @@ import {
 } from "./components";
 
 class App extends Component {
-  static propTypes = {
-    toggleSave: PropTypes.func.isRequired,
-    isSaving: PropTypes.bool.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.state = {
