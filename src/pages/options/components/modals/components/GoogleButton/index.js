@@ -1,5 +1,5 @@
 import React from 'react';
-import GButton from '../../../../../icons/gbutton.svg';
+import GButton from '../../../../../../icons/gbutton.svg';
 import {
     Icon,
     Text,

@@ -1,13 +1,18 @@
 import React from 'react';
 import Switch from 'react-switch';
+import Select from 'react-select';
 
 import {
-    Separator
+    Separator,
 } from './components';
 import ModalBase from './modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';
+
+const languageOptions = [
+    { value: 'english', label: 'English' },
+]
 
 class OptionsModal extends React.Component {
     state = {
@@ -45,9 +50,12 @@ class OptionsModal extends React.Component {
     )
 
     renderLanguageSelect = () => (
-        <select>
-            <option id="english" value="english">English</option>
-        </select>
+        <Select
+            name="lang"
+            classNamePrefix="select"
+            options={languageOptions}
+            styles={{ container: () => ({ height: 44, width: 320 }) }}
+        />
     )
 
     render() {
