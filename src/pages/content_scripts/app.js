@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as actions from './actions';
 import { chatChildrenMapper } from './mappers';
 import {
@@ -12,15 +12,11 @@ let intervalRunning = false;
 let intervalID;
 
 class App extends Component {
-    static propTypes = {
-        isSaving: PropTypes.bool.isRequired,
-    };
-
     constructor(props) {
         super(props);
         console.log('Content scripts loaded.')
     }
-    
+
     componentDidUpdate() {
         const { isSaving } = this.props;
 
@@ -53,7 +49,7 @@ class App extends Component {
     getChats() {
         console.log("started get chat")
         const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
-        const dialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a,b) => [...a,...b], []);
+        const dialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a, b) => [...a, ...b], []);
         chrome.runtime.sendMessage({ messageType: "update", message: dialogs }, (response) => {
             console.log('[APP]: ', response.message);
         });

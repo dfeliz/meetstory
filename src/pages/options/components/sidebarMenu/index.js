@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Title,
   Option,
-  Shadow,
   Container,
   SuperContainer,
 } from './components'

@@ -25,10 +25,11 @@ const uploadFile = (chatData, token) => {
     };
 
 
-    fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id", requestOptions)
+    return fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id", requestOptions)
         .then(response => response.json())
         .then(result => {
             console.log("This is a result: ", result)
+            return metadata.name;
         })
         .catch(error => console.log('error', error));
 }

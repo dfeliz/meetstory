@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { TEXT_COLORS } from '../../../../../../styles/colors';
+import { TEXT_COLORS } from '../../../../../../../styles/colors';
 
 export * from './menu';
 

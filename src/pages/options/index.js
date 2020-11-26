@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';
+import { ToastProvider } from 'react-toast-notifications'
 import './page.css';
 
 async function initApp() {
@@ -9,7 +10,10 @@ async function initApp() {
     document.body.appendChild(mountNode);
     document.title = "Meetstory";
 
-    ReactDOM.render(<App />, mountNode);
+    ReactDOM.render(
+        <ToastProvider autoDismiss>
+            <App />
+        </ToastProvider>, mountNode);
 }
 
 initApp();

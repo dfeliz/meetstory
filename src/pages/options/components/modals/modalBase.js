@@ -2,7 +2,7 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { COLORS } from '../../../styles/colors';
+import { COLORS } from '../../../../styles/colors';
 
 import {
     CloseButtonContainer

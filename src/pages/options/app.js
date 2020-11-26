@@ -4,15 +4,15 @@ import LoadingScreen from 'react-loading-screen'
 import {
   Page,
   PageContainer
-} from './components';
+} from './styles';
 import {
   getFilteredChats,
   toggleChatFavorite,
   toggleChatDelete
 } from './services';
-import Cards from './cards';
-import Sidebar from './sidebarMenu'
-import { OptionsModal } from './modals';
+import Cards from './components/cards';
+import Sidebar from './components/sidebarMenu'
+import { OptionsModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 import { auth, saveToken, disconnect, checkAuth } from './services';
 
