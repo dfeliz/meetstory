@@ -10,9 +10,9 @@ import {
   toggleChatFavorite,
   toggleChatDelete
 } from './services';
-import Cards from './cards';
-import Sidebar from './sidebarMenu'
-import { OptionsModal, ChatModal } from './modals';
+import Cards from './components/cards';
+import Sidebar from './components/sidebarMenu'
+import { OptionsModal, ChatModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 
 import Logo from '../../icons/logo.svg';

@@ -3,15 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf, faFileAlt, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { faGoogleDrive } from '@fortawesome/free-brands-svg-icons';
 
-import { COLORS } from '../../../../../../styles/colors'
-import { downloadChat } from '../../../../utils/download';
+import { COLORS } from '../../../../../../../styles/colors'
+import { downloadChat } from '../../../../../utils/download';
 import {
     MenuItem,
     ItemText,
     ItemHeader,
     DropdownMenu,
     IconContainer,
-} from './';
+} from '.';
 
 const Item = (props) => {
     return (

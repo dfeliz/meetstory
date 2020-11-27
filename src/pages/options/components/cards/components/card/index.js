@@ -15,8 +15,8 @@ import {
 } from './components';
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
-import { COLORS } from '../../../../../styles/colors'
-import { formatDate } from '../../../utils/date';
+import { COLORS } from '../../../../../../styles/colors'
+import { formatDate } from '../../../../utils/date';
 
 const GenerateMessages = (chat) => {
     return chat.slice(0, 6).map((message) => {
