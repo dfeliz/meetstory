@@ -12,7 +12,7 @@ import {
 } from './services';
 import Cards from './cards';
 import Sidebar from './sidebarMenu'
-import { OptionsModal } from './modals';
+import { OptionsModal, ChatModal } from './modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 
 import Logo from '../../icons/logo.svg';
@@ -22,17 +22,25 @@ class App extends Component {
     page: 0,
     chatList: [],
     loading: true,
-    isModalOpen: false,
+    isOptionsModalOpen: false,
+    isChatModalOpen: false,
     reloadFn: this.renderChats,
+    selectedChat: {
+      messages: [],
+    },
   }
 
   componentDidMount() {
     this.renderChats();
   }
-  
-  openModal = () => this.setState({ isModalOpen: true })
 
-  closeModal = () => this.setState({ isModalOpen: false })
+  openOptionsModal = () => this.setState({ isOptionsModalOpen: true });
+
+  closeOptionsModal = () => this.setState({ isOptionsModalOpen: false });
+
+  openChatModal = (chat) => this.setState({ isChatModalOpen: true, selectedChat: chat });
+
+  closeChatModal = () => this.setState({ isChatModalOpen: false });
 
   toggleFavorite = (id) => {
     const { reloadFn } = this.state;
@@ -102,7 +110,14 @@ class App extends Component {
   }
 
   render() {
-    const { chatList, page, loading, isModalOpen } = this.state;
+    const {
+      page,
+      loading,
+      chatList,
+      selectedChat,
+      isChatModalOpen,
+      isOptionsModalOpen,
+    } = this.state;
 
     const sidebarHandlers = [
       this.renderChats,
@@ -115,7 +130,7 @@ class App extends Component {
         <Sidebar
           page={page}
           handlers={sidebarHandlers}
-          openSettings={this.openModal}
+          openSettings={this.openOptionsModal}
         />
         <Page>
           {loading
@@ -129,6 +144,7 @@ class App extends Component {
             : (
               <Cards
                 data={chatList}
+                openChatModal={this.openChatModal}
                 toggleDelete={this.toggleDelete}
                 toggleFavorite={this.toggleFavorite}
               />
@@ -136,7 +152,8 @@ class App extends Component {
           }
 
         </Page>
-        <OptionsModal isOpen={isModalOpen} onRequestClose={this.closeModal} />
+        <ChatModal isOpen={isChatModalOpen} onRequestClose={this.closeChatModal} selectedChat={selectedChat} />
+        <OptionsModal isOpen={isOptionsModalOpen} onRequestClose={this.closeOptionsModal} />
       </PageContainer>
     );
   }

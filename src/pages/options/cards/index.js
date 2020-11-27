@@ -4,13 +4,13 @@ import { Card, CardsContainer, NothingHereMessage } from './components';
 class CardsComponent extends React.Component {
 
     renderCardList = (data) => {
-        const { toggleDelete, toggleFavorite } = this.props;
-    
+        const { toggleDelete, toggleFavorite, openChatModal } = this.props;
 
         return data.map((chat) => (
             <Card
                 chat={chat}
                 toggleDelete={toggleDelete}
+                openChatModal={openChatModal}
                 toggleFavorite={toggleFavorite}
             />
         ));
