@@ -53,11 +53,11 @@ const Menu = (props) => {
             addToast(`No se pudo subir el meetstory. Error: ${err}`, { appearance: "error" });
         }
     }
+
     const handdleTranslation = async (chatData, sourceLenguage, targetLenguage) => {
-        const token = await fetchToken();
         addToast(`El meetstory traducido se descargara en breve...`, { appearance: "info", id: "translating", autoDismiss: false });
         try {
-            await translateText(chatData, sourceLenguage, targetLenguage, token);
+            translateText(chatData, sourceLenguage, targetLenguage);
             setTimeout(() => {
                 removeToast("translating");
                 addToast(`Traduccion completeda.`, { appearance: "success" });

@@ -1,17 +1,17 @@
 import { formatChat, downloadChat } from './download'
-import { checkAuth } from '../services';
 
-const translateText = (chatData, sourceLenguage, targetLenguage, token) => {
+const translateText = (chatData, sourceLenguage, targetLenguage) => {
 
-	const messages = formatChat(chatData)
+	const chatMessages = chatData.messages.join('\r\n');
 	
 	var myHeaders = new Headers();
 	myHeaders.append("Content-Type", "application/json; charset=utf-8");
 
 	var requestBody = {
-		"q": messages,
+		"q": chatMessages,
 		"source": sourceLenguage,
-		"target": targetLenguage
+		"target": targetLenguage,
+		"format": "text",
 	}
 
 	var requestOptions = {
@@ -22,20 +22,20 @@ const translateText = (chatData, sourceLenguage, targetLenguage, token) => {
 	};
 
 	fetch("https://translation.googleapis.com/language/translate/v2?key=AIzaSyCU3i1bxE32OTmhWvDPZ2HIzPtuW5i7nwc", requestOptions)
-	.then(response => {
-		return response.json()
-	}).then(response => {
-		console.log(response)
-		chatData.messages = response.data.translations.map((translation) => translation.translatedText)
-		downloadChat(chatData)
-	})
-	.catch(err => {
-		console.error(err);
-	});
-    
+		.then(response => {
+			return response.json()
+		})
+		.then(response => {
+			console.log(response)
+			const translatedChat = {...chatData};
+			translatedChat.messages = response.data.translations.map((translation) => translation.translatedText)
+			downloadChat(translatedChat)
+		})
+		.catch(err => {
+			console.error(err);
+		});
 }
 
 export {
-    translateText,
-    getLenguages
+	translateText,
 }
