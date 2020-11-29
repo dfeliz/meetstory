@@ -65,7 +65,10 @@ export const MeetDate = styled.p`
 export const MeetMessages = styled.p`
     color: black;
     font-size: 16px;
+    overflow: hidden;
     font-weight: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 export const MeetIcons = styled.div`
