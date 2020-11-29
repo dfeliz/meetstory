@@ -7,7 +7,7 @@ import { useToasts } from 'react-toast-notifications';
 import { COLORS } from '../../../../../../../styles/colors';
 import { downloadChat } from '../../../../../utils/download';
 import { fetchToken, uploadFile } from '../../../../../utils/drive';
-import { translateText } from '../../../../../utils/translator';
+import { translateText } from '../../../../../services/translator';
 import {
     MenuItem,
     ItemText,

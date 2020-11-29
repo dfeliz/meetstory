@@ -1,4 +1,4 @@
-import { formatChat, downloadChat } from './download'
+import { downloadChat } from '../utils/download'
 
 const translateText = (chatData, sourceLenguage, targetLenguage) => {
 
