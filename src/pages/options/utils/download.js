@@ -25,11 +25,10 @@ const downloadChat = (chat, format) => {
 const formatChat = (chat) => {
     const { messages, code, title, date } = chat;
 
-    const messagesArray = messages
-    const titleArray = [title, code, date]
-    const concatArray = titleArray.concat(messagesArray)
-    const completeArray = concatArray.reduce((r, a) => r.concat(a, "\r\n"), []);
-    return completeArray
+    const chatData = [title, code, date, ...messages];
+    const formattedChat = chatData.join('\r\n');
+
+    return formattedChat
 }
 
 /**

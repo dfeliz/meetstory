@@ -2,11 +2,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf, faFileAlt, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { faGoogleDrive } from '@fortawesome/free-brands-svg-icons';
-import { useToasts } from 'react-toast-notifications'
+import { useToasts } from 'react-toast-notifications';
 
-import { COLORS } from '../../../../../../../styles/colors'
+import { COLORS } from '../../../../../../../styles/colors';
 import { downloadChat } from '../../../../../utils/download';
-import { fetchToken, uploadFile } from '../../../../../utils/drive'
+import { fetchToken, uploadFile } from '../../../../../utils/drive';
+import { translateText } from '../../../../../services/translator';
 import {
     MenuItem,
     ItemText,
@@ -53,6 +54,20 @@ const Menu = (props) => {
         }
     }
 
+    const handdleTranslation = async (chatData, sourceLenguage, targetLenguage) => {
+        addToast(`El meetstory traducido se descargara en breve...`, { appearance: "info", id: "translating", autoDismiss: false });
+        try {
+            translateText(chatData, sourceLenguage, targetLenguage);
+            setTimeout(() => {
+                removeToast("translating");
+                addToast(`Traduccion completeda.`, { appearance: "success" });
+            }, 1500)
+        } catch(err) {
+            removeToast("translating");
+            addToast(`No se pudo traducir el meetstory. Error: ${err}`, { appearance: "error" });
+        }
+    }
+
     return (
         <DropdownMenu id="dropdown-menu">
             <ItemHeader>Exportar a</ItemHeader>
@@ -77,7 +92,7 @@ const Menu = (props) => {
             <ItemHeader>Exportar en idioma</ItemHeader>
             <Item
                 leftIcon={faLanguage}
-                onClick={() => onClick(() => { })}
+                onClick={() => onClick(() => handdleTranslation(props.chatData, "es", "en"))}
             >
                 Ingles (pred.)
             </Item>
