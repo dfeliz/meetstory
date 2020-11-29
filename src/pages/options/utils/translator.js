@@ -13,7 +13,7 @@ const translateText = (chatData, sourceLenguage, targetLenguage, token) => {
 		"source": sourceLenguage,
 		"target": targetLenguage
 	}
-	
+
 	var requestOptions = {
 	  method: 'POST',
 	  headers: myHeaders,
@@ -33,23 +33,6 @@ const translateText = (chatData, sourceLenguage, targetLenguage, token) => {
 		console.error(err);
 	});
     
-}
-
-const getLenguages = () => {
-    fetch("https://translation.googleapis.com/language/translate/v2", {
-	"method": "GET",
-	"headers": {
-		"accept-encoding": "application/gzip",
-		"x-rapidapi-key": "238706dc52msh096187744f22f0dp1d3ad8jsn0dbee325ec94",
-		"x-rapidapi-host": "google-translate1.p.rapidapi.com"
-	}
-    })
-    .then(response => {
-    	console.log(response);
-    })
-    .catch(err => {
-    	console.error(err);
-    });
 }
 
 export {

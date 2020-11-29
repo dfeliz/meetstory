@@ -55,12 +55,12 @@ const Menu = (props) => {
     }
     const handdleTranslation = async (chatData, sourceLenguage, targetLenguage) => {
         const token = await fetchToken();
-        addToast(`Traduciendo texto...`, { appearance: "info", id: "translating", autoDismiss: false });
+        addToast(`El meetstory traducido se descargara en breve...`, { appearance: "info", id: "translating", autoDismiss: false });
         try {
             await translateText(chatData, sourceLenguage, targetLenguage, token);
             setTimeout(() => {
                 removeToast("translating");
-                addToast(`Traducido exitosamente.`, { appearance: "success" });
+                addToast(`Traduccion completeda.`, { appearance: "success" });
             }, 1500)
         } catch(err) {
             removeToast("translating");
