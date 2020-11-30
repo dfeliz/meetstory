@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Header = styled.div`
     margin-bottom: 9px;
+    display: flex;
+    justify-content: space-between;
 `;
 
 export const Title = styled.h1`
@@ -29,5 +31,27 @@ export const ChatContainer = styled.div`
     background-color: #F2F2F2;
 `;
 
+export const MeetOptions = styled.img`
+    right: 0;
+    top: -10px;
+    cursor: pointer;
+    position: absolute;
+`;
+
 export const Options = styled.div`
+    right: 0;
+    bottom: 0;
+    display: flex;
+    position: absolute;
+    padding-right: 26px;
+    padding-bottom: 28px;
+
+    & > svg {
+        padding-right: 36px;
+    }
+`;
+
+export const RightContainer = styled.div`
+    width: 200px;
+    position: relative;
 `;

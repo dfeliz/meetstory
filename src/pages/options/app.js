@@ -203,7 +203,9 @@ class App extends Component {
         <ChatModal
           isOpen={isChatModalOpen}
           selectedChat={selectedChat}
+          toggleDelete={this.toggleDelete}
           onRequestClose={this.closeChatModal}
+          toggleFavorite={this.toggleFavorite}
         />
       </PageContainer>
     );

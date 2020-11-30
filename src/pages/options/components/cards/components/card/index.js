@@ -74,7 +74,7 @@ const Card = ({
                 <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />
                 {
                     dropdownVisible && (
-                        <Menu chatData={chatValue} dropdownToggle={dropdownToggle} />
+                        <Menu top={45} right={0} chatData={chatValue} dropdownToggle={dropdownToggle} />
                     )
                 }
                 <MeetCode>{code}</MeetCode>
@@ -82,7 +82,7 @@ const Card = ({
                 <MeetDate>{formattedDate}</MeetDate>
                 <div
                     style={{ cursor: "pointer" }}
-                    onClick={() => openChatModal({ ...chatValue, formattedDate })}
+                    onClick={() => openChatModal({ ...chatValue, formattedDate, chatId })}
                 >
                     {GenerateMessages(messages)}
                 </div>

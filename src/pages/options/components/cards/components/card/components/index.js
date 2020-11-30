@@ -3,18 +3,6 @@ import { TEXT_COLORS } from '../../../../../../../styles/colors';
 
 export * from './menu';
 
-const appear = keyframes`
-  from {
-    top: 30px;
-    opacity: 0;
-  }
-
-  to {
-    top: 45px;
-    opacity: 1;
-  }
-`;
-
 export const CardContainer = styled.div`
     position: relative;
     width: 342px;
@@ -83,9 +71,21 @@ export const MeetIcons = styled.div`
 // Dropdown popup
 
 export const DropdownMenu = styled.div`
+    @keyframes appear {
+        from {
+            top: ${(props) => props.top - 15}px;
+            opacity: 0;
+        }
+
+        to {
+            top: ${(props) => props.top}px;
+            opacity: 1;
+        }
+    }
+
     position: absolute;
-    top: 45px;
-    right: 0px;
+    top: ${(props) => props.top}px;
+    right: ${(props) => props.right}px;
     width: 172px;
     transform: translateX(-40%);
     background-color: white;
@@ -93,7 +93,7 @@ export const DropdownMenu = styled.div`
     padding: 1.2rem 0;
     overflow: hidden;
     box-shadow: 0px 0px 25px -6px rgba(0,0,0,0.35);
-    animation: ${appear} 0.12s ease;
+    animation: appear 0.12s ease;
 `;
 
 export const ItemText = styled.p`
