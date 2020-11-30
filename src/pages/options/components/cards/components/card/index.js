@@ -28,6 +28,7 @@ const GenerateMessages = (chat) => {
 const Card = ({
     chat,
     toggleDelete,
+    openChatModal,
     toggleFavorite,
 }) => {
     const chatValue = Object.values(chat)[0];
@@ -79,7 +80,10 @@ const Card = ({
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <MeetDate>{formattedDate}</MeetDate>
-                <div style={{ cursor: "pointer" }}>
+                <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => openChatModal({ ...chatValue, formattedDate })}
+                >
                     {GenerateMessages(messages)}
                 </div>
             </Upper>

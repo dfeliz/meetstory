@@ -12,7 +12,7 @@ import {
 } from './services';
 import Cards from './components/cards';
 import Sidebar from './components/sidebarMenu'
-import { OptionsModal } from './components/modals';
+import { OptionsModal, ChatModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 import { auth, saveToken, disconnect, checkAuth } from './services';
 
@@ -23,9 +23,13 @@ class App extends Component {
     page: 0,
     chatList: [],
     loading: true,
-    isModalOpen: false,
+    isChatModalOpen: false,
     isAuthenticated: false,
+    isOptionsModalOpen: false,
     reloadFn: this.renderChats,
+    selectedChat: {
+      messages: [],
+    },
   }
 
   componentDidMount() {
@@ -71,9 +75,13 @@ class App extends Component {
     return '';
   }
 
-  openModal = () => this.setState({ isModalOpen: true })
+  openOptionsModal = () => this.setState({ isOptionsModalOpen: true });
 
-  closeModal = () => this.setState({ isModalOpen: false })
+  closeOptionsModal = () => this.setState({ isOptionsModalOpen: false });
+
+  openChatModal = (chat) => this.setState({ isChatModalOpen: true, selectedChat: chat });
+
+  closeChatModal = () => this.setState({ isChatModalOpen: false });
 
   toggleFavorite = (id) => {
     const { reloadFn } = this.state;
@@ -144,11 +152,13 @@ class App extends Component {
 
   render() {
     const {
-      chatList,
       page,
       loading,
-      isModalOpen,
+      chatList,
+      selectedChat,
       isAuthenticated,
+      isChatModalOpen,
+      isOptionsModalOpen,
     } = this.state;
 
     const sidebarHandlers = [
@@ -162,32 +172,38 @@ class App extends Component {
         <Sidebar
           page={page}
           handlers={sidebarHandlers}
-          openSettings={this.openModal}
           userFullName={this.getFullName()}
+          openSettings={this.openOptionsModal}
         />
         <Page>
           {loading
             ? (
               <LoadingScreen
                 loading={true}
-                spinnerColor='#51945a'
                 logoSrc={Logo}
+                spinnerColor='#51945a'
               />
             )
             : (
               <Cards
                 data={chatList}
                 toggleDelete={this.toggleDelete}
+                openChatModal={this.openChatModal}
                 toggleFavorite={this.toggleFavorite}
               />
             )
           }
         </Page>
         <OptionsModal
-          isOpen={isModalOpen}
-          onRequestClose={this.closeModal}
+          isOpen={isOptionsModalOpen}
           isAuthenticated={isAuthenticated}
+          onRequestClose={this.closeOptionsModal}
           handleAuthentication={this.handleAuthentication}
+        />
+        <ChatModal
+          isOpen={isChatModalOpen}
+          selectedChat={selectedChat}
+          onRequestClose={this.closeChatModal}
         />
       </PageContainer>
     );

@@ -5,6 +5,7 @@ import { Card, CardsContainer, NothingHereMessage } from './components';
 const CardsComponent = ({
     data,
     toggleDelete,
+    openChatModal,
     toggleFavorite,
 }) => {
     const { addToast } = useToasts();
@@ -24,6 +25,7 @@ const CardsComponent = ({
             <Card
                 chat={chat}
                 toggleDelete={handleDelete}
+                openChatModal={openChatModal}
                 toggleFavorite={handleFavorite}
             />
         ));

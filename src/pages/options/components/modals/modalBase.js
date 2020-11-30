@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { COLORS } from '../../../../styles/colors';
 
 import {
-    CloseButtonContainer
+    ChildContainer,
+    CloseButtonContainer,
 } from './components';
 
 const ModalBase = (props) => {
