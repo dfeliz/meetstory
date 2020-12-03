@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faTag } from '@fortawesome/free-solid-svg-icons';
 import { COLORS } from '../../../../../styles/colors'
@@ -30,9 +30,9 @@ const ChatModal = ({
 }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const {
+        id,
         code,
         title,
-        chatId,
         messages,
         deleted,
         favorite,
@@ -90,13 +90,16 @@ const ChatModal = ({
                             icon={faTag}
                             size="2x"
                             style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                            onClick={() => toggleFavorite(chatId)}
+                            onClick={() => toggleFavorite(id)}
                         />
                         <FontAwesomeIcon
                             icon={faTrashAlt}
                             size="2x"
                             style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
-                            onClick={() => toggleDelete(chatId)}
+                            onClick={() => {
+                                onRequestClose();
+                                toggleDelete(id);
+                            }}
                         />
                         <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />
                         {

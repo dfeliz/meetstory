@@ -24,6 +24,7 @@ const CardsComponent = ({
         return data.map((chat) => (
             <Card
                 chat={chat}
+                key={chat.id}
                 toggleDelete={handleDelete}
                 openChatModal={openChatModal}
                 toggleFavorite={handleFavorite}

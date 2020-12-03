@@ -15,6 +15,7 @@ import Sidebar from './components/sidebarMenu'
 import { OptionsModal, ChatModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 import { auth, saveToken, disconnect, checkAuth } from './services';
+import { chatInitialState } from './utils/state';
 
 import Logo from '../../icons/logo.svg';
 
@@ -27,9 +28,7 @@ class App extends Component {
     isAuthenticated: false,
     isOptionsModalOpen: false,
     reloadFn: this.renderChats,
-    selectedChat: {
-      messages: [],
-    },
+    selectedChat: chatInitialState,
   }
 
   componentDidMount() {
@@ -112,11 +111,7 @@ class App extends Component {
     });
 
     getFilteredChats(nonDeleted).then((response) => {
-      this.setState({
-        chatList: response,
-        page: 0,
-        loading: false
-      })
+      this.updateChatList({ page: 0, chatList: response})
     });
   }
 
@@ -127,11 +122,7 @@ class App extends Component {
     });
 
     getFilteredChats(favorites).then((response) => {
-      this.setState({
-        chatList: response,
-        page: 1,
-        loading: false
-      })
+      this.updateChatList({ page: 1, chatList: response})
     });
   }
 
@@ -142,12 +133,27 @@ class App extends Component {
     });
 
     getFilteredChats(deleted).then((response) => {
-      this.setState({
-        chatList: response,
-        page: 2,
-        loading: false
-      })
+      this.updateChatList({ page: 2, chatList: response})
     });
+  }
+
+  updateChatList = ({ chatList, page,}) => {
+    const { selectedChat } = this.state;
+
+    let updatedSelectedChat = selectedChat.id
+      ? chatList.find((chat) => chat?.id === selectedChat.id)
+      : chatInitialState;
+    
+    if (updatedSelectedChat === undefined) {
+      updatedSelectedChat = chatInitialState;
+    }
+
+    this.setState({
+      page,
+      chatList,
+      loading: false,
+      selectedChat: updatedSelectedChat,
+    })
   }
 
   render() {

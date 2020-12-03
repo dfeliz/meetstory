@@ -28,6 +28,7 @@ export const ChatContainer = styled.div`
     font-size: 16px;
     overflow-y: scroll;
     padding: 16px 0 0 16px;
+    box-sizing: border-box;
     background-color: #F2F2F2;
 `;
 
