@@ -12,9 +12,10 @@ import {
 } from './services';
 import Cards from './components/cards';
 import Sidebar from './components/sidebarMenu'
-import { OptionsModal } from './components/modals';
+import { OptionsModal, ChatModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
 import { auth, saveToken, disconnect, checkAuth } from './services';
+import { chatInitialState } from './utils/state';
 
 import Logo from '../../icons/logo.svg';
 
@@ -23,9 +24,11 @@ class App extends Component {
     page: 0,
     chatList: [],
     loading: true,
-    isModalOpen: false,
+    isChatModalOpen: false,
     isAuthenticated: false,
+    isOptionsModalOpen: false,
     reloadFn: this.renderChats,
+    selectedChat: chatInitialState,
   }
 
   componentDidMount() {
@@ -71,9 +74,13 @@ class App extends Component {
     return '';
   }
 
-  openModal = () => this.setState({ isModalOpen: true })
+  openOptionsModal = () => this.setState({ isOptionsModalOpen: true });
 
-  closeModal = () => this.setState({ isModalOpen: false })
+  closeOptionsModal = () => this.setState({ isOptionsModalOpen: false });
+
+  openChatModal = (chat) => this.setState({ isChatModalOpen: true, selectedChat: chat });
+
+  closeChatModal = () => this.setState({ isChatModalOpen: false });
 
   toggleFavorite = (id) => {
     const { reloadFn } = this.state;
@@ -104,11 +111,7 @@ class App extends Component {
     });
 
     getFilteredChats(nonDeleted).then((response) => {
-      this.setState({
-        chatList: response,
-        page: 0,
-        loading: false
-      })
+      this.updateChatList({ page: 0, chatList: response})
     });
   }
 
@@ -119,11 +122,7 @@ class App extends Component {
     });
 
     getFilteredChats(favorites).then((response) => {
-      this.setState({
-        chatList: response,
-        page: 1,
-        loading: false
-      })
+      this.updateChatList({ page: 1, chatList: response})
     });
   }
 
@@ -134,21 +133,38 @@ class App extends Component {
     });
 
     getFilteredChats(deleted).then((response) => {
-      this.setState({
-        chatList: response,
-        page: 2,
-        loading: false
-      })
+      this.updateChatList({ page: 2, chatList: response})
     });
+  }
+
+  updateChatList = ({ chatList, page,}) => {
+    const { selectedChat } = this.state;
+
+    let updatedSelectedChat = selectedChat.id
+      ? chatList.find((chat) => chat?.id === selectedChat.id)
+      : chatInitialState;
+    
+    if (updatedSelectedChat === undefined) {
+      updatedSelectedChat = chatInitialState;
+    }
+
+    this.setState({
+      page,
+      chatList,
+      loading: false,
+      selectedChat: updatedSelectedChat,
+    })
   }
 
   render() {
     const {
-      chatList,
       page,
       loading,
-      isModalOpen,
+      chatList,
+      selectedChat,
       isAuthenticated,
+      isChatModalOpen,
+      isOptionsModalOpen,
     } = this.state;
 
     const sidebarHandlers = [
@@ -162,32 +178,40 @@ class App extends Component {
         <Sidebar
           page={page}
           handlers={sidebarHandlers}
-          openSettings={this.openModal}
           userFullName={this.getFullName()}
+          openSettings={this.openOptionsModal}
         />
         <Page>
           {loading
             ? (
               <LoadingScreen
                 loading={true}
-                spinnerColor='#51945a'
                 logoSrc={Logo}
+                spinnerColor='#51945a'
               />
             )
             : (
               <Cards
                 data={chatList}
                 toggleDelete={this.toggleDelete}
+                openChatModal={this.openChatModal}
                 toggleFavorite={this.toggleFavorite}
               />
             )
           }
         </Page>
         <OptionsModal
-          isOpen={isModalOpen}
-          onRequestClose={this.closeModal}
+          isOpen={isOptionsModalOpen}
           isAuthenticated={isAuthenticated}
+          onRequestClose={this.closeOptionsModal}
           handleAuthentication={this.handleAuthentication}
+        />
+        <ChatModal
+          isOpen={isChatModalOpen}
+          selectedChat={selectedChat}
+          toggleDelete={this.toggleDelete}
+          onRequestClose={this.closeChatModal}
+          toggleFavorite={this.toggleFavorite}
         />
       </PageContainer>
     );

@@ -32,7 +32,7 @@ const Item = (props) => (
 
 const Menu = (props) => {
     const { addToast, removeToast } = useToasts();
-    const { dropdownToggle } = props;
+    const { dropdownToggle, top, right } = props;
 
     const onClick = (fn) => {
         fn();
@@ -69,7 +69,7 @@ const Menu = (props) => {
     }
 
     return (
-        <DropdownMenu id="dropdown-menu">
+        <DropdownMenu id="dropdown-menu" top={top} right={right}>
             <ItemHeader>Exportar a</ItemHeader>
             <Item
                 leftIcon={faGoogleDrive}

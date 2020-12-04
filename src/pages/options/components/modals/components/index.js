@@ -10,3 +10,8 @@ export const Separator = styled.div`
     border-bottom: 1px solid #707070A0;
     margin-bottom: 45px;
 `;
+
+export const ChildContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;

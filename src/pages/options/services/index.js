@@ -1,3 +1,4 @@
+import { formatDate } from '../utils/date';
 
 /////////////////////
 // Chat services
@@ -25,10 +26,19 @@ export function getFilteredChats(callback) {
 
         const filteredChats = response.filter((chat) => {
             const chatProperties = Object.values(chat)[0];
+            chatProperties.id = Object.keys(chat)[0];
             return callback(chatProperties);
         })
+        
+        const formattedChats = filteredChats.map((chat) => {
+            const chatValue = Object.values(chat)[0];
+            const chatId = Object.keys(chat)[0];
+            chatValue.id = chatId;
+            chatValue.formattedDate = formatDate(chatValue.date);
+            return chatValue;
+        })
 
-        return filteredChats
+        return formattedChats
     });
 }
 

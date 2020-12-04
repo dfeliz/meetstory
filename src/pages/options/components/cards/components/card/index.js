@@ -28,18 +28,18 @@ const GenerateMessages = (chat) => {
 const Card = ({
     chat,
     toggleDelete,
+    openChatModal,
     toggleFavorite,
 }) => {
-    const chatValue = Object.values(chat)[0];
-    const chatId = Object.keys(chat)[0];
     const {
-        title,
+        id,
         code,
         date,
+        title,
+        deleted,
         messages,
         favorite,
-        deleted,
-    } = chatValue;
+    } = chat;
     const formattedDate = formatDate(date);
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -73,13 +73,16 @@ const Card = ({
                 <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />
                 {
                     dropdownVisible && (
-                        <Menu chatData={chatValue} dropdownToggle={dropdownToggle} />
+                        <Menu top={45} right={0} chatData={chat} dropdownToggle={dropdownToggle} />
                     )
                 }
                 <MeetCode>{code}</MeetCode>
                 <MeetTitle>{title}</MeetTitle>
                 <MeetDate>{formattedDate}</MeetDate>
-                <div style={{ cursor: "pointer" }}>
+                <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => openChatModal({ ...chat, formattedDate, id })}
+                >
                     {GenerateMessages(messages)}
                 </div>
             </Upper>
@@ -88,7 +91,7 @@ const Card = ({
                     icon={faTrashAlt}
                     size="2x"
                     style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
-                    onClick={() => toggleDelete(chatId)}
+                    onClick={() => toggleDelete(id)}
 
                 />
                 {
@@ -97,7 +100,7 @@ const Card = ({
                             icon={faTag}
                             size="2x"
                             style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                            onClick={() => toggleFavorite(chatId)}
+                            onClick={() => toggleFavorite(id)}
                         />
                     )
                 }
