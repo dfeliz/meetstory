@@ -21,6 +21,7 @@ class App extends Component {
         const { isSaving } = this.props;
 
         if (isSaving) {
+
             const chat = {
                 title: document.querySelector(meetTitle).innerHTML,
                 code: document.title.slice(7),
@@ -47,7 +48,10 @@ class App extends Component {
     }
 
     getChats() {
-        console.log("started get chat")
+        console.log("started get chat");
+        chrome.runtime.sendMessage({ messageType: "getUrl" }, (response) => {
+            console.log('[URL]: ', response);
+        });
         const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
         const dialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a, b) => [...a, ...b], []);
         chrome.runtime.sendMessage({ messageType: "update", message: dialogs }, (response) => {

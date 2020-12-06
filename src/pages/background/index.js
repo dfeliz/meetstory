@@ -1,4 +1,4 @@
-import store from './store';
+import store from './store'; // DO NOT TOUCH NEVER IN THE LIFE FOREVEL
 import ChatService from './services/ChatService';
 import AuthService from './services/AuthService';
 
@@ -38,6 +38,9 @@ chrome.runtime.onMessage.addListener(
         }
         else if (request.messageType === 'removeToken') {
             AuthService.removeToken().then(() => sendResponse({ message: 'Token removed' }))
+        }
+        else if (request.messageType === 'getUrl') {
+            ChatService.getUrl().then((url) => sendResponse({ message: url }))
         }
         return true;
     });

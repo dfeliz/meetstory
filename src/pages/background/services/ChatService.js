@@ -76,8 +76,19 @@ async function toggleFavorite(id) {
     });
 }
 
+function getUrl() {
+    return new Promise((resolve, reject) => {
+        chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
+            const url = tabs[0].url;
+            console.log("I have the url: ", url)
+            resolve(url)
+        })
+    })
+}
+
 export default {
     createChat,
+    getUrl,
     updateMessages,
     toggleDelete,
     toggleFavorite,
