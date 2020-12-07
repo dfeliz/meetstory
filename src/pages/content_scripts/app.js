@@ -5,7 +5,8 @@ import { chatChildrenMapper } from './mappers';
 import {
     meetTitle,
     chatLayoutSelector,
-    chatContainerSelector
+    applicationContainer,
+    chatContainerSelector,
 } from '../../selectors';
 
 let intervalRunning = false;

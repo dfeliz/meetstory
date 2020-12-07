@@ -42,5 +42,11 @@ chrome.runtime.onMessage.addListener(
         else if (request.messageType === 'getUrl') {
             ChatService.getUrl().then((url) => sendResponse({ message: url }))
         }
+        else if (request.messageType === 'toggleAutoSave') {
+            ChatService.toggleAutoSave(request.message).then((response) => sendResponse({ message: 'AutoSave status changed' }))
+        }
+        else if (request.messageType === 'getAutoSave') {
+            ChatService.getAutoSave().then((AutoSave) => sendResponse({ message: AutoSave }))
+        }
         return true;
     });

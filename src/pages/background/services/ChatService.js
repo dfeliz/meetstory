@@ -86,6 +86,19 @@ function getUrl() {
     })
 }
 
+async function toggleAutoSave(prevState) {
+    await ChromeStorageService.set({ ['AutoSave']: !prevState });
+    return getAutoSave();
+    
+}
+
+async function getAutoSave() {
+    return ChromeStorageService.get('AutoSave').then(({ AutoSave }) => {
+        console.log("Aqui ta el AutoSave: ", AutoSave)
+        return AutoSave;
+    });
+}
+
 export default {
     createChat,
     getUrl,
@@ -94,4 +107,6 @@ export default {
     toggleFavorite,
     getAllChats,
     getChat,
+    toggleAutoSave,
+    getAutoSave,
 }

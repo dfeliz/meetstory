@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "./actions";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './actions';
 import Switch from 'react-switch';
 import logo from '../../icons/logo.svg'
 import './popup.css';
+import { getAutoSave, toggleAutoSave } from './services'
 
 import {
   TopContainer,
@@ -13,27 +14,38 @@ import {
   Text,
   Background,
   LogoContainer
-} from "./components";
+} from './components';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      checked: false
-    }
-    this.handleChange = this.handleChange.bind(this)
+  state = {
+    checked: false,
   }
 
-  handleChange(checked) {
-    this.setState({checked})
+  componentDidMount() {
+    this.obtainSavedState();
   }
 
-  handleOptions() {
-    chrome.tabs.create({'url': "/pages/options.html" } )
+  obtainSavedState = () => {
+    console.log("1")
+    getAutoSave().then((checkStatus) => {
+      this.setState({ checked: checkStatus });
+    });
+  }
+
+  handleChange = () => {
+    const { checked } = this.state;
+    console.log("2")
+    toggleAutoSave(checked)
+    this.obtainSavedState();
+  }
+
+  handleOptions = () => {
+    chrome.tabs.create({'url': "/pages/options.html" })
   }
   
   render() {
     const { toggleSave, isSaving } = this.props;
+    const { checked }  = this.state;
 
     const startSavingText = 'Empezar a guardar';
     const stopSavingText = 'Parar de guardar';
@@ -52,7 +64,7 @@ class App extends Component {
           </button>
         </div>
         <div style={MiddleContainer}>
-          <Switch className="react-switch" onChange={this.handleChange} checked={this.state.checked}></Switch>
+          <Switch className="react-switch" onChange={this.handleChange} checked={checked}></Switch>
           <h1 style={Text}>Guardar chats automaticamente</h1>
         </div>
         <div style={BottomContainer}>
