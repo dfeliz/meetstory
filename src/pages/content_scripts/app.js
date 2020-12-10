@@ -2,23 +2,83 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import { chatChildrenMapper } from './mappers';
+import { getAutoSave, listenTabClose } from './services';
 import {
     meetTitle,
+    sidePanelJsName,
     chatLayoutSelector,
     applicationContainer,
     chatContainerSelector,
+    sidePanelChildJsName
 } from '../../selectors';
 
 let intervalRunning = false;
 let intervalID;
 
 class App extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        isAutoSaveEnabled: false,
+    }
+
+    componentDidMount() {
+        const { toggleSave, isSaving } = this.props;
         console.log('Content scripts loaded.')
+        if (isSaving) {
+            console.log('Last meet did not stop saving, fixing...');
+            toggleSave();
+            console.log('Ready to save');
+        }
+
+        getAutoSave().then((response) => {
+            this.setState({ isAutoSaveEnabled: response }, this.observeMeeting)
+        })
     }
 
     componentDidUpdate() {
+        this.saveChat();
+    }
+
+    observeMeeting = () => {
+        const { isAutoSaveEnabled } = this.state;
+
+        console.log('Observing...');
+
+        if (isAutoSaveEnabled) {
+            const appContainerElement = document.querySelector(applicationContainer);
+            
+            const callback = (mutationsList, observer) => {
+                let startSaving = false;
+                for(const mutation of mutationsList) {
+                    const jsNames = [sidePanelJsName, sidePanelChildJsName];
+                    const isSidePanel = jsNames.includes(mutation?.target?.attributes?.jsname?.value)
+                    
+                    if (isSidePanel) {
+                        const element = document.querySelector(chatLayoutSelector);
+                        if (element !== null) {
+                            console.log('Chat found!');
+                            listenTabClose();
+                            startSaving = true;
+                            observer.disconnect();
+                        }
+                    }
+                }
+                if (startSaving) {
+                    toggleSave(true);
+                }
+            };
+
+            const observerConfig = {
+                childList: true,
+                subtree: true,
+            };
+
+            const mutationObserver = new MutationObserver(callback);
+
+            mutationObserver.observe(appContainerElement, observerConfig);
+        }
+    }
+
+    saveChat = () => {
         const { isSaving } = this.props;
 
         if (isSaving) {
@@ -31,7 +91,6 @@ class App extends Component {
                 console.log('[APP]: ', response.message);
             });
 
-            console.log("button has been clicked");
             if (document.querySelector(chatLayoutSelector)) {
                 console.log("chatLayout detected");
                 intervalID = setInterval(this.getChats, 1500);
@@ -62,9 +121,7 @@ class App extends Component {
 
     render() {
         return (
-            <div id="xdd" onClick={this.handleClick}>
-                kakakakaka
-            </div>
+            <div></div>
         );
     }
 }

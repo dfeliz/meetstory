@@ -1,6 +1,7 @@
 import store from './store'; // DO NOT TOUCH NEVER IN THE LIFE FOREVEL
 import ChatService from './services/ChatService';
 import AuthService from './services/AuthService';
+import ListenerService from './services/ListenerService';
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
@@ -47,6 +48,9 @@ chrome.runtime.onMessage.addListener(
         }
         else if (request.messageType === 'getAutoSave') {
             ChatService.getAutoSave().then((AutoSave) => sendResponse({ message: AutoSave }))
+        }
+        else if (request.messageType === 'listenTabClose') {
+            ListenerService.listenTabClose(store).then(() => sendResponse({ message: 'Listening...' }))
         }
         return true;
     });
