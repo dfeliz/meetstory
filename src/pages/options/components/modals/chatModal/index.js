@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faTag } from '@fortawesome/free-solid-svg-icons';
 import { COLORS } from '../../../../../styles/colors'
@@ -14,6 +15,7 @@ import {
     ChatContainer,
     RightContainer,
 } from './components';
+import constants from './constants'
 import {
     Menu,
 } from '../../cards/components/card/components';
@@ -28,6 +30,7 @@ const ChatModal = ({
     toggleFavorite,
     onRequestClose,
 }) => {
+    const { addToast, removeToast } = useToasts();
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const {
         id,
@@ -38,10 +41,6 @@ const ChatModal = ({
         favorite,
         formattedDate,
     } = selectedChat;
-
-    const dropdownToggle = () => {
-        setDropdownVisible(!dropdownVisible)
-    }
 
     useEffect(() => {
         const handleOutsideClick = (e) => {
@@ -61,6 +60,39 @@ const ChatModal = ({
             document.removeEventListener('mousedown', handleOutsideClick);
         }
     })
+
+    const dropdownToggle = () => {
+        setDropdownVisible(!dropdownVisible)
+    }
+
+    const handleDelete = (id) => {
+        toggleDelete(id);
+
+        const onRestoreClick = () => {
+            removeToast('deleting');
+            handleDelete(id);
+            addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
+        }
+
+        deleted
+            ? addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
+            : addToast(renderToastDeleteComponent(onRestoreClick), { appearance: 'error', id: 'deleting'})
+    }
+
+    const handleFavorite = (id) => {
+        toggleFavorite(id);
+        addToast(favorite ? constants.CHAT_UNFAVORITED : constants.CHAT_FAVORITED, { appearance: 'success' })
+    }
+
+    const renderToastDeleteComponent = (callback) => (
+        <div>
+            {constants.CHAT_DELETED}
+            {' '}
+            <div style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={callback}>
+                Restaurar
+            </div>
+        </div>
+    )
 
     return (
         <ModalBase
@@ -90,7 +122,7 @@ const ChatModal = ({
                             icon={faTag}
                             size="2x"
                             style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                            onClick={() => toggleFavorite(id)}
+                            onClick={() => handleFavorite(id)}
                         />
                         <FontAwesomeIcon
                             icon={faTrashAlt}
@@ -98,7 +130,7 @@ const ChatModal = ({
                             style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
                             onClick={() => {
                                 onRequestClose();
-                                toggleDelete(id);
+                                handleDelete(id);
                             }}
                         />
                         <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />

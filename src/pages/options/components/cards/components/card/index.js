@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faTag } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,6 +15,7 @@ import {
     MeetOptions,
     MeetDate
 } from './components';
+import constants from './constants'
 import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
 import { COLORS } from '../../../../../../styles/colors'
@@ -40,6 +42,7 @@ const Card = ({
         messages,
         favorite,
     } = chat;
+    const { addToast, removeToast } = useToasts();
     const formattedDate = formatDate(date);
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -47,7 +50,7 @@ const Card = ({
         const handleOutsideClick = (e) => {
             const dropdown = document.getElementById("dropdown-menu");
             const clickedElement = e.target;
-    
+
             if (dropdownVisible) {
                 if (!dropdown.contains(clickedElement)) {
                     setDropdownVisible(false);
@@ -62,9 +65,39 @@ const Card = ({
         }
     })
 
+    const handleDelete = (id) => {
+        toggleDelete(id);
+
+        const onRestoreClick = () => {
+            removeToast('deleting');
+            handleDelete(id);
+            addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
+        }
+
+        deleted
+            ? addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
+            : addToast(renderToastDeleteComponent(onRestoreClick), { appearance: 'error', id: 'deleting'})
+    }
+
+    const handleFavorite = (id) => {
+        toggleFavorite(id);
+        addToast(favorite ? constants.CHAT_UNFAVORITED : constants.CHAT_FAVORITED, { appearance: 'success' })
+    }
+
+
     const dropdownToggle = () => {
         setDropdownVisible(!dropdownVisible)
     }
+
+    const renderToastDeleteComponent = (callback) => (
+        <div>
+            {constants.CHAT_DELETED}
+            {' '}
+            <div style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={callback}>
+                Restaurar
+            </div>
+        </div>
+    )
 
     return (
         <CardContainer>
@@ -91,7 +124,7 @@ const Card = ({
                     icon={faTrashAlt}
                     size="2x"
                     style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
-                    onClick={() => toggleDelete(id)}
+                    onClick={() => handleDelete(id)}
 
                 />
                 {
@@ -100,7 +133,7 @@ const Card = ({
                             icon={faTag}
                             size="2x"
                             style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                            onClick={() => toggleFavorite(id)}
+                            onClick={() => handleFavorite(id)}
                         />
                     )
                 }

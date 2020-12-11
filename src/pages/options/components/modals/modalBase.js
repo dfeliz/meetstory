@@ -30,7 +30,7 @@ const ModalBase = (props) => {
                     ...props.style,
                 }
             }}
-        >
+        >       
             <CloseButtonContainer>
                 <FontAwesomeIcon
                     icon={faTimes}
