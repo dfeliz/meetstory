@@ -89,7 +89,7 @@ const ChatModal = ({
             {constants.CHAT_DELETED}
             {' '}
             <div style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={callback}>
-                Restaurar
+                Deshacer
             </div>
         </div>
     )
