@@ -39,7 +39,7 @@ async function getAllChats() {
         savedDataChats.push(getChatDetail);
     }
 
-    return savedDataChats;
+    return savedDataChats.reverse();
 }
 
 async function getChat(chatId) {
