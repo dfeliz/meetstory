@@ -85,10 +85,8 @@ class App extends Component {
   toggleFavorite = (id) => {
     const { reloadFn } = this.state;
 
-    this.setState({ loading: true });
     toggleChatFavorite(id)
       .then(() => {
-        this.setState({ loading: false });
         reloadFn();
       });
   }
@@ -96,17 +94,14 @@ class App extends Component {
   toggleDelete = (id) => {
     const { reloadFn } = this.state;
 
-    this.setState({ loading: true });
     toggleChatDelete(id)
       .then(() => {
-        this.setState({ loading: false });
         reloadFn();
       });
   }
 
   renderChats = () => {
     this.setState({
-      loading: true,
       reloadFn: this.renderChats
     });
 
@@ -117,7 +112,6 @@ class App extends Component {
 
   renderFavoriteChats = () => {
     this.setState({
-      loading: true,
       reloadFn: this.renderFavoriteChats
     });
 
@@ -128,7 +122,6 @@ class App extends Component {
 
   renderDeletedChats = () => {
     this.setState({
-      loading: true,
       reloadFn: this.renderDeletedChats
     });
 
