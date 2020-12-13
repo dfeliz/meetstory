@@ -50,7 +50,7 @@ class App extends Component {
       if (!isAuthenticated) {
         auth().then((res) => {
           if (res.success) {
-            console.log('Saving token...')
+            console.log('Saving token...', res.token)
             saveToken(res.token)
             this.setState({ isAuthenticated: true })
           }

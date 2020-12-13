@@ -11,9 +11,9 @@ const storage = createChromeStorage(window.chrome, 'sync');
 const persistConfig = {
     key: 'root',
     storage,
-  }
+}
   
-const persistedReducer = persistReducer(persistConfig, reducer)
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = createStore(persistedReducer);
 // const persistor = persistStore(store)

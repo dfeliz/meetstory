@@ -76,11 +76,37 @@ async function toggleFavorite(id) {
     });
 }
 
+function getUrl() {
+    return new Promise((resolve, reject) => {
+        chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
+            const url = tabs[0].url;
+            console.log("I have the url: ", url)
+            resolve(url)
+        })
+    })
+}
+
+async function toggleAutoSave(prevState) {
+    await ChromeStorageService.set({ ['AutoSave']: !prevState });
+    return getAutoSave();
+    
+}
+
+async function getAutoSave() {
+    return ChromeStorageService.get('AutoSave').then(({ AutoSave }) => {
+        console.log("Aqui ta el AutoSave: ", AutoSave)
+        return AutoSave;
+    });
+}
+
 export default {
     createChat,
+    getUrl,
     updateMessages,
     toggleDelete,
     toggleFavorite,
     getAllChats,
     getChat,
+    toggleAutoSave,
+    getAutoSave,
 }
