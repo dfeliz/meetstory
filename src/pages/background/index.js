@@ -39,5 +39,8 @@ chrome.runtime.onMessage.addListener(
         else if (request.messageType === 'removeToken') {
             AuthService.removeToken().then(() => sendResponse({ message: 'Token removed' }))
         }
+        else if (request.messageType === 'deleteChat') {
+            ChatService.deleteChat(request.message).then(() => sendResponse({ message: 'Chat deleted' }))
+        }
         return true;
     });

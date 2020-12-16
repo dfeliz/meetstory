@@ -12,7 +12,7 @@ async function createChat(data) {
         if (!Array.isArray(savedChats)) {
             savedChats = [];
         }
-        
+
         const updatedSavedChats = [
             ...savedChats,
             newChatId
@@ -68,6 +68,18 @@ async function toggleDelete(id) {
     });
 }
 
+async function deleteChat(id) {
+    return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
+        console.log('got the chat id: ', savedChats, "deleting: ", id)
+
+        const newSavedArray = savedChats.filter((chats) => chats !== id)
+
+        console.log('New chat array :', newSavedArray)
+
+        ChromeStorageService.set({ savedChats: newSavedArray });
+    });
+}
+
 async function toggleFavorite(id) {
     return ChromeStorageService.get(id).then((chatObj) => {
         const chat = Object.values(chatObj)[0];
@@ -83,4 +95,5 @@ export default {
     toggleFavorite,
     getAllChats,
     getChat,
+    deleteChat,
 }

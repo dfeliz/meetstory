@@ -6,6 +6,7 @@ const CardsComponent = ({
     data,
     toggleDelete,
     openChatModal,
+    openDeleteModal,
     toggleFavorite,
 }) => {
     const { addToast } = useToasts();
@@ -27,6 +28,7 @@ const CardsComponent = ({
                 key={chat.id}
                 toggleDelete={handleDelete}
                 openChatModal={openChatModal}
+                openDeleteModal={openDeleteModal}
                 toggleFavorite={handleFavorite}
             />
         ));

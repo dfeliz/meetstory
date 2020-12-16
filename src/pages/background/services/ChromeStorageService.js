@@ -1,5 +1,5 @@
 
- const get = key =>
+const get = key =>
     new Promise((resolve, reject) =>
         chrome.storage.sync.get(key, result =>
             chrome.runtime.lastError
@@ -8,9 +8,17 @@
         )
     )
 
- const set = data =>
+const set = data =>
     new Promise((resolve, reject) =>
         chrome.storage.sync.set(data, () =>
+            chrome.runtime.lastError
+                ? reject(Error(chrome.runtime.lastError.message))
+                : resolve()
+        )
+    )
+const remove = key =>
+    new Promise((resolve, reject) =>
+        chrome.storage.sync.remove(key, () =>
             chrome.runtime.lastError
                 ? reject(Error(chrome.runtime.lastError.message))
                 : resolve()
@@ -20,4 +28,5 @@
 export default {
     get,
     set,
+    remove,
 }

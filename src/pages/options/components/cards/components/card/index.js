@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faTag, faReply } from '@fortawesome/free-solid-svg-icons';
 
 import {
     Menu,
@@ -29,6 +29,7 @@ const Card = ({
     chat,
     toggleDelete,
     openChatModal,
+    openDeleteModal,
     toggleFavorite,
 }) => {
     const {
@@ -47,7 +48,7 @@ const Card = ({
         const handleOutsideClick = (e) => {
             const dropdown = document.getElementById("dropdown-menu");
             const clickedElement = e.target;
-    
+
             if (dropdownVisible) {
                 if (!dropdown.contains(clickedElement)) {
                     setDropdownVisible(false);
@@ -65,6 +66,7 @@ const Card = ({
     const dropdownToggle = () => {
         setDropdownVisible(!dropdownVisible)
     }
+
 
     return (
         <CardContainer>
@@ -87,21 +89,37 @@ const Card = ({
                 </div>
             </Upper>
             <MeetIcons>
-                <FontAwesomeIcon
-                    icon={faTrashAlt}
-                    size="2x"
-                    style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
-                    onClick={() => toggleDelete(id)}
-
-                />
                 {
-                    !deleted && (
-                        <FontAwesomeIcon
-                            icon={faTag}
-                            size="2x"
-                            style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                            onClick={() => toggleFavorite(id)}
-                        />
+                    deleted ? (
+                        <>
+                            <FontAwesomeIcon
+                                icon={faReply}
+                                size="2x"
+                                style={{ cursor: "pointer", color: COLORS.INACTIVE }}
+                                onClick={() => toggleDelete(id)}
+                            />
+                            <FontAwesomeIcon
+                                icon={faTrashAlt}
+                                size="2x"
+                                style={{ cursor: "pointer", color: COLORS.DANGER }}
+                                onClick={() => openDeleteModal(chat)}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <FontAwesomeIcon
+                                icon={faTrashAlt}
+                                size="2x"
+                                style={{ cursor: "pointer", color: COLORS.INACTIVE }}
+                                onClick={() => toggleDelete(id)}
+                            />
+                            <FontAwesomeIcon
+                                icon={faTag}
+                                size="2x"
+                                style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
+                                onClick={() => toggleFavorite(id)}
+                            />
+                        </>
                     )
                 }
             </MeetIcons>

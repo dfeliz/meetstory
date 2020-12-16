@@ -17,8 +17,8 @@ export function getAllChats() {
 
 /**
  * Gets all chats then filters using the callback parameter.
- * 
- * @param {function} callback 
+ *
+ * @param {function} callback
  * @returns {Array} array of chats (filtered)
  */
 export function getFilteredChats(callback) {
@@ -29,7 +29,7 @@ export function getFilteredChats(callback) {
             chatProperties.id = Object.keys(chat)[0];
             return callback(chatProperties);
         })
-        
+
         const formattedChats = filteredChats.map((chat) => {
             const chatValue = Object.values(chat)[0];
             const chatId = Object.keys(chat)[0];
@@ -45,6 +45,18 @@ export function getFilteredChats(callback) {
 export function toggleChatDelete(id) {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ messageType: 'toggleDelete', message: id }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject(`Couldn't delete chat id ${id}`);
+            }
+            resolve(response.message);
+        });
+    })
+}
+
+export function deleteChat(id) {
+    console.log("here", id)
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'deleteChat', message: id }, (response) => {
             if (response.message === undefined || response.message === null) {
                 reject(`Couldn't delete chat id ${id}`);
             }
