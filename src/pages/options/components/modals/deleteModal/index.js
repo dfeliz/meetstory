@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import { Button } from '@material-ui/core';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { COLORS } from '../../../../../styles/colors'
 
 import {
     Code,
     Title,
-    ButtonContainer,
+    Divider,
+    Subtitle,
+    ButtonDelete,
+    ButtonCancel,
     ModalContainer,
+    ButtonContainer,
 } from './components';
 
 import ModalBase from '../modalBase';
@@ -15,11 +21,12 @@ async function confirmDelete(id, onRequestClose, deleteChat) {
     onRequestClose();
 }
 
+
 const DeleteModal = ({
     isOpen,
-    onRequestClose,
-    selectedChat,
     deleteChat,
+    selectedChat,
+    onRequestClose,
 }) => {
     const {
         id,
@@ -30,30 +37,36 @@ const DeleteModal = ({
         <ModalBase
             isOpen={isOpen}
             style={{
-                width: 450,
-                padding: 20,
+                width: 500,
+                padding: 25,
             }}
             hideCloseButton={true}
         >
             <ModalContainer>
+                <FontAwesomeIcon
+                    size="6x"
+                    icon={faTrashAlt}
+                    style={{ color: COLORS.DANGER }}
+                />
                 <Title>
-                    Esta seguro que quiere borrar el meet "{title}" con codigo:
+                    ¿Esta seguro que quiere borrar el meetstory?
                 </Title>
                 <Code>
-                    {code}
+                    Titulo: {title}
+                </Code>
+                <Code>
+                    Codigo: {code}
                 </Code>
                 <ButtonContainer>
-                    <Button
-                        variant="contained"
-                        color="secondary"
+                    <ButtonDelete
                         onClick={() => confirmDelete(id, onRequestClose, deleteChat)}
                         >Borrar
-                    </Button>
-                    <Button
-                        variant="contained"
+                    </ButtonDelete>
+                    <Divider/>
+                    <ButtonCancel
                         onClick={onRequestClose}
                         >Cancelar
-                    </Button>
+                    </ButtonCancel>
                 </ButtonContainer>
             </ModalContainer>
         </ModalBase>
