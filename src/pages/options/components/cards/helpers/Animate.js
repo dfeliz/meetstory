@@ -26,22 +26,25 @@ const Animate = ({ children }) => {
         if (domNode) {
           const firstBox = prevBoundingBox[child.key];
           const lastBox = boundingBox[child.key];
-          const changeInX = firstBox.left - lastBox.left;
-          const changeInY = firstBox.y - lastBox.y;
-  
-          if (changeInX) {
-            requestAnimationFrame(() => {
-              // Before the DOM paints, invert child to old position
-              domNode.style.transform = `translate(${changeInX}px, ${changeInY}px)`;
-              domNode.style.transition = "transform 0s";
-  
+          if (firstBox && lastBox) {
+            console.log(child.props.chat.code, firstBox, lastBox);
+            const changeInX = firstBox.left - lastBox.left;
+            const changeInY = firstBox.y - lastBox.y;
+    
+            if (changeInX || changeInY) {
               requestAnimationFrame(() => {
-                // After the previous frame, remove
-                // the transistion to play the animation
-                domNode.style.transform = "";
-                domNode.style.transition = "transform 500ms";
+                // Before the DOM paints, invert child to old position
+                domNode.style.transform = `translate(${changeInX}px, ${changeInY}px)`;
+                domNode.style.transition = "transform 0s";
+    
+                requestAnimationFrame(() => {
+                  // After the previous frame, remove
+                  // the transistion to play the animation
+                  domNode.style.transform = "";
+                  domNode.style.transition = "transform 500ms";
+                });
               });
-            });
+            }
           }
         }
       });
