@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faTag, faReply } from '@fortawesome/free-solid-svg-icons';
 
 import {
     Menu,
     Upper,
+    MeetDate,
     MeetLogo,
-    CardContainer,
     MeetCode,
     MeetTitle,
     MeetIcons,
-    MeetMessages,
     MeetOptions,
-    MeetDate
+    MeetMessages,
+    CardContainer,
 } from './components';
-import MeetIcon from '../../assets/meet.svg';
+import constants from './constants'
 import Dots from '../../assets/dots.svg';
-import { COLORS } from '../../../../../../styles/colors'
+import MeetIcon from '../../assets/meet.svg';
 import { formatDate } from '../../../../utils/date';
+import { COLORS } from '../../../../../../styles/colors'
 
 const GenerateMessages = (chat) => {
     return chat.slice(0, 6).map((message) => {
@@ -41,6 +43,7 @@ const Card = ({
         messages,
         favorite,
     } = chat;
+    const { addToast, removeToast } = useToasts();
     const formattedDate = formatDate(date);
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -63,10 +66,39 @@ const Card = ({
         }
     })
 
+    const handleDelete = (id) => {
+        toggleDelete(id);
+
+        const onRestoreClick = () => {
+            removeToast('deleting');
+            handleDelete(id);
+            addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
+        }
+
+        deleted
+            ? addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
+            : addToast(renderToastDeleteComponent(onRestoreClick), { appearance: 'error', id: 'deleting'})
+    }
+
+    const handleFavorite = (id) => {
+        toggleFavorite(id);
+        addToast(favorite ? constants.CHAT_UNFAVORITED : constants.CHAT_FAVORITED, { appearance: 'success' })
+    }
+
+
     const dropdownToggle = () => {
         setDropdownVisible(!dropdownVisible)
     }
 
+    const renderToastDeleteComponent = (callback) => (
+        <div>
+            {constants.CHAT_DELETED}
+            {' '}
+            <div style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={callback}>
+                Deshacer
+            </div>
+        </div>
+    )
 
     return (
         <CardContainer>
@@ -82,8 +114,8 @@ const Card = ({
                 <MeetTitle>{title}</MeetTitle>
                 <MeetDate>{formattedDate}</MeetDate>
                 <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() => openChatModal({ ...chat, formattedDate, id })}
+                    style={!deleted ? { cursor: "pointer" } : undefined }
+                    onClick={!deleted ? () => openChatModal({ ...chat, formattedDate, id }): undefined }
                 >
                     {GenerateMessages(messages)}
                 </div>
@@ -96,7 +128,7 @@ const Card = ({
                                 icon={faReply}
                                 size="2x"
                                 style={{ cursor: "pointer", color: COLORS.INACTIVE }}
-                                onClick={() => toggleDelete(id)}
+                                onClick={() => handleDelete(id)}
                             />
                             <FontAwesomeIcon
                                 icon={faTrashAlt}
@@ -111,13 +143,13 @@ const Card = ({
                                 icon={faTrashAlt}
                                 size="2x"
                                 style={{ cursor: "pointer", color: COLORS.INACTIVE }}
-                                onClick={() => toggleDelete(id)}
+                                onClick={() => handleDelete(id)}
                             />
                             <FontAwesomeIcon
                                 icon={faTag}
                                 size="2x"
                                 style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                                onClick={() => toggleFavorite(id)}
+                                onClick={() => handleFavorite(id)}
                             />
                         </>
                     )
