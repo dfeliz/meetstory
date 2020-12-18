@@ -69,14 +69,14 @@ const Card = forwardRef(({
         toggleDelete(id);
 
         const onRestoreClick = () => {
-            removeToast('deleting');
+            removeToast(`deleting${id}`);
             handleDelete(id);
             addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
         }
 
         deleted
             ? addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
-            : addToast(renderToastDeleteComponent(onRestoreClick), { appearance: 'error', id: 'deleting'})
+            : addToast(renderToastDeleteComponent(onRestoreClick), { appearance: 'error', id: `deleting${id}`})
     }
 
     const handleFavorite = (id) => {
