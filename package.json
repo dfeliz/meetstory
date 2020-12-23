@@ -17,6 +17,7 @@
     "pdfmake": "^0.1.68",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-flip-move": "^3.0.4",
     "react-loading-screen": "0.0.17",
     "react-modal": "^3.12.1",
     "react-redux": "^4.4.6",
