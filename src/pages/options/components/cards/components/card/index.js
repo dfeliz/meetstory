@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faTag, faReply } from '@fortawesome/free-solid-svg-icons';
@@ -27,13 +27,13 @@ const GenerateMessages = (chat) => {
     })
 }
 
-const Card = ({
+const Card = forwardRef(({
     chat,
     toggleDelete,
     openChatModal,
     openDeleteModal,
     toggleFavorite,
-}) => {
+}, ref) => {
     const {
         id,
         code,
@@ -70,14 +70,14 @@ const Card = ({
         toggleDelete(id);
 
         const onRestoreClick = () => {
-            removeToast('deleting');
+            removeToast(`deleting${id}`);
             handleDelete(id);
             addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
         }
 
         deleted
             ? addToast(constants.CHAT_UNDELETED, { appearance: 'success' })
-            : addToast(renderToastDeleteComponent(onRestoreClick), { appearance: 'error', id: 'deleting'})
+            : addToast(renderToastDeleteComponent(onRestoreClick), { appearance: 'error', id: `deleting${id}`})
     }
 
     const handleFavorite = (id) => {
@@ -101,62 +101,64 @@ const Card = ({
     )
 
     return (
-        <CardContainer>
-            <Upper>
-                <MeetLogo src={MeetIcon} alt="Meet" />
-                <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />
-                {
-                    dropdownVisible && (
-                        <Menu top={45} right={0} chatData={chat} dropdownToggle={dropdownToggle} />
-                    )
-                }
-                <MeetCode>{code}</MeetCode>
-                <MeetTitle>{title}</MeetTitle>
-                <MeetDate>{formattedDate}</MeetDate>
-                <div
-                    style={!deleted ? { cursor: "pointer" } : undefined }
-                    onClick={!deleted ? () => openChatModal({ ...chat, formattedDate, id }): undefined }
-                >
-                    {GenerateMessages(messages)}
-                </div>
-            </Upper>
-            <MeetIcons>
-                {
-                    deleted ? (
-                        <>
-                            <FontAwesomeIcon
-                                icon={faReply}
-                                size="2x"
-                                style={{ cursor: "pointer", color: COLORS.INACTIVE }}
-                                onClick={() => handleDelete(id)}
-                            />
-                            <FontAwesomeIcon
-                                icon={faTrashAlt}
-                                size="2x"
-                                style={{ cursor: "pointer", color: COLORS.DANGER }}
-                                onClick={() => openDeleteModal(chat)}
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <FontAwesomeIcon
-                                icon={faTrashAlt}
-                                size="2x"
-                                style={{ cursor: "pointer", color: COLORS.INACTIVE }}
-                                onClick={() => handleDelete(id)}
-                            />
-                            <FontAwesomeIcon
-                                icon={faTag}
-                                size="2x"
-                                style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                                onClick={() => handleFavorite(id)}
-                            />
-                        </>
-                    )
-                }
-            </MeetIcons>
-        </CardContainer>
+        <div ref={ref}>
+            <CardContainer>
+                <Upper>
+                    <MeetLogo src={MeetIcon} alt="Meet" />
+                    <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />
+                    {
+                        dropdownVisible && (
+                            <Menu top={45} right={0} chatData={chat} dropdownToggle={dropdownToggle} />
+                        )
+                    }
+                    <MeetCode>{code}</MeetCode>
+                    <MeetTitle>{title}</MeetTitle>
+                    <MeetDate>{formattedDate}</MeetDate>
+                    <div
+                        style={!deleted ? { cursor: "pointer" } : undefined }
+                        onClick={!deleted ? () => openChatModal({ ...chat, formattedDate, id }): undefined }
+                    >
+                        {GenerateMessages(messages)}
+                    </div>
+                </Upper>
+                <MeetIcons>
+                    {
+                        deleted ? (
+                            <>
+                                <FontAwesomeIcon
+                                    icon={faReply}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: COLORS.INACTIVE }}
+                                    onClick={() => handleDelete(id)}
+                                />
+                                <FontAwesomeIcon
+                                    icon={faTrashAlt}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: COLORS.DANGER }}
+                                    onClick={() => openDeleteModal(chat)}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <FontAwesomeIcon
+                                    icon={faTrashAlt}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: COLORS.INACTIVE }}
+                                    onClick={() => handleDelete(id)}
+                                />
+                                <FontAwesomeIcon
+                                    icon={faTag}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
+                                    onClick={() => handleFavorite(id)}
+                                />
+                            </>
+                        )
+                    }
+                </MeetIcons>
+            </CardContainer>
+        </div>
     )
-}
+})
 
 export default Card;
