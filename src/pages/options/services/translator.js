@@ -26,7 +26,6 @@ const translateText = (chatData, sourceLenguage, targetLenguage) => {
 			return response.json()
 		})
 		.then(response => {
-			console.log(response)
 			const translatedChat = {...chatData};
 			translatedChat.messages = response.data.translations.map((translation) => translation.translatedText)
 			downloadChat(translatedChat)

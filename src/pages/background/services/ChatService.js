@@ -7,12 +7,10 @@ async function createChat(data) {
     const newChatId = uuidv4();
 
     return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
-        console.log("TamoAqui:", savedChats)
-
         if (!Array.isArray(savedChats)) {
             savedChats = [];
         }
-        
+
         const updatedSavedChats = [
             ...savedChats,
             newChatId
@@ -44,7 +42,6 @@ async function getAllChats() {
 
 async function getChat(chatId) {
     return ChromeStorageService.get(chatId).then(({ chat }) => {
-        console.log("Aqui ta el chat:", chat)
         return chat;
     });
 }
@@ -55,7 +52,6 @@ async function updateMessages(messages) {
             const chat = chatObj[currentChat];
             chat.messages = messages;
             ChromeStorageService.set({ [currentChat]: chat });
-            console.log('[ChatService]: ', messages, currentChat, chat);
         });
     });
 }
@@ -65,6 +61,13 @@ async function toggleDelete(id) {
         const chat = Object.values(chatObj)[0];
         chat.deleted = !chat.deleted;
         ChromeStorageService.set({ [id]: chat });
+    });
+}
+
+async function deleteChat(id) {
+    return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
+        const newSavedArray = savedChats.filter((chats) => chats !== id)
+        ChromeStorageService.set({ savedChats: newSavedArray });
     });
 }
 
@@ -80,7 +83,6 @@ function getUrl() {
     return new Promise((resolve, reject) => {
         chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
             const url = tabs[0].url;
-            console.log("I have the url: ", url)
             resolve(url)
         })
     })
@@ -89,12 +91,11 @@ function getUrl() {
 async function toggleAutoSave(prevState) {
     await ChromeStorageService.set({ ['AutoSave']: !prevState });
     return getAutoSave();
-    
+
 }
 
 async function getAutoSave() {
     return ChromeStorageService.get('AutoSave').then(({ AutoSave }) => {
-        console.log("Aqui ta el AutoSave: ", AutoSave)
         return AutoSave;
     });
 }
@@ -109,4 +110,5 @@ export default {
     getChat,
     toggleAutoSave,
     getAutoSave,
+    deleteChat,
 }

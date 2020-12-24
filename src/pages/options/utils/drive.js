@@ -28,7 +28,6 @@ const uploadFile = (chatData, token) => {
     return fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log("This is a result: ", result)
             return metadata.name;
         })
         .catch(error => console.log('error', error));
@@ -37,7 +36,6 @@ const uploadFile = (chatData, token) => {
 const fetchToken = () => {
     return checkAuth().then((token) => {
         if (typeof token === 'string' && token.length !== 0) {
-            console.log("I got the token: ", token)
             return token
         }
         else {

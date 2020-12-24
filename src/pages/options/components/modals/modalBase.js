@@ -30,15 +30,19 @@ const ModalBase = (props) => {
                     ...props.style,
                 }
             }}
-        >       
-            <CloseButtonContainer>
-                <FontAwesomeIcon
-                    icon={faTimes}
-                    size="2x"
-                    style={{ cursor: "pointer", color: COLORS.INACTIVE }}
-                    onClick={props.onRequestClose}
-                />
-            </CloseButtonContainer>
+        >
+            {
+                !props.hideCloseButton && (
+                    <CloseButtonContainer>
+                        <FontAwesomeIcon
+                            icon={faTimes}
+                            size="2x"
+                            style={{ cursor: "pointer", color: COLORS.INACTIVE }}
+                            onClick={props.onRequestClose}
+                        />
+                    </CloseButtonContainer>
+                )
+            }
             { props.children }
         </ReactModal>
     )

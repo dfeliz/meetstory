@@ -8,13 +8,13 @@ import {
 import {
   getFilteredChats,
   toggleChatFavorite,
-  toggleChatDelete
+  toggleChatDelete,
 } from './services';
 import Cards from './components/cards';
 import Sidebar from './components/sidebarMenu'
-import { OptionsModal, ChatModal } from './components/modals';
+import { OptionsModal, ChatModal, DeleteModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
-import { auth, saveToken, disconnect, checkAuth } from './services';
+import { auth, saveToken, disconnect, checkAuth, deleteChat } from './services';
 import { chatInitialState } from './utils/state';
 
 import Logo from '../../icons/logo.svg';
@@ -27,6 +27,7 @@ class App extends Component {
     isChatModalOpen: false,
     isAuthenticated: false,
     isOptionsModalOpen: false,
+    isDeleteModalOpen: false,
     reloadFn: this.renderChats,
     selectedChat: chatInitialState,
   }
@@ -37,7 +38,6 @@ class App extends Component {
   }
 
   checkIsAuthenticated = () => {
-    console.log('checkIsAuthenticated')
     checkAuth().then(() => {
       this.setState({ isAuthenticated: true })
     })
@@ -45,12 +45,10 @@ class App extends Component {
 
   handleAuthentication = () => {
     const { isAuthenticated } = this.state;
-    console.log('Handling authentication...');
     return new Promise((resolve) => {
       if (!isAuthenticated) {
         auth().then((res) => {
           if (res.success) {
-            console.log('Saving token...', res.token)
             saveToken(res.token)
             this.setState({ isAuthenticated: true })
           }
@@ -59,7 +57,6 @@ class App extends Component {
       else {
         disconnect().then((res) => {
           if (res.success) {
-            console.log('Disconnected');
             this.setState({ isAuthenticated: false })
           }
         }).finally((() => resolve()));
@@ -82,6 +79,10 @@ class App extends Component {
 
   closeChatModal = () => this.setState({ isChatModalOpen: false });
 
+  closeDeleteModal = () => this.setState({ isDeleteModalOpen: false });
+
+  openDeleteModal = (chat) => this.setState({ isDeleteModalOpen: true, selectedChat: chat });
+
   toggleFavorite = (id) => {
     const { reloadFn } = this.state;
 
@@ -96,6 +97,17 @@ class App extends Component {
 
     toggleChatDelete(id)
       .then(() => {
+        reloadFn();
+      });
+  }
+
+  deleteSelectedChat = (id) => {
+    const { reloadFn } = this.state;
+
+    this.setState({ loading: true });
+    deleteChat(id)
+      .then(() => {
+        this.setState({ loading: false });
         reloadFn();
       });
   }
@@ -136,7 +148,7 @@ class App extends Component {
     let updatedSelectedChat = selectedChat.id
       ? chatList.find((chat) => chat?.id === selectedChat.id)
       : chatInitialState;
-    
+
     if (updatedSelectedChat === undefined) {
       updatedSelectedChat = chatInitialState;
     }
@@ -158,6 +170,7 @@ class App extends Component {
       isAuthenticated,
       isChatModalOpen,
       isOptionsModalOpen,
+      isDeleteModalOpen,
     } = this.state;
 
     const sidebarHandlers = [
@@ -188,6 +201,7 @@ class App extends Component {
                 data={chatList}
                 toggleDelete={this.toggleDelete}
                 openChatModal={this.openChatModal}
+                openDeleteModal={this.openDeleteModal}
                 toggleFavorite={this.toggleFavorite}
               />
             )
@@ -205,6 +219,12 @@ class App extends Component {
           toggleDelete={this.toggleDelete}
           onRequestClose={this.closeChatModal}
           toggleFavorite={this.toggleFavorite}
+        />
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          deleteChat={this.deleteSelectedChat}
+          onRequestClose={this.closeDeleteModal}
+          selectedChat={selectedChat}
         />
       </PageContainer>
     );

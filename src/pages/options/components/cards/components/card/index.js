@@ -1,25 +1,25 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faTag, faReply } from '@fortawesome/free-solid-svg-icons';
 
 import {
     Menu,
     Upper,
+    MeetDate,
     MeetLogo,
-    CardContainer,
     MeetCode,
     MeetTitle,
     MeetIcons,
-    MeetMessages,
     MeetOptions,
-    MeetDate
+    MeetMessages,
+    CardContainer,
 } from './components';
 import constants from './constants'
-import MeetIcon from '../../assets/meet.svg';
 import Dots from '../../assets/dots.svg';
-import { COLORS } from '../../../../../../styles/colors'
+import MeetIcon from '../../assets/meet.svg';
 import { formatDate } from '../../../../utils/date';
+import { COLORS } from '../../../../../../styles/colors'
 
 const GenerateMessages = (chat) => {
     return chat.slice(0, 6).map((message) => {
@@ -31,6 +31,7 @@ const Card = forwardRef(({
     chat,
     toggleDelete,
     openChatModal,
+    openDeleteModal,
     toggleFavorite,
 }, ref) => {
     const {
@@ -114,28 +115,44 @@ const Card = forwardRef(({
                     <MeetTitle>{title}</MeetTitle>
                     <MeetDate>{formattedDate}</MeetDate>
                     <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() => openChatModal({ ...chat, formattedDate, id })}
+                        style={!deleted ? { cursor: "pointer" } : undefined }
+                        onClick={!deleted ? () => openChatModal({ ...chat, formattedDate, id }): undefined }
                     >
                         {GenerateMessages(messages)}
                     </div>
                 </Upper>
                 <MeetIcons>
-                    <FontAwesomeIcon
-                        icon={faTrashAlt}
-                        size="2x"
-                        style={{ cursor: "pointer", color: deleted ? COLORS.DANGER : COLORS.INACTIVE }}
-                        onClick={() => handleDelete(id)}
-
-                    />
                     {
-                        !deleted && (
-                            <FontAwesomeIcon
-                                icon={faTag}
-                                size="2x"
-                                style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
-                                onClick={() => handleFavorite(id)}
-                            />
+                        deleted ? (
+                            <>
+                                <FontAwesomeIcon
+                                    icon={faReply}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: COLORS.INACTIVE }}
+                                    onClick={() => handleDelete(id)}
+                                />
+                                <FontAwesomeIcon
+                                    icon={faTrashAlt}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: COLORS.DANGER }}
+                                    onClick={() => openDeleteModal(chat)}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <FontAwesomeIcon
+                                    icon={faTrashAlt}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: COLORS.INACTIVE }}
+                                    onClick={() => handleDelete(id)}
+                                />
+                                <FontAwesomeIcon
+                                    icon={faTag}
+                                    size="2x"
+                                    style={{ cursor: "pointer", color: favorite ? COLORS.ACTIVE : COLORS.INACTIVE }}
+                                    onClick={() => handleFavorite(id)}
+                                />
+                            </>
                         )
                     }
                 </MeetIcons>

@@ -6,6 +6,7 @@ const CardsComponent = ({
 	data,
 	toggleDelete,
 	openChatModal,
+	openDeleteModal,
 	toggleFavorite,
 }) => {
 
@@ -21,6 +22,7 @@ const CardsComponent = ({
 							toggleDelete={toggleDelete}
 							openChatModal={openChatModal}
 							toggleFavorite={toggleFavorite}
+							openDeleteModal={openDeleteModal}
 						/>
 					))}
 				</Animate>

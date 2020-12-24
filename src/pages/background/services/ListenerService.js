@@ -10,7 +10,6 @@ function listenTabClose(objStore) {
     const onUpdatedListener = chrome.tabs.onUpdated.addListener(function(tabId, info) {
         chrome.tabs.get(tabId, function(tab) {
             tabs[tabId] = tab.url;
-            console.log(tabs);
         });
     });
 

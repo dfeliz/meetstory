@@ -26,7 +26,6 @@ class App extends Component {
   }
 
   obtainSavedState = () => {
-    console.log("1")
     getAutoSave().then((checkStatus) => {
       this.setState({ checked: checkStatus });
     });
@@ -34,7 +33,6 @@ class App extends Component {
 
   handleChange = () => {
     const { checked } = this.state;
-    console.log("2")
     toggleAutoSave(checked)
     this.obtainSavedState();
   }
