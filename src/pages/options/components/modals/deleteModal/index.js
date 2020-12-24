@@ -58,14 +58,12 @@ const DeleteModal = ({
                     Codigo: {code}
                 </Code>
                 <ButtonContainer>
-                    <ButtonDelete
-                        onClick={() => confirmDelete(id, onRequestClose, deleteChat)}
-                        >Borrar
+                    <ButtonDelete onClick={() => confirmDelete(id, onRequestClose, deleteChat)}>
+                        Borrar
                     </ButtonDelete>
                     <Divider/>
-                    <ButtonCancel
-                        onClick={onRequestClose}
-                        >Cancelar
+                    <ButtonCancel onClick={onRequestClose}>
+                        Cancelar
                     </ButtonCancel>
                 </ButtonContainer>
             </ModalContainer>

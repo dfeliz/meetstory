@@ -54,7 +54,6 @@ export function toggleChatDelete(id) {
 }
 
 export function deleteChat(id) {
-    console.log("here", id)
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ messageType: 'deleteChat', message: id }, (response) => {
             if (response.message === undefined || response.message === null) {
@@ -114,7 +113,6 @@ export function getToken() {
 export function checkAuth() {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ messageType: 'checkAuth' }, (response) => {
-            console.log('responseeeeeeeeeeeee')
             const token = response.message;
             if (typeof token === 'string' && token.length !== 0) {
                 resolve(response.message);

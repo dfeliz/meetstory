@@ -7,8 +7,6 @@ async function createChat(data) {
     const newChatId = uuidv4();
 
     return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
-        console.log("TamoAqui:", savedChats)
-
         if (!Array.isArray(savedChats)) {
             savedChats = [];
         }
@@ -44,7 +42,6 @@ async function getAllChats() {
 
 async function getChat(chatId) {
     return ChromeStorageService.get(chatId).then(({ chat }) => {
-        console.log("Aqui ta el chat:", chat)
         return chat;
     });
 }
@@ -55,7 +52,6 @@ async function updateMessages(messages) {
             const chat = chatObj[currentChat];
             chat.messages = messages;
             ChromeStorageService.set({ [currentChat]: chat });
-            console.log('[ChatService]: ', messages, currentChat, chat);
         });
     });
 }
@@ -70,12 +66,7 @@ async function toggleDelete(id) {
 
 async function deleteChat(id) {
     return ChromeStorageService.get('savedChats').then(({ savedChats }) => {
-        console.log('got the chat id: ', savedChats, "deleting: ", id)
-
         const newSavedArray = savedChats.filter((chats) => chats !== id)
-
-        console.log('New chat array :', newSavedArray)
-
         ChromeStorageService.set({ savedChats: newSavedArray });
     });
 }
@@ -92,7 +83,6 @@ function getUrl() {
     return new Promise((resolve, reject) => {
         chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
             const url = tabs[0].url;
-            console.log("I have the url: ", url)
             resolve(url)
         })
     })
@@ -106,7 +96,6 @@ async function toggleAutoSave(prevState) {
 
 async function getAutoSave() {
     return ChromeStorageService.get('AutoSave').then(({ AutoSave }) => {
-        console.log("Aqui ta el AutoSave: ", AutoSave)
         return AutoSave;
     });
 }

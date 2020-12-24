@@ -52,5 +52,8 @@ chrome.runtime.onMessage.addListener(
         else if (request.messageType === 'listenTabClose') {
             ListenerService.listenTabClose(store).then(() => sendResponse({ message: 'Listening...' }))
         }
+        else if (request.messageType === 'deleteChat') {
+            ChatService.deleteChat(request.message).then(() => sendResponse({ message: `Delete done`}))
+        }
         return true;
     });

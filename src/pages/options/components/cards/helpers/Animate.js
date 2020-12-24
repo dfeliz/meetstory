@@ -27,7 +27,6 @@ const Animate = ({ children }) => {
           const firstBox = prevBoundingBox[child.key];
           const lastBox = boundingBox[child.key];
           if (firstBox && lastBox) {
-            console.log(child.props.chat.code, firstBox, lastBox);
             const changeInX = firstBox.left - lastBox.left;
             const changeInY = firstBox.y - lastBox.y;
     

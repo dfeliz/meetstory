@@ -38,7 +38,6 @@ class App extends Component {
   }
 
   checkIsAuthenticated = () => {
-    console.log('checkIsAuthenticated')
     checkAuth().then(() => {
       this.setState({ isAuthenticated: true })
     })
@@ -46,12 +45,10 @@ class App extends Component {
 
   handleAuthentication = () => {
     const { isAuthenticated } = this.state;
-    console.log('Handling authentication...');
     return new Promise((resolve) => {
       if (!isAuthenticated) {
         auth().then((res) => {
           if (res.success) {
-            console.log('Saving token...', res.token)
             saveToken(res.token)
             this.setState({ isAuthenticated: true })
           }
@@ -60,7 +57,6 @@ class App extends Component {
       else {
         disconnect().then((res) => {
           if (res.success) {
-            console.log('Disconnected');
             this.setState({ isAuthenticated: false })
           }
         }).finally((() => resolve()));

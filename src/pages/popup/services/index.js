@@ -5,7 +5,6 @@ export function getAutoSave() {
             if (response.message === undefined || response.message === null) {
                 reject("Couldn't get autosave status")
             }
-            console.log("This is the current state of autosave", response.message)
             resolve(response.message);
         });
     })
