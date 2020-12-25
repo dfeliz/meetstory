@@ -199,6 +199,7 @@ class App extends Component {
             : (
               <Cards
                 data={chatList}
+                isAuthenticated={isAuthenticated}
                 toggleDelete={this.toggleDelete}
                 openChatModal={this.openChatModal}
                 openDeleteModal={this.openDeleteModal}

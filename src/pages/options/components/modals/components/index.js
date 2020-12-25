@@ -15,3 +15,10 @@ export const ChildContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
+export const SelectContainer = styled.div`
+    display: flex;
+    font-size: 16px;
+    line-height: 20px;
+    padding-top: 20px;
+`;

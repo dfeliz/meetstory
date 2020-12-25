@@ -31,8 +31,9 @@ const Card = forwardRef(({
     chat,
     toggleDelete,
     openChatModal,
-    openDeleteModal,
     toggleFavorite,
+    openDeleteModal,
+    isAuthenticated,
 }, ref) => {
     const {
         id,
@@ -108,7 +109,7 @@ const Card = forwardRef(({
                     <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />
                     {
                         dropdownVisible && (
-                            <Menu top={45} right={0} chatData={chat} dropdownToggle={dropdownToggle} />
+                            <Menu top={45} right={0} chatData={chat} dropdownToggle={dropdownToggle} isAuthenticated={isAuthenticated} />
                         )
                     }
                     <MeetCode>{code}</MeetCode>

@@ -23,8 +23,21 @@ async function getToken() {
 function removeToken() {
     return new Promise((resolve, reject) => {
         return ChromeStorageService.set({ gToken: {} })
-            .then(resolve)
+            .then(() => {
+                chrome.identity.clearAllCachedAuthTokens(resolve)
+                console.log('cleared');
+            })
             .catch(reject); 
+    })
+}
+
+function getProfileInfo() {
+    return new Promise((resolve, reject) => {
+        try {
+            return chrome.identity.getProfileUserInfo(resolve)
+        } catch(err) {
+            reject(err)
+        }
     })
 }
 
@@ -33,4 +46,5 @@ export default {
     getToken,
     saveToken,
     removeToken,
+    getProfileInfo,
 }

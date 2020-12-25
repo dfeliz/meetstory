@@ -4,6 +4,7 @@ import Select from 'react-select';
 
 import {
     Separator,
+    SelectContainer,
 } from './components';
 import ModalBase from './modalBase';
 import Section from './components/Section';
@@ -50,12 +51,14 @@ class OptionsModal extends React.Component {
     )
 
     renderLanguageSelect = () => (
-        <Select
-            name="lang"
-            classNamePrefix="select"
-            options={languageOptions}
-            styles={{ container: () => ({ height: 44, width: 320 }) }}
-        />
+        <SelectContainer>
+            <Select
+                name="lang"
+                classNamePrefix="select"
+                options={languageOptions}
+                styles={{ container: () => ({ height: 44, width: 320 }) }}
+            />
+        </SelectContainer>
     )
 
     render() {

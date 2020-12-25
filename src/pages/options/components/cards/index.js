@@ -6,8 +6,9 @@ const CardsComponent = ({
 	data,
 	toggleDelete,
 	openChatModal,
-	openDeleteModal,
 	toggleFavorite,
+	openDeleteModal,
+	isAuthenticated,
 }) => {
 
 	if (data && data.length > 0) {
@@ -22,6 +23,7 @@ const CardsComponent = ({
 							toggleDelete={toggleDelete}
 							openChatModal={openChatModal}
 							toggleFavorite={toggleFavorite}
+							isAuthenticated={isAuthenticated}
 							openDeleteModal={openDeleteModal}
 						/>
 					))}
