@@ -32,7 +32,7 @@ const Item = (props) => (
 
 const Menu = (props) => {
     const { addToast, removeToast } = useToasts();
-    const { dropdownToggle, top, right } = props;
+    const { dropdownToggle, top, right, isAuthenticated } = props;
 
     const onClick = (fn) => {
         fn();
@@ -71,12 +71,14 @@ const Menu = (props) => {
     return (
         <DropdownMenu id="dropdown-menu" top={top} right={right}>
             <ItemHeader>Exportar a</ItemHeader>
-            <Item
-                leftIcon={faGoogleDrive}
-                onClick={() => onClick(() => handdleDrive(props.chatData))}
-            >
-                Google Drive
-            </Item>
+            { isAuthenticated && (
+                <Item
+                    leftIcon={faGoogleDrive}
+                    onClick={() => onClick(() => handdleDrive(props.chatData))}
+                >
+                    Google Drive
+                </Item>
+            )}
             <Item
                 leftIcon={faFileAlt}
                 onClick={() => onClick(() => downloadChat(props.chatData, 'txt'))}

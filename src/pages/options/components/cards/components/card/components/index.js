@@ -6,6 +6,7 @@ export * from './menu';
 export const CardContainer = styled.div`
     position: relative;
     width: 342px;
+    margin-right: 32px;
     margin-bottom: 72px;
     border-radius: 13px;
     box-sizing: border-box;
