@@ -91,12 +91,12 @@ const Menu = (props) => {
             >
                 Archivo PDF
             </Item>
-            <ItemHeader>Exportar en idioma</ItemHeader>
+            <ItemHeader>Exportar traducido del</ItemHeader>
             <Item
                 leftIcon={faLanguage}
                 onClick={() => onClick(() => handdleTranslation(props.chatData, "en", "es"))}
             >
-                Ingles (pred.)
+                Inglés
             </Item>
         </DropdownMenu>
     );
