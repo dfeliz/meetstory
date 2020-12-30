@@ -36,6 +36,7 @@ class App extends Component {
     }
 
     observeMeeting = () => {
+        const { toggleSave } = this.props;
         const { isAutoSaveEnabled } = this.state;
         if (isAutoSaveEnabled) {
             const appContainerElement = document.querySelector(applicationContainer);
