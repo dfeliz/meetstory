@@ -10,6 +10,9 @@ import ModalBase from './modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';
+import {
+    getAutoSave, toggleAutoSave
+} from '../../services'
 
 const languageOptions = [
     { value: 'english', label: 'English' },
@@ -25,6 +28,24 @@ class OptionsModal extends React.Component {
         super(props);
     }
 
+    
+    componentDidMount() {
+        this.obtainSavedState();
+    }
+
+    obtainSavedState = () => {
+        getAutoSave().then((checkStatus) => {
+            this.setState({ autoSave: checkStatus });
+        });
+    }
+
+    handleSwitchToggle = () => {
+        const { autoSave } = this.state;
+        toggleAutoSave(autoSave)
+        this.obtainSavedState();
+    }
+
+
     handleGoogleConnection = () => {
         const { handleAuthentication } = this.props;
         this.setState({ isGoogleButtonDisabled: true })
@@ -33,14 +54,15 @@ class OptionsModal extends React.Component {
         })
     }
 
-    handleSwitchToggle = () => {
+    renderSwitch = () => {
         const { autoSave } = this.state;
-        this.setState({ autoSave: !autoSave })
+        return (
+            <Switch
+                checked={autoSave}
+                onChange={this.handleSwitchToggle}
+            />
+        )
     }
-
-    renderSwitch = () => (
-        <Switch checked={this.state.autoSave} onChange={this.handleSwitchToggle} />
-    )
 
     renderGoogleButton = () => (
         <GoogleButton
@@ -53,9 +75,11 @@ class OptionsModal extends React.Component {
     renderLanguageSelect = () => (
         <SelectContainer>
             <Select
+                isDisabled
                 name="lang"
                 classNamePrefix="select"
                 options={languageOptions}
+                value={languageOptions[0]}
                 styles={{ container: () => ({ height: 44, width: 320 }) }}
             />
         </SelectContainer>
