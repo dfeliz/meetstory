@@ -10,16 +10,6 @@ function auth({interactive = true}) {
     })
 }
 
-async function saveToken(token) {
-    return ChromeStorageService.set({ gToken: token });
-}
-
-async function getToken() {
-    return ChromeStorageService.get('gToken').then(({ gToken }) => {
-        return gToken;
-    })
-}
-
 function removeToken() {
     return new Promise((resolve, reject) => {
         return ChromeStorageService.set({ gToken: {} })
@@ -43,8 +33,6 @@ function getProfileInfo() {
 
 export default {
     auth,
-    getToken,
-    saveToken,
     removeToken,
     getProfileInfo,
 }

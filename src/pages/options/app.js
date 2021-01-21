@@ -14,7 +14,7 @@ import Cards from './components/cards';
 import Sidebar from './components/sidebarMenu'
 import { OptionsModal, ChatModal, DeleteModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
-import { auth, saveToken, disconnect, checkAuth, deleteChat } from './services';
+import { auth, disconnect, checkAuth, deleteChat } from './services';
 import { chatInitialState } from './utils/state';
 
 import Logo from '../../icons/logo.svg';
@@ -49,7 +49,6 @@ class App extends Component {
       if (!isAuthenticated) {
         auth().then((res) => {
           if (res.success) {
-            saveToken(res.token)
             this.setState({ isAuthenticated: true })
           }
         }).finally((() => resolve()))

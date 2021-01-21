@@ -31,12 +31,6 @@ chrome.runtime.onMessage.addListener(
         else if (request.messageType === 'checkAuth') {
             AuthService.auth({ interactive: false }).then((token) => sendResponse({ message: token }))
         }
-        else if (request.messageType === 'saveToken') {
-            AuthService.saveToken(request.message).then(() => sendResponse({ message: 'Token saved'}))
-        }
-        else if (request.messageType === 'getToken') {
-            AuthService.getToken().then((token) => sendResponse({ message: token }))
-        }
         else if (request.messageType === 'removeToken') {
             AuthService.removeToken().then(() => sendResponse({ message: 'Token removed' }))
         }

@@ -23,7 +23,6 @@ export function getAllChats() {
  */
 export function getFilteredChats(callback) {
     return getAllChats().then((response) => {
-
         const filteredChats = response.filter((chat) => {
             const chatProperties = Object.values(chat)[0];
             chatProperties.id = Object.keys(chat)[0];
@@ -98,14 +97,6 @@ export function saveToken(token) {
                 reject(`[ERROR] Token not saved.`);
             }
             resolve({ success: true })
-        })
-    })
-}
-
-export function getToken() {
-    return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ messageType: 'getToken' }, (response) => {
-            resolve(response.message)
         })
     })
 }
