@@ -1,5 +1,4 @@
 import React from 'react';
-import Switch from 'react-switch';
 import Select from 'react-select';
 
 import {
@@ -10,9 +9,7 @@ import ModalBase from './modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';
-import {
-    getAutoSave, toggleAutoSave
-} from '../../services'
+import { getAutoSave } from '../../services'
 
 const languageOptions = [
     { value: 'english', label: 'English' },
@@ -39,29 +36,12 @@ class OptionsModal extends React.Component {
         });
     }
 
-    handleSwitchToggle = () => {
-        const { autoSave } = this.state;
-        toggleAutoSave(autoSave)
-        this.obtainSavedState();
-    }
-
-
     handleGoogleConnection = () => {
         const { handleAuthentication } = this.props;
         this.setState({ isGoogleButtonDisabled: true })
         handleAuthentication().finally(() => {
             this.setState({ isGoogleButtonDisabled: false })
         })
-    }
-
-    renderSwitch = () => {
-        const { autoSave } = this.state;
-        return (
-            <Switch
-                checked={autoSave}
-                onChange={this.handleSwitchToggle}
-            />
-        )
     }
 
     renderGoogleButton = () => (
@@ -101,11 +81,6 @@ class OptionsModal extends React.Component {
                         Title="Conexión con Google"
                         Description="Conecta con Google para guardar tus meetstories en Google Drive."
                         renderComponent={this.renderGoogleButton}
-                    />
-                    <SettingRow
-                        Title="Guardado automático"
-                        Description="Guarda los meetstories automáticamente en tu Google Drive."
-                        renderComponent={this.renderSwitch}
                     />
                 </Section>
                 <Separator />
