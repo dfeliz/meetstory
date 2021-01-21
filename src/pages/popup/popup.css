@@ -28,6 +28,16 @@ body {
     background-color: #681111 !important;
 }
 
+.disabled {
+    cursor: not-allowed;
+    color: #adadad !important;
+    background-color: #d8d8d8 !important;
+}
+
+.disabled:hover {
+    background-color: #d8d8d8 !important;
+}
+
 #primaryButton {
     padding: 13.5px  106px;
     background-color: #178E74;

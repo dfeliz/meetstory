@@ -55,7 +55,7 @@ class App extends Component {
         </div>
           <h1 style={Title}>Meetstory for Google Meet</h1>
         <div style={TopContainer}>
-          <button id="primaryButton" className={`${ isSaving && 'danger'} button`} onClick={toggleSave}>
+          <button id="primaryButton" className={`${ isSaving && 'danger'} ${checked && 'disabled'} button`} onClick={toggleSave} disabled={checked}>
             {
               isSaving ? stopSavingText : startSavingText
             }
