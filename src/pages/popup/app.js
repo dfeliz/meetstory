@@ -53,7 +53,7 @@ class App extends Component {
         <div style={LogoContainer}>
           <img src={logo}></img>
         </div>
-          <h1 style={Title}>Meetstory for Google Meets</h1>
+          <h1 style={Title}>Meetstory for Google Meet</h1>
         <div style={TopContainer}>
           <button id="primaryButton" className={`${ isSaving && 'danger'} button`} onClick={toggleSave}>
             {
@@ -66,7 +66,7 @@ class App extends Component {
           <h1 style={Text}>Guardar chats automaticamente</h1>
         </div>
         <div style={BottomContainer}>
-          <button id="secondaryButton" className="button" onClick={this.handleOptions}>Mis meetstories</button>
+          <button id="secondaryButton" className="button" onClick={this.handleOptions}>Mis Meetstories</button>
         </div>
       </div>
     );

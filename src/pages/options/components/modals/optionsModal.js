@@ -49,7 +49,7 @@ class OptionsModal extends React.Component {
     handleGoogleConnection = () => {
         const { handleAuthentication } = this.props;
         this.setState({ isGoogleButtonDisabled: true })
-        handleAuthentication().then(() => {
+        handleAuthentication().finally(() => {
             this.setState({ isGoogleButtonDisabled: false })
         })
     }
