@@ -147,3 +147,26 @@ export function toggleAutoSave(prevState) {
         });
     })
 }
+
+
+export function saveTranslation(translationLenguage) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'saveTranslation', message: translationLenguage }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject(`[ERROR] translation Lenguage not saved.`);
+            }
+            resolve({ success: true })
+        })
+    })
+}
+
+export function getTranslation() {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'getTranslation' }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject("Couldn't get translation lenguaje")
+            }
+            resolve(response.message);
+        });
+    })
+}
