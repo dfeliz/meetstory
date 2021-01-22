@@ -9,36 +9,38 @@ import ModalBase from './modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';
-import { getAutoSave } from '../../services'
+import { getTranslation, saveTranslation } from '../../services'
 
 const languageOptions = [
-    { value: 'FR', label: 'Francés' },
-    { value: 'EN', label: 'Inglés' },
-    { value: 'IT', label: 'Italiano' },
-    { value: 'ZH', label: 'Mandarín' },
-    { value: 'PT', label: 'Portugués' },
+    { value: 'fr', label: 'Francés' },
+    { value: 'en', label: 'Inglés' },
+    { value: 'it', label: 'Italiano' },
+    { value: 'zh', label: 'Mandarín' },
+    { value: 'pt', label: 'Portugués' },
 ]
 
 class OptionsModal extends React.Component {
     state = {
         autoSave: false,
         isGoogleButtonDisabled: false,
+        translateLenguage: ""
     }
 
-    constructor(props) {
-        super(props);
-    }
-
-    
     componentDidMount() {
-        this.obtainSavedState();
+        this.obtainTranslationLenguage();
     }
 
-    obtainSavedState = () => {
-        getAutoSave().then((checkStatus) => {
-            this.setState({ autoSave: checkStatus });
+    obtainTranslationLenguage = () => {
+        getTranslation().then((lenguage) => {
+            this.setState({ translateLenguage: lenguage });
         });
     }
+
+    setTranslationLenguage = (selectedLenguage) => {
+        saveTranslation(selectedLenguage);
+        this.setState({ translateLenguage: selectedLenguage });
+    }
+
 
     handleGoogleConnection = () => {
         const { handleAuthentication } = this.props;
@@ -62,8 +64,9 @@ class OptionsModal extends React.Component {
                 name="lang"
                 classNamePrefix="select"
                 options={languageOptions}
-                value={languageOptions[0]}
+                value={this.state.translateLenguage}
                 styles={{ container: () => ({ height: 44, width: 320 }) }}
+                onChange={this.setTranslationLenguage}
             />
         </SelectContainer>
     )

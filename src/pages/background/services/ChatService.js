@@ -100,6 +100,16 @@ async function getAutoSave() {
     });
 }
 
+async function getTranslation() {
+    return ChromeStorageService.get('translationLenguage').then(({ translationLenguage }) => {
+        return translationLenguage;
+    });
+}
+
+async function saveTranslation(lenguage) {
+    await ChromeStorageService.set({ ['translationLenguage']: lenguage });
+}
+
 export default {
     createChat,
     getUrl,
@@ -111,4 +121,6 @@ export default {
     toggleAutoSave,
     getAutoSave,
     deleteChat,
+    getTranslation,
+    saveTranslation,
 }

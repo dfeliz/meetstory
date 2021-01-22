@@ -94,7 +94,7 @@ const Menu = (props) => {
             <ItemHeader>Exportar traducido del</ItemHeader>
             <Item
                 leftIcon={faLanguage}
-                onClick={() => onClick(() => handdleTranslation(props.chatData, "en", "es"))}
+                onClick={() => onClick(() => handdleTranslation(props.chatData))}
             >
                 Inglés
             </Item>

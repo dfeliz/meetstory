@@ -1,16 +1,17 @@
 import { downloadChat } from '../utils/download'
+import { getTranslation } from './index'
 
-const translateText = (chatData, sourceLenguage, targetLenguage) => {
+const translateText = (chatData) => {
 
 	const chatMessages = chatData.messages.join('\r\n');
-	
+
 	var myHeaders = new Headers();
 	myHeaders.append("Content-Type", "application/json; charset=utf-8");
 
 	var requestBody = {
 		"q": chatMessages,
 		"source": sourceLenguage,
-		"target": targetLenguage,
+		"target": "es",
 		"format": "text",
 	}
 
