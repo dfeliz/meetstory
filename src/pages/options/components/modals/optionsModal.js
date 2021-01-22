@@ -12,7 +12,11 @@ import GoogleButton from './components/GoogleButton';
 import { getAutoSave } from '../../services'
 
 const languageOptions = [
-    { value: 'english', label: 'English' },
+    { value: 'FR', label: 'Francés' },
+    { value: 'EN', label: 'Inglés' },
+    { value: 'IT', label: 'Italiano' },
+    { value: 'ZH', label: 'Mandarín' },
+    { value: 'PT', label: 'Portugués' },
 ]
 
 class OptionsModal extends React.Component {
@@ -55,7 +59,6 @@ class OptionsModal extends React.Component {
     renderLanguageSelect = () => (
         <SelectContainer>
             <Select
-                isDisabled
                 name="lang"
                 classNamePrefix="select"
                 options={languageOptions}
@@ -74,6 +77,7 @@ class OptionsModal extends React.Component {
                 style={{
                     width: 966,
                     padding: 60,
+                    overflow: 'visible',
                 }}
             >
                 <Section title="Configuración de Google Drive">
