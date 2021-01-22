@@ -102,12 +102,12 @@ async function getAutoSave() {
 
 async function getTranslation() {
     return ChromeStorageService.get('translationLenguage').then(({ translationLenguage }) => {
-        return translationLenguage;
+        return JSON.parse(translationLenguage);
     });
 }
 
 async function saveTranslation(lenguage) {
-    await ChromeStorageService.set({ ['translationLenguage']: lenguage });
+    await ChromeStorageService.set({ ['translationLenguage']: JSON.stringify(lenguage) });
 }
 
 export default {

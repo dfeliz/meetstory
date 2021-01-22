@@ -1,7 +1,7 @@
 import { downloadChat } from '../utils/download'
 import { getTranslation } from './index'
 
-const translateText = (chatData) => {
+const translateText = (chatData, sourceLenguage) => {
 
 	const chatMessages = chatData.messages.join('\r\n');
 
