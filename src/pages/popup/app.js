@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './actions';
-import Switch from 'react-switch';
-import logo from '../../icons/logo.svg'
+
 import './popup.css';
-import { getAutoSave, toggleAutoSave } from './services'
+import Switch from 'react-switch';
+import * as actions from './actions';
+import logo from '../../icons/logo.svg';
+import { isGoogleMeetURL } from './helpers';
+import { getAutoSave, toggleAutoSave } from './services';
 
 import {
   TopContainer,
@@ -18,22 +20,33 @@ import {
 
 class App extends Component {
   state = {
-    checked: false,
+    isOnGoogleMeet: false,
+    isAutoSaveEnabled: false,
   }
 
   componentDidMount() {
     this.obtainSavedState();
+    this.checkLocation();
+  }
+
+  checkLocation = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (res) => {
+      const currentUrl = res[0].url;
+      if (isGoogleMeetURL(currentUrl)) {
+        this.setState({ isOnGoogleMeet: true });
+      }
+    })
   }
 
   obtainSavedState = () => {
     getAutoSave().then((checkStatus) => {
-      this.setState({ checked: checkStatus });
+      this.setState({ isAutoSaveEnabled: checkStatus });
     });
   }
 
   handleChange = () => {
-    const { checked } = this.state;
-    toggleAutoSave(checked)
+    const { isAutoSaveEnabled } = this.state;
+    toggleAutoSave(isAutoSaveEnabled)
     this.obtainSavedState();
   }
 
@@ -43,10 +56,12 @@ class App extends Component {
   
   render() {
     const { toggleSave, isSaving } = this.props;
-    const { checked }  = this.state;
+    const { isAutoSaveEnabled, isOnGoogleMeet }  = this.state;
 
     const startSavingText = 'Empezar a guardar';
     const stopSavingText = 'Parar de guardar';
+
+    const saveShouldBeDisabled = !isOnGoogleMeet || isAutoSaveEnabled;
 
     return (
       <div style={Background}>
@@ -55,14 +70,14 @@ class App extends Component {
         </div>
           <h1 style={Title}>Meetstory for Google Meet</h1>
         <div style={TopContainer}>
-          <button id="primaryButton" className={`${ isSaving && 'danger'} ${checked && 'disabled'} button`} onClick={toggleSave} disabled={checked}>
+          <button id="primaryButton" className={`${ isSaving && 'danger'} ${saveShouldBeDisabled && 'disabled'} button`} onClick={toggleSave} disabled={saveShouldBeDisabled}>
             {
               isSaving ? stopSavingText : startSavingText
             }
           </button>
         </div>
         <div style={MiddleContainer}>
-          <Switch className="react-switch" onChange={this.handleChange} checked={checked}></Switch>
+          <Switch className="react-switch" onChange={this.handleChange} checked={isAutoSaveEnabled}></Switch>
           <h1 style={Text}>Guardar chats automaticamente</h1>
         </div>
         <div style={BottomContainer}>
