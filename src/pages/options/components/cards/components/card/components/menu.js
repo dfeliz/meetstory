@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf, faFileAlt, faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { faGoogleDrive } from '@fortawesome/free-brands-svg-icons';
 import { useToasts } from 'react-toast-notifications';
 
+import { getTranslation } from '../../../../../services';
 import { COLORS } from '../../../../../../../styles/colors';
 import { downloadChat } from '../../../../../utils/download';
 import { fetchToken, uploadFile } from '../../../../../utils/drive';
@@ -33,6 +34,13 @@ const Item = (props) => (
 const Menu = (props) => {
     const { addToast, removeToast } = useToasts();
     const { dropdownToggle, top, right, isAuthenticated } = props;
+    const [translateLenguage, setTranslateLenguage] = useState({});
+
+    useEffect(() => {
+        getTranslation().then((storedLenguage) => {
+            setTranslateLenguage(storedLenguage);
+        })
+    }, [])
 
     const onClick = (fn) => {
         fn();
@@ -54,10 +62,10 @@ const Menu = (props) => {
         }
     }
 
-    const handdleTranslation = async (chatData, sourceLenguage, targetLenguage) => {
+    const handdleTranslation = async (chatData, sourceLenguage) => {
         addToast(`El meetstory traducido se descargara en breve...`, { appearance: "info", id: "translating", autoDismiss: false });
         try {
-            translateText(chatData, sourceLenguage, targetLenguage);
+            translateText(chatData, sourceLenguage);
             setTimeout(() => {
                 removeToast("translating");
                 addToast(`Traduccion completeda.`, { appearance: "success" });
@@ -94,9 +102,9 @@ const Menu = (props) => {
             <ItemHeader>Exportar traducido del</ItemHeader>
             <Item
                 leftIcon={faLanguage}
-                onClick={() => onClick(() => handdleTranslation(props.chatData, "en", "es"))}
+                onClick={() => onClick(() => handdleTranslation(props.chatData, translateLenguage.value))}
             >
-                Inglés
+                {translateLenguage.label}
             </Item>
         </DropdownMenu>
     );

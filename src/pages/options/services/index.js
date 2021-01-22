@@ -23,7 +23,6 @@ export function getAllChats() {
  */
 export function getFilteredChats(callback) {
     return getAllChats().then((response) => {
-
         const filteredChats = response.filter((chat) => {
             const chatProperties = Object.values(chat)[0];
             chatProperties.id = Object.keys(chat)[0];
@@ -102,14 +101,6 @@ export function saveToken(token) {
     })
 }
 
-export function getToken() {
-    return new Promise((resolve) => {
-        chrome.runtime.sendMessage({ messageType: 'getToken' }, (response) => {
-            resolve(response.message)
-        })
-    })
-}
-
 export function checkAuth() {
     return new Promise((resolve, reject) => {
         chrome.runtime.sendMessage({ messageType: 'checkAuth' }, (response) => {
@@ -152,6 +143,29 @@ export function toggleAutoSave(prevState) {
                 reject("Couldn't change saved state");
             }
             console.log(response.message)
+            resolve(response.message);
+        });
+    })
+}
+
+
+export function saveTranslation(translationLenguage) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'saveTranslation', message: translationLenguage }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject(`[ERROR] translation Lenguage not saved.`);
+            }
+            resolve({ success: true })
+        })
+    })
+}
+
+export function getTranslation() {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'getTranslation' }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject("Couldn't get translation lenguaje")
+            }
             resolve(response.message);
         });
     })

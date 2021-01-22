@@ -31,12 +31,6 @@ chrome.runtime.onMessage.addListener(
         else if (request.messageType === 'checkAuth') {
             AuthService.auth({ interactive: false }).then((token) => sendResponse({ message: token }))
         }
-        else if (request.messageType === 'saveToken') {
-            AuthService.saveToken(request.message).then(() => sendResponse({ message: 'Token saved'}))
-        }
-        else if (request.messageType === 'getToken') {
-            AuthService.getToken().then((token) => sendResponse({ message: token }))
-        }
         else if (request.messageType === 'removeToken') {
             AuthService.removeToken().then(() => sendResponse({ message: 'Token removed' }))
         }
@@ -48,6 +42,12 @@ chrome.runtime.onMessage.addListener(
         }
         else if (request.messageType === 'getAutoSave') {
             ChatService.getAutoSave().then((AutoSave) => sendResponse({ message: AutoSave }))
+        }
+        else if (request.messageType === 'getTranslation') {
+            ChatService.getTranslation().then((lenguage) => sendResponse({ message: lenguage }))
+        }
+        else if (request.messageType === 'saveTranslation') {
+            ChatService.saveTranslation(request.message).then((response) => sendResponse({ message: 'Translation lenguage changed '}))
         }
         else if (request.messageType === 'listenTabClose') {
             ListenerService.listenTabClose(store).then(() => sendResponse({ message: 'Listening...' }))

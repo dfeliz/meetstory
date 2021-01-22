@@ -1,5 +1,4 @@
 import React from 'react';
-import Switch from 'react-switch';
 import Select from 'react-select';
 
 import {
@@ -10,58 +9,45 @@ import ModalBase from './modalBase';
 import Section from './components/Section';
 import SettingRow from './components/SettingRow';
 import GoogleButton from './components/GoogleButton';
-import {
-    getAutoSave, toggleAutoSave
-} from '../../services'
+import { getTranslation, saveTranslation } from '../../services'
 
 const languageOptions = [
-    { value: 'english', label: 'English' },
+    { value: 'fr', label: 'Francés' },
+    { value: 'en', label: 'Inglés' },
+    { value: 'it', label: 'Italiano' },
+    { value: 'zh', label: 'Mandarín' },
+    { value: 'pt', label: 'Portugués' },
 ]
 
 class OptionsModal extends React.Component {
     state = {
         autoSave: false,
         isGoogleButtonDisabled: false,
+        translateLenguage: ""
     }
 
-    constructor(props) {
-        super(props);
-    }
-
-    
     componentDidMount() {
-        this.obtainSavedState();
+        this.obtainTranslationLenguage();
     }
 
-    obtainSavedState = () => {
-        getAutoSave().then((checkStatus) => {
-            this.setState({ autoSave: checkStatus });
+    obtainTranslationLenguage = () => {
+        getTranslation().then((lenguage) => {
+            this.setState({ translateLenguage: lenguage });
         });
     }
 
-    handleSwitchToggle = () => {
-        const { autoSave } = this.state;
-        toggleAutoSave(autoSave)
-        this.obtainSavedState();
+    setTranslationLenguage = (selectedLenguage) => {
+        saveTranslation(selectedLenguage);
+        this.setState({ translateLenguage: selectedLenguage });
     }
 
 
     handleGoogleConnection = () => {
         const { handleAuthentication } = this.props;
         this.setState({ isGoogleButtonDisabled: true })
-        handleAuthentication().then(() => {
+        handleAuthentication().finally(() => {
             this.setState({ isGoogleButtonDisabled: false })
         })
-    }
-
-    renderSwitch = () => {
-        const { autoSave } = this.state;
-        return (
-            <Switch
-                checked={autoSave}
-                onChange={this.handleSwitchToggle}
-            />
-        )
     }
 
     renderGoogleButton = () => (
@@ -75,12 +61,12 @@ class OptionsModal extends React.Component {
     renderLanguageSelect = () => (
         <SelectContainer>
             <Select
-                isDisabled
                 name="lang"
                 classNamePrefix="select"
                 options={languageOptions}
-                value={languageOptions[0]}
+                value={this.state.translateLenguage}
                 styles={{ container: () => ({ height: 44, width: 320 }) }}
+                onChange={this.setTranslationLenguage}
             />
         </SelectContainer>
     )
@@ -94,6 +80,7 @@ class OptionsModal extends React.Component {
                 style={{
                     width: 966,
                     padding: 60,
+                    overflow: 'visible',
                 }}
             >
                 <Section title="Configuración de Google Drive">
@@ -101,11 +88,6 @@ class OptionsModal extends React.Component {
                         Title="Conexión con Google"
                         Description="Conecta con Google para guardar tus meetstories en Google Drive."
                         renderComponent={this.renderGoogleButton}
-                    />
-                    <SettingRow
-                        Title="Guardado automático"
-                        Description="Guarda los meetstories automáticamente en tu Google Drive."
-                        renderComponent={this.renderSwitch}
                     />
                 </Section>
                 <Separator />
