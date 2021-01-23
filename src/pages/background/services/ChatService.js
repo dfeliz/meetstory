@@ -102,6 +102,9 @@ async function getAutoSave() {
 
 async function getTranslation() {
     return ChromeStorageService.get('translationLenguage').then(({ translationLenguage }) => {
+        if (translationLenguage === undefined) {
+            return { value: 'en', label: 'Inglés' }; // default value
+        }
         return JSON.parse(translationLenguage);
     });
 }
