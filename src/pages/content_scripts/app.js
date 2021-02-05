@@ -12,37 +12,56 @@ import {
     sidePanelChildJsName
 } from '../../selectors';
 
-let intervalRunning = false;
-let intervalID;
+var intervalID = null;
+var outisdeManualButtonActive = false;
 
 class App extends Component {
     state = {
-        isAutoSaveEnabled: false,
+        isManualButtonActive: false,
     }
 
     componentDidMount() {
-        const { toggleSave, isSaving } = this.props;
-        if (isSaving) {
-            toggleSave();
-        }
+        this.observeMeeting()
+            .then(() => {
+                // console.log('Chat detected. Checking orders.');
+                getAutoSave().then((isAutoSaveEnabled) => {
+                    const { isSaving: isManualButtonActive } = this.props;
+                    
+                    if (isManualButtonActive) {
+                        outisdeManualButtonActive = true;
+                    }
 
-        getAutoSave().then((response) => {
-            this.setState({ isAutoSaveEnabled: response }, this.observeMeeting)
-        })
+                    if (isManualButtonActive || isAutoSaveEnabled) {
+                        intervalID = this.startSavingChat();
+                    }
+                })
+            })
+            .catch((err) => console.log('Meeting observer throwed an error.', err));
     }
 
     componentDidUpdate() {
-        this.saveChat();
+        const { isSaving: isManualButtonActive } = this.props;
+
+        if (!isManualButtonActive && outisdeManualButtonActive) {
+            this.stopInterval();
+            outisdeManualButtonActive = false;
+            return;
+        }
+
+        const interval = this.startSavingChat()
+        intervalID = interval;
+
+        if (isManualButtonActive && !outisdeManualButtonActive) {
+            outisdeManualButtonActive = true;
+        }
     }
 
     observeMeeting = () => {
-        const { toggleSave } = this.props;
-        const { isAutoSaveEnabled } = this.state;
-        if (isAutoSaveEnabled) {
+        return new Promise((resolve) => {
             const appContainerElement = document.querySelector(applicationContainer);
             
             const callback = (mutationsList, observer) => {
-                let startSaving = false;
+                let targetDetected = false;
                 for(const mutation of mutationsList) {
                     const jsNames = [sidePanelJsName, sidePanelChildJsName];
                     const isSidePanel = jsNames.includes(mutation?.target?.attributes?.jsname?.value)
@@ -51,61 +70,54 @@ class App extends Component {
                         const element = document.querySelector(chatLayoutSelector);
                         if (element !== null) {
                             listenTabClose();
-                            startSaving = true;
+                            targetDetected = true;
                             observer.disconnect();
                         }
                     }
                 }
-                if (startSaving) {
-                    toggleSave(true);
+                if (targetDetected) {
+                    resolve(true);
                 }
             };
-
+    
             const observerConfig = {
                 childList: true,
                 subtree: true,
             };
-
+    
             const mutationObserver = new MutationObserver(callback);
-
+    
             mutationObserver.observe(appContainerElement, observerConfig);
-        }
+        })
     }
 
-    saveChat = () => {
-        const { isSaving } = this.props;
+    startSavingChat = () => {
+        const chat = {
+            title: document.querySelector(meetTitle).innerHTML,
+            code: document.title.slice(7),
+        }
+        chrome.runtime.sendMessage({ messageType: "create", message: chat });
 
-        if (isSaving) {
-
-            const chat = {
-                title: document.querySelector(meetTitle).innerHTML,
-                code: document.title.slice(7),
-            }
-            chrome.runtime.sendMessage({ messageType: "create", message: chat }, (response) => {
-            });
-
-            if (document.querySelector(chatLayoutSelector)) {
-                intervalID = setInterval(this.getChats, 1500);
-                intervalRunning = true;
-            } else {
-            }
-        } else {
-            if (intervalRunning) {
-                intervalRunning = false;
-                clearInterval(intervalID);
-            }
+        if (document.querySelector(chatLayoutSelector)) {
+            intervalID = setInterval(this.getChats, 1500);
+            intervalRunning = true;
+            return intervalID;
         }
     }
 
     getChats() {
         chrome.runtime.sendMessage({ messageType: "getUrl" }, (response) => {
-            console.log('[URL]: ', response);
+            // console.log('[URL]: ', response);
         });
         const chatChildrenArray = Array.from(document.querySelector(chatContainerSelector).childNodes);
         const dialogs = chatChildrenArray.map(chatChildrenMapper).reduce((a, b) => [...a, ...b], []);
         chrome.runtime.sendMessage({ messageType: "update", message: dialogs }, (response) => {
-            console.log('[APP]: ', response.message);
+            // console.log('[APP]: ', response.message);
         });
+    }
+
+    stopInterval = () => {
+        clearInterval(intervalID)
     }
 
     render() {
