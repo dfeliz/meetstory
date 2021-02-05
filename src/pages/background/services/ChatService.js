@@ -96,6 +96,9 @@ async function toggleAutoSave(prevState) {
 
 async function getAutoSave() {
     return ChromeStorageService.get('AutoSave').then(({ AutoSave }) => {
+        if (AutoSave === undefined) {
+            return false;
+        }
         return AutoSave;
     });
 }
