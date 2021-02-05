@@ -14,6 +14,7 @@ import {
 
 var intervalID = null;
 var outisdeManualButtonActive = false;
+var chatFound = false;
 
 class App extends Component {
     state = {
@@ -24,6 +25,7 @@ class App extends Component {
         this.observeMeeting()
             .then(() => {
                 // console.log('Chat detected. Checking orders.');
+                chatFound = true;
                 getAutoSave().then((isAutoSaveEnabled) => {
                     const { isSaving: isManualButtonActive } = this.props;
                     
@@ -92,16 +94,19 @@ class App extends Component {
     }
 
     startSavingChat = () => {
-        const chat = {
-            title: document.querySelector(meetTitle).innerHTML,
-            code: document.title.slice(7),
-        }
-        chrome.runtime.sendMessage({ messageType: "create", message: chat });
-
-        if (document.querySelector(chatLayoutSelector)) {
-            intervalID = setInterval(this.getChats, 1500);
-            intervalRunning = true;
-            return intervalID;
+        if (chatFound) {
+            const chat = {
+                title: document.querySelector(meetTitle).innerHTML,
+                code: document.title.slice(7),
+            }
+            chrome.runtime.sendMessage({ messageType: "create", message: chat });
+    
+            if (document.querySelector(chatLayoutSelector)) {
+                intervalID = setInterval(this.getChats, 1500);
+                return intervalID;
+            }
+        } else {
+            console.log('Tried to save but tool is not ready.');
         }
     }
 
