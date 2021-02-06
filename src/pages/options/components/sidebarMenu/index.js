@@ -30,7 +30,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { openSettings, userFullName } = this.props;
+    const { openSettings, userFullName, userPhoto } = this.props;
 
     return (
       <SuperContainer>
@@ -41,6 +41,7 @@ class Sidebar extends Component {
         <UserCard
           fullName={userFullName}
           openSettings={openSettings}
+          userPhoto={userPhoto}
         />
       </SuperContainer>
     );

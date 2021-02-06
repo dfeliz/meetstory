@@ -17,7 +17,7 @@ import { nonDeleted, deleted, favorites } from './utils/filters';
 import { auth, disconnect, checkAuth, deleteChat, obtainName } from './services';
 import { chatInitialState } from './utils/state';
 import Logo from '../../icons/logo.svg';
-import { getName } from './services/accountInfo';
+import { getName, getPhoto } from './services/accountInfo';
 
 class App extends Component {
   state = {
@@ -31,6 +31,7 @@ class App extends Component {
     reloadFn: this.renderChats,
     selectedChat: chatInitialState,
     userFullName: "",
+    userPhoto: "",
   }
 
   componentDidMount() {
@@ -41,7 +42,7 @@ class App extends Component {
   checkIsAuthenticated = () => {
     checkAuth().then((response) => {
       this.setState({ isAuthenticated: true })
-      this.obtainUsername(response);
+      this.obtainUserInfo(response);
     })
   }
 
@@ -52,7 +53,7 @@ class App extends Component {
         auth().then((res) => {
           if (res.success) {
             this.setState({ isAuthenticated: true})
-            this.obtainUsername(res.token);
+            this.obtainUserInfo(res.token);
           }
         }).finally((() => resolve()))
       }
@@ -66,9 +67,12 @@ class App extends Component {
     })
   }
 
-  obtainUsername = (token) => {
+  obtainUserInfo = (token) => {
     getName(token).then((UserName) => {
       this.setState({ userFullName: UserName})
+    })
+    getPhoto(token).then((photo) => {
+      this.setState({ userPhoto: photo})
     })
   }
   openOptionsModal = () => this.setState({ isOptionsModalOpen: true });
@@ -186,6 +190,7 @@ class App extends Component {
           handlers={sidebarHandlers}
           userFullName={this.state.userFullName}
           openSettings={this.openOptionsModal}
+          userPhoto={this.state.userPhoto}
         />
         <Page>
           {loading

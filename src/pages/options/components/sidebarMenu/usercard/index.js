@@ -16,7 +16,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const UserCard = ({
     fullName,
-    openSettings
+    openSettings,
+    userPhoto
 }) => {
 
     const isAnonymous = fullName.length === 0;
@@ -25,7 +26,7 @@ const UserCard = ({
         <SuperContainer>
             <Card>
                 <UserImgContainer>
-                    <UserImg src={DefaultImg} alt="user" />
+                    <UserImg src={userPhoto} alt="user" />
                 </UserImgContainer>
                 <TextsContainer>
                     <UpperText>
@@ -36,7 +37,7 @@ const UserCard = ({
                     </LowerText>
                 </TextsContainer>
                 <ButtonContainer>
-                    <FontAwesomeIcon 
+                    <FontAwesomeIcon
                         icon={faCog}
                         size="2x"
                         style={{ cursor: "pointer", color: COLORS.WHITE }}
