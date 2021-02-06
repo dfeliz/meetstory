@@ -17,10 +17,6 @@ var outisdeManualButtonActive = false;
 var chatFound = false;
 
 class App extends Component {
-    state = {
-        isManualButtonActive: false,
-    }
-
     componentDidMount() {
         this.observeMeeting()
             .then(() => {
@@ -78,7 +74,7 @@ class App extends Component {
                     }
                 }
                 if (targetDetected) {
-                    resolve(true);
+                    resolve();
                 }
             };
     
