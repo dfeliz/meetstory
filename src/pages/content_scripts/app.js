@@ -16,6 +16,7 @@ var intervalID = null;
 var outisdeManualButtonActive = false;
 var chatFound = false;
 var currentChatId = null;
+var chatPaused = false;
 
 class App extends Component {
     componentDidMount() {
@@ -46,6 +47,7 @@ class App extends Component {
             this.stopInterval();
             deleteChatIfEmpty(currentChatId);
             outisdeManualButtonActive = false;
+            chatPaused = true;
             return;
         }
 
@@ -92,6 +94,11 @@ class App extends Component {
     }
 
     startSavingChat = () => {
+        if (chatPaused) {
+            intervalID = setInterval(this.getChats, 1500);
+            return;
+        }
+
         if (chatFound) {
             const chat = {
                 title: document.querySelector(meetTitle).innerHTML,
