@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import { chatChildrenMapper } from './mappers';
-import { getAutoSave, listenTabClose } from './services';
+import { getAutoSave, listenTabClose, deleteChatIfEmpty } from './services';
 import {
     meetTitle,
     sidePanelJsName,
@@ -15,6 +15,7 @@ import {
 var intervalID = null;
 var outisdeManualButtonActive = false;
 var chatFound = false;
+var currentChatId = null;
 
 class App extends Component {
     componentDidMount() {
@@ -40,9 +41,10 @@ class App extends Component {
 
     componentDidUpdate() {
         const { isSaving: isManualButtonActive } = this.props;
-
-        if (!isManualButtonActive && outisdeManualButtonActive) {
+        const stoppedSaving = !isManualButtonActive && outisdeManualButtonActive;
+        if (stoppedSaving) {
             this.stopInterval();
+            deleteChatIfEmpty(currentChatId);
             outisdeManualButtonActive = false;
             return;
         }
@@ -95,7 +97,9 @@ class App extends Component {
                 title: document.querySelector(meetTitle).innerHTML,
                 code: document.title.slice(7),
             }
-            chrome.runtime.sendMessage({ messageType: "create", message: chat });
+            chrome.runtime.sendMessage({ messageType: "create", message: chat }, (response) => {
+                currentChatId = response.data.chatId;
+            });
     
             if (document.querySelector(chatLayoutSelector)) {
                 intervalID = setInterval(this.getChats, 1500);

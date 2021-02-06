@@ -19,3 +19,14 @@ export function listenTabClose() {
         });
     })
 }
+
+export function deleteChatIfEmpty(id) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ messageType: 'deleteChatIfEmpty', message: id }, (response) => {
+            if (response.message === undefined || response.message === null) {
+                reject("[deleteChatIfEmpty]: Error.")
+            }
+            resolve(response.message);
+        });
+    })  
+}
