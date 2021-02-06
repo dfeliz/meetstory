@@ -39,7 +39,15 @@ class App extends Component {
   }
 
   obtainSavedState = () => {
+    const { isSaving, toggleSave } = this.props;
     getAutoSave().then((checkStatus) => {
+      const buttonOffToggleOn = !isSaving && checkStatus
+      const buttonOnToggleOff = isSaving && !checkStatus
+      if (buttonOffToggleOn || buttonOnToggleOff) {
+        // Syncs button with toggle
+        toggleSave();
+      }
+
       this.setState({ isAutoSaveEnabled: checkStatus });
     });
   }
@@ -70,7 +78,12 @@ class App extends Component {
         </div>
           <h1 style={Title}>Meetstory for Google Meet</h1>
         <div style={TopContainer}>
-          <button id="primaryButton" className={`${ isSaving && 'danger'} ${saveShouldBeDisabled && 'disabled'} button`} onClick={toggleSave} disabled={saveShouldBeDisabled}>
+          <button
+            id="primaryButton"
+            className={`${ isSaving && 'danger'} ${saveShouldBeDisabled && 'disabled'} button`}
+            onClick={toggleSave}
+            disabled={saveShouldBeDisabled}
+          >
             {
               isSaving ? stopSavingText : startSavingText
             }
