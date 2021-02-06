@@ -39,23 +39,24 @@ class App extends Component {
   }
 
   obtainSavedState = () => {
-    const { isSaving, toggleSave } = this.props;
     getAutoSave().then((checkStatus) => {
-      const buttonOffToggleOn = !isSaving && checkStatus
-      const buttonOnToggleOff = isSaving && !checkStatus
-      if (buttonOffToggleOn || buttonOnToggleOff) {
-        // Syncs button with toggle
-        toggleSave();
-      }
-
       this.setState({ isAutoSaveEnabled: checkStatus });
     });
   }
 
-  handleChange = () => {
+  handleChange = (value) => {
     const { isAutoSaveEnabled } = this.state;
-    toggleAutoSave(isAutoSaveEnabled)
-    this.obtainSavedState();
+    const { isSaving, toggleSave } = this.props;
+
+    const switchOnAndButtonOff = value === true && !isSaving
+    const switchOffAndButtonOn = value === false && isSaving
+
+    if (switchOnAndButtonOff || switchOffAndButtonOn) {
+      toggleSave();
+    }
+
+    this.setState({ isAutoSaveEnabled: value });
+    toggleAutoSave(isAutoSaveEnabled);
   }
 
   handleOptions = () => {
