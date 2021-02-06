@@ -29,6 +29,7 @@ const ChatModal = ({
     toggleDelete,
     toggleFavorite,
     onRequestClose,
+    isAuthenticated,
 }) => {
     const { addToast, removeToast } = useToasts();
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -136,7 +137,7 @@ const ChatModal = ({
                         <MeetOptions aria-controls="export-menu" src={Dots} alt="options" onClick={dropdownToggle} />
                         {
                             dropdownVisible && (
-                                <Menu top={0} right={-20} chatData={selectedChat} dropdownToggle={dropdownToggle} />
+                                <Menu top={0} right={-20} chatData={selectedChat} dropdownToggle={dropdownToggle} isAuthenticated={isAuthenticated}/>
                             )
                         }
                     </Options>
