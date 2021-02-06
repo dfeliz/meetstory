@@ -17,22 +17,11 @@ function removeToken() {
                 chrome.identity.clearAllCachedAuthTokens(resolve)
                 console.log('cleared');
             })
-            .catch(reject); 
-    })
-}
-
-function getProfileInfo() {
-    return new Promise((resolve, reject) => {
-        try {
-            return chrome.identity.getProfileUserInfo(resolve)
-        } catch(err) {
-            reject(err)
-        }
+            .catch(reject);
     })
 }
 
 export default {
     auth,
     removeToken,
-    getProfileInfo,
 }

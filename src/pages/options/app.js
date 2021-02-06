@@ -14,10 +14,10 @@ import Cards from './components/cards';
 import Sidebar from './components/sidebarMenu'
 import { OptionsModal, ChatModal, DeleteModal } from './components/modals';
 import { nonDeleted, deleted, favorites } from './utils/filters';
-import { auth, disconnect, checkAuth, deleteChat } from './services';
+import { auth, disconnect, checkAuth, deleteChat, obtainName } from './services';
 import { chatInitialState } from './utils/state';
-
 import Logo from '../../icons/logo.svg';
+import { getName } from './services/accountInfo';
 
 class App extends Component {
   state = {
@@ -30,6 +30,7 @@ class App extends Component {
     isDeleteModalOpen: false,
     reloadFn: this.renderChats,
     selectedChat: chatInitialState,
+    userFullName: "",
   }
 
   componentDidMount() {
@@ -38,8 +39,9 @@ class App extends Component {
   }
 
   checkIsAuthenticated = () => {
-    checkAuth().then(() => {
+    checkAuth().then((response) => {
       this.setState({ isAuthenticated: true })
+      this.obtainUsername(response);
     })
   }
 
@@ -49,27 +51,26 @@ class App extends Component {
       if (!isAuthenticated) {
         auth().then((res) => {
           if (res.success) {
-            this.setState({ isAuthenticated: true })
+            this.setState({ isAuthenticated: true})
+            this.obtainUsername(res.token);
           }
         }).finally((() => resolve()))
       }
       else {
         disconnect().then((res) => {
           if (res.success) {
-            this.setState({ isAuthenticated: false })
+            this.setState({ isAuthenticated: false, userFullName: "" })
           }
         }).finally((() => resolve()));
       }
     })
   }
 
-  getFullName = () => {
-    if (this.state.isAuthenticated) {
-      return 'Harold Adames Montaño'
-    }
-    return '';
+  obtainUsername = (token) => {
+    getName(token).then((UserName) => {
+      this.setState({ userFullName: UserName})
+    })
   }
-
   openOptionsModal = () => this.setState({ isOptionsModalOpen: true });
 
   closeOptionsModal = () => this.setState({ isOptionsModalOpen: false });
@@ -183,7 +184,7 @@ class App extends Component {
         <Sidebar
           page={page}
           handlers={sidebarHandlers}
-          userFullName={this.getFullName()}
+          userFullName={this.state.userFullName}
           openSettings={this.openOptionsModal}
         />
         <Page>
