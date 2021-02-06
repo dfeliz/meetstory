@@ -15,9 +15,8 @@ function removeToken() {
         return ChromeStorageService.set({ gToken: {} })
             .then(() => {
                 chrome.identity.clearAllCachedAuthTokens(resolve)
-                console.log('cleared');
             })
-            .catch(reject); 
+            .catch(reject);
     })
 }
 

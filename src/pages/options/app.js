@@ -219,6 +219,7 @@ class App extends Component {
           toggleDelete={this.toggleDelete}
           onRequestClose={this.closeChatModal}
           toggleFavorite={this.toggleFavorite}
+          isAuthenticated={isAuthenticated}
         />
         <DeleteModal
           isOpen={isDeleteModalOpen}

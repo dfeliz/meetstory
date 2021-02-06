@@ -48,7 +48,7 @@ export const Options = styled.div`
     padding-bottom: 28px;
 
     & > svg {
-        padding-right: 36px;
+        margin-right: 36px;
     }
 `;
 
