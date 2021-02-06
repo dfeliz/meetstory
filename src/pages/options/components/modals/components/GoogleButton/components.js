@@ -2,14 +2,18 @@ import styled from 'styled-components';
 
 export const Icon = styled.img`
     padding: 0 16px;
+    margin-top: 15px;
+    position: absolute;
+    margin-bottom: 15px;
 `;
 
 export const Text = styled.p`
+    width: 100%;
     color: #757575;
     padding: 16px 0;
     font-size: 20px;
     line-height: 20px;
-    margin-left: 28px;
+    text-align: center;
     justify-content: center;
 `;
 
