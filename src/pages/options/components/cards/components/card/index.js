@@ -22,7 +22,7 @@ import { formatDate } from '../../../../utils/date';
 import { COLORS } from '../../../../../../styles/colors'
 
 const GenerateMessages = (chat) => {
-    return chat.slice(0, 6).map((message) => {
+    return chat.slice(Math.max(chat.length - 6, 0)).map((message) => {
         return <MeetMessages>{message}</MeetMessages>
     })
 }
