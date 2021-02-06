@@ -6,10 +6,15 @@ import ListenerService from './services/ListenerService';
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         if (request.messageType === 'create') {
-            ChatService.createChat(request.message).then(sendResponse({ message: 'Chat successfully created' }));
+            ChatService.createChat(request.message)
+                .then((id) => sendResponse({ message: 'Chat successfully created', data: { chatId: id } }))
+                .catch((err) => sendResponse({ message: err }));
         }
         else if (request.messageType === 'update') {
             ChatService.updateMessages(request.message).then(sendResponse({ message: 'Chat successfully updated' }))
+        }
+        else if (request.messageType === 'deleteChatIfEmpty') {
+            ChatService.deleteChatIfEmpty(request.message).then((message) => sendResponse({ message }))
         }
         else if (request.messageType === 'getAllChats') {
             ChatService.getAllChats().then(response => {

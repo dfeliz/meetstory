@@ -20,6 +20,7 @@ async function createChat(data) {
         ChromeStorageService.set({ savedChats: updatedSavedChats });
         ChromeStorageService.set(newChatObj);
         ChromeStorageService.set({ currentChat: newChatId });
+        return newChatId;
     });
 }
 
@@ -41,9 +42,8 @@ async function getAllChats() {
 }
 
 async function getChat(chatId) {
-    return ChromeStorageService.get(chatId).then(({ chat }) => {
-        return chat;
-    });
+    const chat = await ChromeStorageService.get(chatId)
+    return Object.values(chat)[0]
 }
 
 async function updateMessages(messages) {
@@ -69,6 +69,17 @@ async function deleteChat(id) {
         const newSavedArray = savedChats.filter((chats) => chats !== id)
         ChromeStorageService.set({ savedChats: newSavedArray });
     });
+}
+
+async function deleteChatIfEmpty(id) {
+    return getChat(id).then((chat) => {
+        if (!chat.messages.length) {
+            deleteChat(id).then(() => {
+                return "Chat deleted because it was empty.";
+            });
+        }
+        return "Chat was not empty.";
+    })
 }
 
 async function toggleFavorite(id) {
@@ -129,4 +140,5 @@ export default {
     deleteChat,
     getTranslation,
     saveTranslation,
+    deleteChatIfEmpty,
 }
