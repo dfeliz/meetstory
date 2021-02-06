@@ -26,7 +26,7 @@ const UserCard = ({
         <SuperContainer>
             <Card>
                 <UserImgContainer>
-                    <UserImg src={userPhoto} alt="user" />
+                    <UserImg src={isAnonymous ? DefaultImg : userPhoto} alt="user" />
                 </UserImgContainer>
                 <TextsContainer>
                     <UpperText>
