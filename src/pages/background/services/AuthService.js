@@ -12,13 +12,24 @@ function auth({interactive = true}) {
 
 function removeToken() {
     return new Promise((resolve, reject) => {
-        return ChromeStorageService.set({ gToken: {} })
-            .then(() => {
-                chrome.identity.clearAllCachedAuthTokens(resolve)
-            })
-            .catch(reject);
+        chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+            // Use the token.
+            if (token) {
+                  // Make a request to revoke token
+                  var xhr = new XMLHttpRequest();
+                  xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' +
+                       token);
+                  xhr.send();
+             }
+            chrome.identity.removeCachedAuthToken(
+                { 'token': token }, function () {
+                    resolve()
+                })
+          });
     })
 }
+
+
 
 export default {
     auth,
