@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "content_security_policy": "default-src https://accounts.google.com/ https://translation.googleapis.com/ https://www.googleapis.com/ https://apis.google.com/ https://content-people.googleapis.com/; script-src 'self' https://apis.google.com/ https://translation.googleapis.com/ 'unsafe-eval'; connect-src https://www.googleapis.com/ https://translation.googleapis.com/ https://content-people.googleapis.com/ 'self'; img-src * 'self' data:; style-src 'self' 'unsafe-inline';base-uri 'self';form-action 'self'",
+    "content_security_policy": "default-src https://accounts.google.com/ https://translation.googleapis.com/ https://www.googleapis.com/ https://apis.google.com/ https://content-people.googleapis.com/ https://accounts.google.com/ ; script-src 'self' https://apis.google.com/ https://translation.googleapis.com/ 'unsafe-eval'; connect-src https://www.googleapis.com/ https://translation.googleapis.com/ https://content-people.googleapis.com/ https://accounts.google.com/ 'self'; img-src * 'self' data:; style-src 'self' 'unsafe-inline';base-uri 'self';form-action 'self'",
     "name": "Meetstory",
     "description": "Tool for saving google meets chat history",
     "version": "0.3.0",
@@ -24,7 +24,7 @@
     ],
     "options_page": "pages/options.html",
     "oauth2": {
-        "client_id": "636688220685-v6q7jotrsfic4vnspcfmssfn821rjovl.apps.googleusercontent.com",
+        "client_id": "636688220685-4vnim56kkf6lekpmduqdliomk2satuaj.apps.googleusercontent.com",
         "scopes": [
             "https://www.googleapis.com/auth/drive.appdata",
             "https://www.googleapis.com/auth/drive.file",

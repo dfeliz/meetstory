@@ -10,3 +10,5 @@ export const applicationContainer = '[jsname="RFn3Rd"]';
 export const sidePanelJsName = 'Yz8Ubc';
 
 export const sidePanelChildJsName = 'o4MlPd';
+
+export const chatButton = 'snByac';
