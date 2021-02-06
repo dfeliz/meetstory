@@ -22,6 +22,7 @@ class App extends Component {
     }
 
     componentDidMount() {
+        listenTabClose();
         this.observeMeeting()
             .then(() => {
                 // console.log('Chat detected. Checking orders.');
@@ -71,7 +72,6 @@ class App extends Component {
                     if (isSidePanel) {
                         const element = document.querySelector(chatLayoutSelector);
                         if (element !== null) {
-                            listenTabClose();
                             targetDetected = true;
                             observer.disconnect();
                         }

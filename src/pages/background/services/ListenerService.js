@@ -16,7 +16,10 @@ function listenTabClose(objStore) {
     const onRemovedListener = chrome.tabs.onRemoved.addListener(function(tabId) {
         const tabUrl = tabs[tabId];
         if (urlRegex.test(tabUrl)) {
-            store.dispatch(toggleSave());
+            const state = store.getState();
+            if (state.isSaving) {
+                store.dispatch(toggleSave());
+            }
             chrome.tabs.onUpdated.removeListener(onUpdatedListener);
             chrome.tabs.onRemoved.removeListener(onRemovedListener);
         }
