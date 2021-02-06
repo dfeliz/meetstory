@@ -50,7 +50,12 @@ chrome.runtime.onMessage.addListener(
             ChatService.saveTranslation(request.message).then((response) => sendResponse({ message: 'Translation lenguage changed '}))
         }
         else if (request.messageType === 'listenTabClose') {
-            ListenerService.listenTabClose(store).then(() => sendResponse({ message: 'Listening...' }))
+            try {
+                ListenerService.listenTabClose(store);
+                sendResponse({ message: 'Listening...' });
+            } catch(err) {
+                sendResponse({});
+            }
         }
         else if (request.messageType === 'deleteChat') {
             ChatService.deleteChat(request.message).then(() => sendResponse({ message: `Delete done`}))

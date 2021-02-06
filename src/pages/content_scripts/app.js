@@ -17,11 +17,8 @@ var outisdeManualButtonActive = false;
 var chatFound = false;
 
 class App extends Component {
-    state = {
-        isManualButtonActive: false,
-    }
-
     componentDidMount() {
+        listenTabClose();
         this.observeMeeting()
             .then(() => {
                 // console.log('Chat detected. Checking orders.');
@@ -71,14 +68,13 @@ class App extends Component {
                     if (isSidePanel) {
                         const element = document.querySelector(chatLayoutSelector);
                         if (element !== null) {
-                            listenTabClose();
                             targetDetected = true;
                             observer.disconnect();
                         }
                     }
                 }
                 if (targetDetected) {
-                    resolve(true);
+                    resolve();
                 }
             };
     

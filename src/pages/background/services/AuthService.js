@@ -20,18 +20,7 @@ function removeToken() {
     })
 }
 
-function getProfileInfo() {
-    return new Promise((resolve, reject) => {
-        try {
-            return chrome.identity.getProfileUserInfo(resolve)
-        } catch(err) {
-            reject(err)
-        }
-    })
-}
-
 export default {
     auth,
     removeToken,
-    getProfileInfo,
 }
