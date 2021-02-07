@@ -100,9 +100,10 @@ class App extends Component {
         }
 
         if (chatFound) {
+            const codeExtractRegex = new RegExp("(...-....-...)");
             const chat = {
                 title: document.querySelector(meetTitle).innerHTML,
-                code: document.title.slice(7),
+                code: codeExtractRegex.exec(document.location.href)[0],
             }
             chrome.runtime.sendMessage({ messageType: "create", message: chat }, (response) => {
                 currentChatId = response.data.chatId;
