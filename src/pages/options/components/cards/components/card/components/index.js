@@ -42,7 +42,13 @@ export const MeetCode = styled.p`
 export const MeetTitle = styled.h2`
     color: black;
     font-size: 25px;
+    overflow: hidden;
+    line-height: 26px;
     font-weight: normal;
+    padding-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 `;
 
 export const MeetDate = styled.p`
